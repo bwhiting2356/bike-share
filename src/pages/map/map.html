@@ -1,0 +1,48 @@
+<div id="menu-fab">
+  <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+</div>
+<div class="flex-container">
+  <div id="map">
+    <google-map
+      [center]="center | async"
+      [origin]="originCoords | async"
+      [destination]="destinationCoords | async">
+    </google-map>
+  </div>
+  <div id="search">
+    <ion-content padding-horizontal>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Origin</ion-label>
+          <ion-input
+            (click)="openOriginModal()"
+            disabled
+            [value]="origin"
+            type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Destination</ion-label>
+          <ion-input
+            (click)="openDestinationModal()"
+            disabled
+            [value]="destination"
+            type="text"></ion-input>
+        </ion-item>
+
+        <div ion-item id="time-container">
+          <ion-select [(ngModel)]="timeTarget" interface="action-sheet" float-left>
+            <ion-option value="Depart at">Depart at</ion-option>
+            <ion-option value="Arrive by">Arrive by</ion-option>
+          </ion-select>
+          <ion-datetime displayFormat="h:mm A MMM DD" [(ngModel)]="datetime"></ion-datetime>
+        </div>
+
+        <button ion-button block [disabled]="disableButton">
+          Find bike rentals
+        </button>
+      </ion-list>
+    </ion-content>
+  </div>
+</div>
