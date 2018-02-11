@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs/Observable";
+
+// firebase
 
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 
-import { Observable } from "rxjs/Observable";
+
 import { LatLng } from '../shared/LatLng';
 
 interface GeoPoint {
@@ -45,11 +49,12 @@ export class FirebaseService {
   // TODO: create nested searchParams structure rather than flat properties? How do I update or make a reference?
 
   updateSearchOrigin(searchOrigin: LatLng) {
-    this.userDataRef.update({ searchOrigin });
+
+    this.userDataRef.update({ searchOrigin: this.geopoint(searchOrigin) });
   }
 
   updateSearchDestination(searchDestination: LatLng) {
-    this.userDataRef.update({ searchDestination });
+    this.userDataRef.update({ searchDestination: this.geopoint(searchDestination) });
   }
 
   updateTimeTarget(searchTimeTarget: string) {
@@ -60,4 +65,9 @@ export class FirebaseService {
     const searchDatetime = new Date(date);
     this.userDataRef.update({ searchDatetime })
   }
+
+  geopoint(latlng: LatLng) {
+    return new firebase.firestore.GeoPoint(latlng.lat, latlng.lng);
+  }
+
 }
