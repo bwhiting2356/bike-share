@@ -22,16 +22,13 @@ export class FirebaseService {
   stationList: Observable<LatLng[]>;
   userId: string;
   userDataRef;
-  searchParams;
 
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFirestore) {
 
-    this.stationList = this.db.collection('stations').valueChanges().map((geopoints: GeoPoint[]) => {
-      return geopoints.map(geopoint => {
-        return { lat: geopoint.coords._lat, lng: geopoint.coords._long };
-      })
+    this.stationList = this.db.collection('stations').valueChanges().map(geopoints => {
+      return geopoints.map(mapGeoPointToLatLng);
     });
 
     this.afAuth.idToken.subscribe(token => {
@@ -50,11 +47,11 @@ export class FirebaseService {
 
   updateSearchOrigin(searchOrigin: LatLng) {
 
-    this.userDataRef.update({ searchOrigin: this.geopoint(searchOrigin) });
+    this.userDataRef.update({ searchOrigin: mapLatLngToGeoPoint(searchOrigin) });
   }
 
   updateSearchDestination(searchDestination: LatLng) {
-    this.userDataRef.update({ searchDestination: this.geopoint(searchDestination) });
+    this.userDataRef.update({ searchDestination: mapLatLngToGeoPoint(searchDestination) });
   }
 
   updateTimeTarget(searchTimeTarget: string) {
@@ -66,8 +63,16 @@ export class FirebaseService {
     this.userDataRef.update({ searchDatetime })
   }
 
-  geopoint(latlng: LatLng) {
-    return new firebase.firestore.GeoPoint(latlng.lat, latlng.lng);
-  }
+  // geopoint(latlng: LatLng) {
+  //   return new firebase.firestore.GeoPoint(latlng.lat, latlng.lng);
+  // }
 
+}
+
+function mapGeoPointToLatLng(geopoint: GeoPoint): LatLng {
+  return { lat: geopoint.coords._lat, lng: geopoint.coords._long };
+}
+
+function mapLatLngToGeoPoint(latlng: LatLng): firebase.firestore.GeoPoint {
+  return new firebase.firestore.GeoPoint(latlng.lat, latlng.lng);
 }
