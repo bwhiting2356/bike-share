@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
-import { GeolocationService } from '../../services/geolocation-service';
+
 import { LatLng } from '../../shared/LatLng';
 import 'rxjs/add/operator/startWith';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AddressModalPage } from '../address-modal/address-modal';
-import { FirestoreService } from '../../services/firestore-service';
 import { Observable } from 'rxjs/Observable';
+
+import { FirebaseService } from '../../services/firebase-service';
+import { GeolocationService } from '../../services/geolocation-service';
 
 /**
  * Generated class for the MapPage page.
@@ -33,7 +35,7 @@ export class MapPage {
   constructor(
     private modalCtrl: ModalController,
     private geolocationService: GeolocationService,
-    private firestoreService: FirestoreService,
+    private firebaseService: FirebaseService,
     public navCtrl: NavController,
     public navParams: NavParams
   ) {
@@ -42,11 +44,14 @@ export class MapPage {
     this.destinationCoords = new BehaviorSubject(null);
     this.geolocationService.getCurrentPosition();
     this.center = this.geolocationService.userLocation$;
-    this.stationList = this.firestoreService.stationList;
+    this.stationList = this.firebaseService.stationList;
   }
 
   ionViewDidLoad() {
     this.geolocationService.getCurrentPosition();
+    this.firebaseService.signInAnonymously().then(() => {
+      this.timeTargetChange();
+    })
 
   }
 
@@ -58,6 +63,7 @@ export class MapPage {
         this.origin = choice;
         this.geolocationService.geocode(choice).then(latlng => {
           this.originCoords.next(latlng);
+          this.firebaseService.updateSearchOrigin(latlng);
         });
       }
       // TODO; maybe add a spinner while we're waiting for the geolocation to come back from the server
@@ -72,6 +78,7 @@ export class MapPage {
         this.destination = choice;
         this.geolocationService.geocode(choice).then(latlng => {
           this.destinationCoords.next(latlng);
+          this.firebaseService.updateSearchDestination(latlng);
         });
       }
     });
@@ -79,5 +86,14 @@ export class MapPage {
 
   get disableButton() {
     return !this.origin || !this.destination;
+  }
+
+  timeTargetChange() {
+    this.firebaseService.updateTimeTarget(this.timeTarget);
+  }
+
+  datetimeChange() {
+    this.firebaseService.updateDatetime(this.datetime);
+
   }
 }

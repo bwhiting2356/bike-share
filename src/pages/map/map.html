@@ -33,11 +33,19 @@
         </ion-item>
 
         <div ion-item id="time-container">
-          <ion-select [(ngModel)]="timeTarget" interface="action-sheet" float-left>
+          <ion-select
+            [(ngModel)]="timeTarget"
+            (ngModelChange)="timeTargetChange()"
+            interface="action-sheet"
+            float-left>
             <ion-option value="Depart at">Depart at</ion-option>
             <ion-option value="Arrive by">Arrive by</ion-option>
           </ion-select>
-          <ion-datetime displayFormat="h:mm A MMM DD" [(ngModel)]="datetime"></ion-datetime>
+          <ion-datetime
+            [(ngModel)]="datetime"
+            (ngModelChange)="datetimeChange()"
+            displayFormat="h:mm A MMM DD">
+          </ion-datetime>
         </div>
 
         <button ion-button block [disabled]="disableButton">

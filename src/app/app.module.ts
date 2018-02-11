@@ -16,19 +16,22 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 // services
 import { GeolocationService } from '../services/geolocation-service';
-import { FirestoreService } from '../services/firestore-service';
+import { FirebaseService } from '../services/firebase-service';
 import { AutocompleteService } from '../services/autocomplete-service';
 
 // firebase
 
 import { AngularFirestore } from "angularfire2/firestore";
-import { AngularFireModule, FirebaseApp } from 'angularfire2';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from "angularfire2/auth";
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { Keyboard } from '@ionic-native/keyboard';
 
 import { ComponentsModule } from "../components/components.module";
+
 import { environment } from "../environments/environment";
+
 
 
 @NgModule({
@@ -58,10 +61,11 @@ import { environment } from "../environments/environment";
     SplashScreen,
     GeolocationService,
     AutocompleteService,
-    FirestoreService,
+    FirebaseService,
     Geolocation,
     Keyboard,
     AngularFirestore,
+    AngularFireAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
