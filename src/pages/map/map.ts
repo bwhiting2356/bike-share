@@ -5,6 +5,7 @@ import { LatLng } from '../../shared/LatLng';
 import 'rxjs/add/operator/startWith';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AddressModalPage } from '../address-modal/address-modal';
+import { FirestoreService } from '../../services/firestore-service';
 
 /**
  * Generated class for the MapPage page.
@@ -30,6 +31,7 @@ export class MapPage {
   constructor(
     private modalCtrl: ModalController,
     private geolocationService: GeolocationService,
+    private firestoreService: FirestoreService,
     public navCtrl: NavController,
     public navParams: NavParams) {
     this.datetime = new Date().toISOString();
@@ -41,6 +43,7 @@ export class MapPage {
 
   ionViewDidLoad() {
     this.geolocationService.getCurrentPosition();
+    this.firestoreService.stations.subscribe(console.log);
   }
 
   openOriginModal() {

@@ -2,21 +2,34 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+// pages
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { MapPage } from '../pages/map/map';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { MapPage } from '../pages/map/map';
+
+
+// services
 import { GeolocationService } from '../services/geolocation-service';
+import { FirestoreService } from '../services/firestore-service';
+import { AutocompleteService } from '../services/autocomplete-service';
+
+// firebase
+
+import { AngularFirestore } from "angularfire2/firestore";
+import { AngularFireModule, FirebaseApp } from 'angularfire2';
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { Keyboard } from '@ionic-native/keyboard';
 
 import { ComponentsModule } from "../components/components.module";
-import { AutocompleteService } from '../services/autocomplete-service';
+import { environment } from "../environments/environment";
+
 
 @NgModule({
   declarations: [
@@ -29,6 +42,7 @@ import { AutocompleteService } from '../services/autocomplete-service';
   imports: [
     BrowserModule,
     ComponentsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -44,8 +58,10 @@ import { AutocompleteService } from '../services/autocomplete-service';
     SplashScreen,
     GeolocationService,
     AutocompleteService,
+    FirestoreService,
     Geolocation,
     Keyboard,
+    AngularFirestore,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
