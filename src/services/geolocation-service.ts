@@ -35,8 +35,7 @@ export class GeolocationService {
   getCurrentPosition() {
     this.geolocation.watchPosition()
       .subscribe(position => {
-        if (position) {
-          console.log("position", position);
+        if (position && position.coords) {
           this.userLocation$.next({ lat: position.coords.latitude, lng: position.coords.longitude });
         }
       })
