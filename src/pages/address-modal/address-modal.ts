@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Searchbar } from 'ionic-angular';
 import { AutocompleteService } from '../../services/autocomplete-service';
 import { GeolocationService } from '../../services/geolocation-service';
 import { Observable } from 'rxjs/Observable';
@@ -23,13 +23,12 @@ import 'rxjs/add/observable/fromPromise';
   templateUrl: 'address-modal.html',
 })
 export class AddressModalPage implements AfterViewInit {
-  @ViewChild('searchbar') searchbar: ElementRef;
+  @ViewChild('searchbar') searchbar: Searchbar;
   autocompleteResults: Observable<any>;
   title: string;
   userAddress$;
 
   constructor(
-    private keyboard: Keyboard,
     private autocompleteService: AutocompleteService,
     private geolocationService: GeolocationService,
     private viewCtrl: ViewController,
@@ -46,6 +45,12 @@ export class AddressModalPage implements AfterViewInit {
   ionViewDidLoad() {
     this.title = this.navParams.get('title');
 
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.searchbar.setFocus()
+    }, 150)
   }
 
   dismiss() {
