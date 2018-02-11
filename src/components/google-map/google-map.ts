@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnChanges } from '@angular/core';
+import { Component, ViewChild, Input, OnChanges, OnInit } from '@angular/core';
 
 import { LatLng } from '../../shared/LatLng';
 
@@ -13,9 +13,11 @@ export class GoogleMapComponent implements OnChanges {
   @Input() zoom: number = 14;
   @Input() center: LatLng;
   @Input() origin: LatLng;
-  @Input() station1: LatLng;
-  @Input() station2: LatLng;
   @Input() destination: LatLng;
+  @Input() stationStart: LatLng;
+  @Input() stationEnd: LatLng;
+
+  @Input() stationList: LatLng[];
   map: any;
 
   constructor() { }
@@ -38,23 +40,23 @@ export class GoogleMapComponent implements OnChanges {
       let originMarker = new google.maps.Marker({
         position: this.origin,
         map: this.map,
-        title: 'Origin'
+        title: 'Origin',
       });
     }
 
-    if (this.station1) {
-      let station1Marker = new google.maps.Marker({
-        position: this.station1,
+    if (this.stationStart) {
+      let stationStartMarker = new google.maps.Marker({
+        position: this.stationStart,
         map: this.map,
-        title: 'Station 1'
+        title: 'Station Start'
       });
     }
 
-    if (this.station2) {
-      let station2Marker = new google.maps.Marker({
-        position: this.station2,
+    if (this.stationEnd) {
+      let stationEndMarker = new google.maps.Marker({
+        position: this.stationEnd,
         map: this.map,
-        title: 'Station 2'
+        title: 'Station End'
       });
     }
 
@@ -66,15 +68,28 @@ export class GoogleMapComponent implements OnChanges {
       });
     }
     if (this.origin || this.destination) this.fitBounds();
+
+    if (this.stationList) {
+      this.stationList.forEach(station => {
+        new google.maps.Marker({
+          position: station,
+          map: this.map,
+          title: 'Station',
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10
+          },
+        });
+      })
+    }
   }
 
   fitBounds() {
     let bounds = new google.maps.LatLngBounds();
     if (this.origin) bounds.extend(this.origin);
-    if (this.station1) bounds.extend(this.station1);
-    if (this.station2) bounds.extend(this.station2);
+    if (this.stationStart) bounds.extend(this.stationStart);
+    if (this.stationEnd) bounds.extend(this.stationEnd);
     if (this.destination) bounds.extend(this.destination);
     this.map.fitBounds(bounds);
   }
 }
-

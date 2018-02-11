@@ -6,6 +6,7 @@ import 'rxjs/add/operator/startWith';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AddressModalPage } from '../address-modal/address-modal';
 import { FirestoreService } from '../../services/firestore-service';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the MapPage page.
@@ -25,6 +26,7 @@ export class MapPage {
   originCoords: BehaviorSubject<LatLng>;
   destination: string;
   destinationCoords: BehaviorSubject<LatLng>;
+  stationList: Observable<LatLng[]>;
   timeTarget: string = 'Depart at';
   datetime;
 
@@ -33,17 +35,19 @@ export class MapPage {
     private geolocationService: GeolocationService,
     private firestoreService: FirestoreService,
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams
+  ) {
     this.datetime = new Date().toISOString();
-    this.originCoords = new BehaviorSubject(null)
-    this.destinationCoords = new BehaviorSubject(null)
+    this.originCoords = new BehaviorSubject(null);
+    this.destinationCoords = new BehaviorSubject(null);
     this.geolocationService.getCurrentPosition();
     this.center = this.geolocationService.userLocation$;
+    this.stationList = this.firestoreService.stationList;
   }
 
   ionViewDidLoad() {
     this.geolocationService.getCurrentPosition();
-    this.firestoreService.stations.subscribe(console.log);
+
   }
 
   openOriginModal() {
@@ -56,7 +60,6 @@ export class MapPage {
           this.originCoords.next(latlng);
         });
       }
-
       // TODO; maybe add a spinner while we're waiting for the geolocation to come back from the server
     });
   }
