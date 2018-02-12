@@ -5,10 +5,10 @@ import { LatLng } from '../../shared/LatLng';
 
 admin.initializeApp(functions.config().firebase);
 
+exports.helloWorldUpdate = functions.https.onRequest((request, response) => {
+  console.log("hello world triggered");
+  response.send("Hello from Firebase updated!");
 
-export const helloWorldUpdate = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase updated!");
- console.log("hello world triggered");
 });
 //
 // export const itemNameUppercase = functions.firestore.document('items/{itemId}').onCreate((event) => {

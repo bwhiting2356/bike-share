@@ -16,6 +16,7 @@
     "firebase-functions": "^0.8.1"
   },
   "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
     "tslint": "^5.8.0",
     "typescript": "^2.5.3"
   },

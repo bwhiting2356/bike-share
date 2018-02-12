@@ -35,6 +35,8 @@ export class FirebaseService {
     this.afAuth.idToken.subscribe(token => {
       this.userId = token;
     })
+
+    this.db.collection('stations').
   }
 
   signInAnonymously() {

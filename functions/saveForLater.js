@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
+var functions = require("firebase-functions");
+var admin = require("firebase-admin");
 admin.initializeApp(functions.config().firebase);
-exports.helloWorldUpdate = functions.https.onRequest((request, response) => {
-    response.send("Hello from Firebase updated!");
+exports.helloWorldUpdate = functions.https.onRequest(function (request, response) {
     console.log("hello world triggered");
+    response.send("Hello from Firebase updated!");
 });
 //
 // export const itemNameUppercase = functions.firestore.document('items/{itemId}').onCreate((event) => {
@@ -13,10 +13,10 @@ exports.helloWorldUpdate = functions.https.onRequest((request, response) => {
 //   console.log("data: ", data);
 //   return event.data.ref.set({test: 'testy test'}, {merge: true});
 // });
-const mapGeoPointToLatLng = (geopoint) => {
+var mapGeoPointToLatLng = function (geopoint) {
     return { lat: geopoint.coords._latitude, lng: geopoint.coords._longitude };
 };
-exports.findNearest = functions.firestore.document('users/{userId}').onUpdate(event => {
+exports.findNearest = functions.firestore.document('users/{userId}').onUpdate(function (event) {
     console.log('hello line 34');
     // admin.firestore().collection('stations')
     //   .get()
@@ -36,4 +36,3 @@ exports.findNearest = functions.firestore.document('users/{userId}').onUpdate(ev
     // console.log('search destination ', searchDestination);
     return Promise.resolve();
 });
-//# sourceMappingURL=index.js.map

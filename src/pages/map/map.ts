@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 
-import { LatLng } from '../../shared/LatLng';
+import { AddressModalPage } from '../address-modal/address-modal';
+import { LatLng } from '../../../shared/LatLng';
+
+// rxjs
+
 import 'rxjs/add/operator/startWith';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AddressModalPage } from '../address-modal/address-modal';
 import { Observable } from 'rxjs/Observable';
+
+// services
 
 import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
+
+
 
 /**
  * Generated class for the MapPage page.
