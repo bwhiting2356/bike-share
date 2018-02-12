@@ -7,8 +7,9 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
-
-import { LatLng } from '../shared/LatLng';
+import { LatLng } from '../../shared/LatLng';
+import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
+import { mapGeoPointToLatLng } from '../../shared/mapGeoPointToLatLng';
 
 interface GeoPoint {
   coords: {
@@ -69,10 +70,5 @@ export class FirebaseService {
 
 }
 
-function mapGeoPointToLatLng(geopoint: GeoPoint): LatLng {
-  return { lat: geopoint.coords._lat, lng: geopoint.coords._long };
-}
 
-function mapLatLngToGeoPoint(latlng: LatLng): firebase.firestore.GeoPoint {
-  return new firebase.firestore.GeoPoint(latlng.lat, latlng.lng);
-}
+

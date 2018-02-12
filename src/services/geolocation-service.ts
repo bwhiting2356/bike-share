@@ -1,5 +1,4 @@
 import { Injectable, NgZone } from '@angular/core';
-import { LatLng } from '../shared/LatLng';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -7,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { LatLng } from '../../shared/LatLng';
 
 declare var google;
 

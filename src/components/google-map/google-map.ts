@@ -1,6 +1,5 @@
 import { Component, ViewChild, Input, OnChanges, OnInit } from '@angular/core';
-
-import { LatLng } from '../../shared/LatLng';
+import { LatLng } from '../../../shared/LatLng';
 
 declare var google;
 
