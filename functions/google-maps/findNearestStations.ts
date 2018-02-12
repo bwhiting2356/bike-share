@@ -23,7 +23,7 @@ export const findNearestStation = () => {
     }],
     mode: 'walking'
   };
-  client.distanceMatrix(request, (err, response) => console.log(response.json.rows[0].elements));
+  googleMapsClient.distanceMatrix(request, (err, response) => console.log(response.json.rows[0].elements));
 }
 
 findNearestStation();
