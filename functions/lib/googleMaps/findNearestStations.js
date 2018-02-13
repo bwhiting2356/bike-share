@@ -7,7 +7,7 @@ function serverMapGeoPointToLatLng(geopoint) {
 exports.findNearestStations = functions.firestore
     .document('/users/{userId}')
     .onUpdate(function (event) {
-    return admin.firestore().collection('stations').get()
+    return admin.firestore().collection('/stations').get()
         .then(function (querySnapshot) {
         var stationsPlusId = [];
         querySnapshot.docs.forEach(function (queryDocumentSnapshot) {
@@ -39,10 +39,16 @@ exports.findNearestStations = functions.firestore
             googleMapsClient.distanceMatrix(req, function (err, response) {
                 var mergedData = mergeDataWithIds(response.json.rows[0].elements, stationsPlusId);
                 var sortedData = mergedData.sort(compareStationData);
-                console.log(JSON.stringify(sortedData));
-                resolve(response.json.rows[0].elements);
+                resolve({ query: location, result: sortedData });
             });
         });
+    })
+        .then(function (data) {
+        var query = JSON.stringify(data.query);
+        var result = JSON.stringify(data.result);
+        return admin.firestore()
+            .collection('/stationWalkingDistanceQueries')
+            .doc(query).set({ response: result });
     });
 });
 function mergeDataWithIds(response, stationsPlusIds) {
