@@ -11,13 +11,6 @@ import { LatLng } from '../../shared/LatLng';
 import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
 import { mapGeoPointToLatLng } from '../../shared/mapGeoPointToLatLng';
 
-interface GeoPoint {
-  coords: {
-    _lat: number;
-    _long: number;
-  }
-}
-
 @Injectable()
 export class FirebaseService {
   stationList: Observable<LatLng[]>;
@@ -29,14 +22,12 @@ export class FirebaseService {
     private db: AngularFirestore) {
 
     this.stationList = this.db.collection('stations').valueChanges().map(geopoints => {
-      return geopoints.map(mapGeoPointToLatLng);
+      return geopoints.map(clientMapGeoPointToLatLng);
     });
 
     this.afAuth.idToken.subscribe(token => {
       this.userId = token;
-    })
-
-    this.db.collection('stations').
+    });
   }
 
   signInAnonymously() {
@@ -66,11 +57,12 @@ export class FirebaseService {
     this.userDataRef.update({ searchDatetime })
   }
 
-  // geopoint(latlng: LatLng) {
-  //   return new firebase.firestore.GeoPoint(latlng.lat, latlng.lng);
-  // }
-
 }
+
+export const clientMapGeoPointToLatLng = (geopoint): LatLng => {
+  return { lat: geopoint.coords.latitude, lng: geopoint.coords.longitude };
+};
+
 
 
 

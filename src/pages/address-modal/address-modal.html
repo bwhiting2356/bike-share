@@ -19,9 +19,9 @@
     (ionClear)="clearInput()"
     placeholder="Address or place name">
   </ion-searchbar>
-  <ion-list no-lines>
+  <ion-list>
       <div *ngIf="userAddress$ | async">
-        <ion-item (click)="chooseCurrentLocation()">
+        <ion-item no-lines (click)="chooseCurrentLocation()">
           <ion-icon
             name="locate"
             item-start>

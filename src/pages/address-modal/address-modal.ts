@@ -68,7 +68,12 @@ export class AddressModalPage implements AfterViewInit {
   }
 
   chooseAutocompleteItem(result) {
-    const address = result.structured_formatting.main_text + ", " + result.structured_formatting.secondary_text;
+    const part1 = result.structured_formatting.main_text || '';
+    const part2 = result.structured_formatting.secondary_text || '';
+    let address = part1;
+    if (part2) {
+      address += `, ${part2}`
+    }
     this.viewCtrl.dismiss(address);
   }
 

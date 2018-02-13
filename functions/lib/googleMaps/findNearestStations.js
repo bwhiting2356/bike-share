@@ -4,37 +4,58 @@ const googleMapsClient = require('./googleMapsClient').googleMapsClient;
 function serverMapGeoPointToLatLng(geopoint) {
     return { lat: geopoint._latitude, lng: geopoint._longitude };
 }
-exports.findNearestStations = functions.firestore.document('/users/{userId}').onUpdate(function (event) {
-    //
+exports.findNearestStations = functions.firestore
+    .document('/users/{userId}')
+    .onUpdate(function (event) {
     return admin.firestore().collection('stations').get()
         .then(function (querySnapshot) {
-        var stations = [];
+        var stationsPlusId = [];
         querySnapshot.docs.forEach(function (queryDocumentSnapshot) {
-            //           id: queryDocumentSnapshot.id,
-            console.log("station from database: ", queryDocumentSnapshot.data());
-            stations.push(serverMapGeoPointToLatLng(queryDocumentSnapshot.data().coords));
+            stationsPlusId.push({
+                id: queryDocumentSnapshot.id,
+                data: serverMapGeoPointToLatLng(queryDocumentSnapshot.data().coords)
+            });
+        });
+        var stations = stationsPlusId.map(function (station) {
+            return station.data;
         });
         var userData = event.data.data();
-        if (userData.searchOrigin) {
-            // console.log(userData.searchOrigin);
-            var searchOrigin = serverMapGeoPointToLatLng(userData.searchOrigin);
+        var previousUserData = event.data.previous.data();
+        var location;
+        // have the origin coords changed since the previous value?
+        if (JSON.stringify(userData.searchOrigin) !== JSON.stringify(previousUserData.searchOrigin)) {
+            location = serverMapGeoPointToLatLng(userData.searchOrigin);
         }
-        // if (userData.searchDestination) {
-        //   var searchDestination = serverMapGeoPointToLatLng(userData.searchDestination);
-        // }
+        // have the destination coords changed since the previous value?
+        if (JSON.stringify(userData.searchDestination) !== JSON.stringify(previousUserData.searchDestination)) {
+            location = serverMapGeoPointToLatLng(userData.searchDestination);
+        }
         const req = {
-            origins: [searchOrigin],
+            origins: [location],
             destinations: stations,
             mode: 'walking'
         };
-        console.log(stations);
         return new Promise(function (resolve) {
             googleMapsClient.distanceMatrix(req, function (err, response) {
-                // console.log(stations);
-                console.log(response.json.rows[0].elements);
+                var mergedData = mergeDataWithIds(response.json.rows[0].elements, stationsPlusId);
+                var sortedData = mergedData.sort(compareStationData);
+                console.log(JSON.stringify(sortedData));
                 resolve(response.json.rows[0].elements);
             });
         });
     });
 });
+function mergeDataWithIds(response, stationsPlusIds) {
+    var newData = [];
+    for (var i = 0; i < response.length; i++) {
+        newData.push({
+            id: stationsPlusIds[i].id,
+            data: response[i]
+        });
+    }
+    return newData;
+}
+function compareStationData(a, b) {
+    return a.data.distance.value - b.data.distance.value;
+}
 //# sourceMappingURL=findNearestStations.js.map

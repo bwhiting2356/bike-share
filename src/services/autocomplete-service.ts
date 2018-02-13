@@ -1,5 +1,4 @@
 import { Injectable, NgZone } from '@angular/core';
-import { LatLng } from '../shared/LatLng';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
