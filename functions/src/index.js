@@ -1,7 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const testNextDoor = require('./testNextDoor').testNextDoor;
-const findNearestStation = require('./findNearestStations').findNearestStations;
+const findNearestStation = require('./googleMaps/findNearestStations').findNearestStations;
+const testAsyncHttp = require('./testAsyncHttp').testAsyncHttp;
 
 admin.initializeApp(functions.config().firebase);
 
@@ -15,6 +16,7 @@ exports.helloWorldUpdate = functions.https.onRequest(function(request, response)
 
 exports.testNextDoor = testNextDoor;
 exports.findNearestStation = findNearestStation;
+exports.testAsyncHttp = testAsyncHttp;
 
 
 
