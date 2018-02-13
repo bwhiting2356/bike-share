@@ -31,6 +31,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { ComponentsModule } from "../components/components.module";
 
 import { environment } from "../environments/environment";
+import { SearchResultPage } from '../pages/search-result/search-result';
 
 
 
@@ -40,7 +41,8 @@ import { environment } from "../environments/environment";
     HomePage,
     ListPage,
     MapPage,
-    AddressModalPage
+    AddressModalPage,
+    SearchResultPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,8 @@ import { environment } from "../environments/environment";
     HomePage,
     ListPage,
     MapPage,
-    AddressModalPage
+    AddressModalPage,
+    SearchResultPage
   ],
   providers: [
     StatusBar,

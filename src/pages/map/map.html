@@ -48,7 +48,11 @@
           </ion-datetime>
         </div>
 
-        <button ion-button block [disabled]="disableButton">
+        <button
+          ion-button
+          block
+          [disabled]="disableButton"
+          (click)="submitSearch()">
           Find bike rentals
         </button>
       </ion-list>

@@ -14,6 +14,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
+import { SearchResultPage } from '../search-result/search-result';
 
 
 
@@ -102,6 +103,9 @@ export class MapPage {
 
   datetimeChange() {
     this.firebaseService.updateDatetime(this.datetime);
+  }
 
+  submitSearch() {
+    this.navCtrl.push(SearchResultPage);
   }
 }
