@@ -7,6 +7,20 @@ function serverMapGeoPointToLatLng(geopoint) {
 exports.findNearestStations = functions.firestore
     .document('/users/{userId}')
     .onUpdate(function (event) {
+    var userData = event.data.data();
+    var previousUserData = event.data.previous.data();
+    var location;
+    // have the origin coords changed since the previous value?
+    if (JSON.stringify(userData.searchOrigin) !== JSON.stringify(previousUserData.searchOrigin)) {
+        location = serverMapGeoPointToLatLng(userData.searchOrigin);
+    }
+    // have the destination coords changed since the previous value?
+    if (JSON.stringify(userData.searchDestination) !== JSON.stringify(previousUserData.searchDestination)) {
+        location = serverMapGeoPointToLatLng(userData.searchDestination);
+    }
+    if (!location) {
+        return Promise.resolve();
+    }
     return admin.firestore().collection('/stations').get()
         .then(function (querySnapshot) {
         var stationsPlusId = [];
@@ -44,11 +58,16 @@ exports.findNearestStations = functions.firestore
         });
     })
         .then(function (data) {
+        console.log('writing to database!');
         var query = JSON.stringify(data.query);
         var result = JSON.stringify(data.result);
         return admin.firestore()
             .collection('/stationWalkingDistanceQueries')
-            .doc(query).set({ response: result });
+            .doc(query).set({ response: result })
+            .then(function () {
+            console.log('I got here...');
+            console.log("query: ", query);
+        });
     });
 });
 function mergeDataWithIds(response, stationsPlusIds) {
