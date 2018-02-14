@@ -1,9 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const googleMapsClient = require('./googleMapsClient').googleMapsClient;
-function serverMapGeoPointToLatLng(geopoint) {
-    return { lat: geopoint._latitude, lng: geopoint._longitude };
-}
+const serverMapGeoPointToLatLng = require('./serverMapGeoPointToLatLng').serverMapGeoPointToLatLng;
 exports.findNearestStations = functions.firestore
     .document('/users/{userId}')
     .onUpdate(function (event) {
@@ -45,21 +43,6 @@ exports.findNearestStations = functions.firestore
             var stations = stationsPlusId.map(function (station) {
                 return station.data;
             });
-            // var userData = event.data.data();
-            // var previousUserData = event.data.previous.data();
-            // var location;
-            //
-            // // have the origin coords changed since the previous value?
-            //
-            // if (JSON.stringify(userData.searchOrigin) !== JSON.stringify(previousUserData.searchOrigin)) {
-            //   location = serverMapGeoPointToLatLng(userData.searchOrigin);
-            // }
-            //
-            // // have the destination coords changed since the previous value?
-            //
-            // if (JSON.stringify(userData.searchDestination) !== JSON.stringify(previousUserData.searchDestination)) {
-            //   location = serverMapGeoPointToLatLng(userData.searchDestination);
-            // }
             // make request to google
             const req = {
                 origins: [location],
@@ -82,6 +65,7 @@ exports.findNearestStations = functions.firestore
                 .doc(query).set({ response: result });
         });
     });
+    // TODO: clean this up with better control flow
 });
 function mergeDataWithIds(response, stationsPlusIds) {
     var newData = [];

@@ -1,10 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const googleMapsClient = require('./googleMapsClient').googleMapsClient;
-
-function serverMapGeoPointToLatLng(geopoint) {
-  return { lat: geopoint._latitude, lng: geopoint._longitude };
-}
+const serverMapGeoPointToLatLng = require('./serverMapGeoPointToLatLng').serverMapGeoPointToLatLng;
 
 
 exports.findNearestStations = functions.firestore
@@ -87,6 +84,9 @@ exports.findNearestStations = functions.firestore
             return admin.firestore()
               .collection('/stationWalkingDistanceQueries')
               .doc(query).set({response: result});
+          })
+          .then(function() {
+
           })
       })
 
