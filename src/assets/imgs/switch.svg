@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="65px" viewBox="0 0 28 65" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Bike-Share-Wireframes" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-8" transform="translate(-66.000000, -78.000000)" fill="#000000">
+            <g id="Group-5" transform="translate(66.000000, 78.000000)">
+                <g id="Group-4">
+                    <path d="M12,21.4634146 L12,40 L4,40 L4,21.4634146 L0,21.4634146 L8,-1.77635684e-15 L16,21.4634146 L12,21.4634146 Z" id="Combined-Shape"></path>
+                </g>
+                <g id="Group-4" transform="translate(20.000000, 45.000000) rotate(180.000000) translate(-20.000000, -45.000000) translate(12.000000, 25.000000)">
+                    <path d="M12,21.4634146 L12,40 L4,40 L4,21.4634146 L0,21.4634146 L8,-1.77635684e-15 L16,21.4634146 L12,21.4634146 Z" id="Combined-Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

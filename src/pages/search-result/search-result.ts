@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { fakeResult } from './fakeResult';
 
 /**
  * Generated class for the SearchResultPage page.
@@ -15,17 +16,19 @@ import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-an
 })
 export class SearchResultPage {
 
+  result;
   constructor(
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
+    this.result = fakeResult;
   }
 
   ionViewDidLoad() {
-    let loading = this.loadingCtrl.create({
-      content: 'Searching database..'
-    });
-
-    loading.present();
+    // let loading = this.loadingCtrl.create({
+    //   content: 'Searching database..'
+    // });
+    //
+    // loading.present();
     console.log('ionViewDidLoad SearchResultPage');
   }
 

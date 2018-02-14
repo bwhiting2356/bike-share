@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MapPage } from '../pages/map/map';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
+import { SearchResultPage } from "../pages/search-result/search-result";
 
 @Component({
   templateUrl: 'app.html'
@@ -14,7 +15,7 @@ import { AddressModalPage } from '../pages/address-modal/address-modal';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = MapPage;
+  rootPage: any = SearchResultPage;
 
   pages: Array<{title: string, component: any}>;
 

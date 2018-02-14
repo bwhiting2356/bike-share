@@ -15,6 +15,9 @@ export class GoogleMapComponent implements OnChanges {
   @Input() destination: LatLng;
   @Input() stationStart: LatLng;
   @Input() stationEnd: LatLng;
+  @Input() walking1Points: LatLng[];
+  @Input() walking2Points: LatLng[];
+  @Input() bicyclingPoints: LatLng[];
 
   @Input() stationList: LatLng[];
   map: any;
@@ -47,7 +50,11 @@ export class GoogleMapComponent implements OnChanges {
       let stationStartMarker = new google.maps.Marker({
         position: this.stationStart,
         map: this.map,
-        title: 'Station Start'
+        title: 'Station Start',
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10
+        },
       });
     }
 
@@ -55,7 +62,11 @@ export class GoogleMapComponent implements OnChanges {
       let stationEndMarker = new google.maps.Marker({
         position: this.stationEnd,
         map: this.map,
-        title: 'Station End'
+        title: 'Station End',
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10
+        },
       });
     }
 
@@ -80,6 +91,42 @@ export class GoogleMapComponent implements OnChanges {
           },
         });
       })
+    }
+
+    if (this.walking1Points) {
+      var flightPath = new google.maps.Polyline({
+        path: this.walking1Points,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+      flightPath.setMap(this.map);
+    }
+
+    if (this.walking2Points) {
+      var flightPath = new google.maps.Polyline({
+        path: this.walking2Points,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+      flightPath.setMap(this.map);
+    }
+
+    if (this.bicyclingPoints) {
+      var flightPath = new google.maps.Polyline({
+        path: this.bicyclingPoints,
+        geodesic: true,
+        strokeColor: 'blue',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+      flightPath.setMap(this.map);
     }
   }
 

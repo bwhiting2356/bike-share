@@ -1,3 +1,210 @@
-page-search-result {
+$search-bar-height: 100px;
+$travel-info-height: 45px;
 
+page-search-result {
+  #menu-fab {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    z-index: 3;
+
+    button {
+      background-color: white;
+      border: 1px solid grey;
+      color: black;
+    }
+  }
+
+  .flex-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    #map {
+      align-self: flex-start;
+      width: 100%;
+      height: 100px;
+      flex-grow: 2;
+      z-index: 1;
+    }
+
+    #search {
+      border-top: 1px solid black;
+      flex-grow: 0;
+      align-self: flex-end;
+      background-color: white;
+      width: 100%;
+      height: 250px;  // TODO: this changes slightly depending on device, so should be dynamic
+
+      ion-content {
+        max-width: 600px;
+        margin: auto;
+      }
+    }
+
+    #time-container {
+      position: relative;
+
+      ion-select {
+        position: absolute;
+        left: 0;
+      }
+      ion-datetime {
+        position: absolute;
+        right: 0;
+      }
+
+    }
+  }
+}
+
+ion-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .container {
+    padding: 5px;
+  }
+  .trip-details {
+    padding-top: 5px;
+    display: grid;
+    grid-template-columns: 80px 20px 1fr 50px;
+    grid-template-rows: auto $travel-info-height auto auto $travel-info-height auto auto $travel-info-height auto auto;
+    grid-template-areas:
+      "departureTime     originIcon           originAddress       ."
+      ".                 walkingDots1         walkingTravelInfo1        ."
+      "reservation1Time  bikeReservationLine  reservation1Desc    reservation1Price"
+      ".                 bikeReservationLine  reservation1Address ."
+      ".                 bikeReservationLine  bikeTravelInfo      bikePrice"
+      "reservation2Time  bikeReservationLine  reservation2Desc    reservation2Price"
+      ".                 walkingDots2         reservation2Address ."
+      ".                 walkingDots2         walkingTravelInfo2  ."
+      "arrivalTime       destinationIcon      destinationAddress  ."
+      "totalTime         .                    totalDistance       totalPrice";
+
+    #departureTime {  grid-area: departureTime;  }
+    #originIcon {  grid-area: originIcon;  }
+    #originAddress { grid-area: originAddress }
+    #walkingDots1 { grid-area: walkingDots1 }
+    #walkingTravelInfo1 { grid-area: walkingTravelInfo1 }
+    #bikeReservationLine { grid-area: bikeReservationLine }
+    #reservation1Time { grid-area: reservation1Time }
+    #reservation1Desc { grid-area: reservation1Desc }
+    #reservation1Price { grid-area: reservation1Price }
+    #reservation1Address { grid-area: reservation1Address }
+    #bikeTravelInfo { grid-area: bikeTravelInfo }
+    #bikePrice { grid-area: bikePrice }
+    #reservation2Time { grid-area: reservation2Time }
+    #reservation2Desc { grid-area: reservation2Desc }
+    #reservation2Price { grid-area: reservation2Price }
+    #reservation2Address { grid-area: reservation2Address }
+    #walkingDots2 { grid-area: walkingDots2 }
+    #walkingTravelInfo2 { grid-area: walkingTravelInfo2 }
+    #arrivalTime {  grid-area: arrivalTime;  }
+    #destinationIcon {  grid-area: destinationIcon;  }
+    #destinationAddress { grid-area: destinationAddress }
+
+    #totalTime {  grid-area: totalTime;  }
+    #totalDistance {  grid-area: totalDistance;  }
+    #totalPrice { grid-area: totalPrice }
+
+
+    .price {
+      font-weight: 500;
+      display: flex;
+      align-items: left;
+      justify-content: flex-end;
+    }
+
+    .time {
+
+      //font-size: 1em;
+      font-weight: 500;
+      display: flex;
+      align-items: left;
+      justify-content: center;
+    }
+
+    .icon {
+      align-items: center;
+      justify-content: space-around;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .address,
+    .reservation,
+    .travel-info {
+      display: flex;
+      align-items: center;
+      margin-left: 5px;
+    }
+
+    .address {
+      font-weight: 400;
+    }
+    .reservation {
+      font-weight: 600;
+    }
+
+    .travel-info {
+      display: flex;
+      align-items: center;
+      font-style: italic;
+      color: #757575;
+
+      ion-icon {
+        font-size: 1.5em;
+        margin-right: 5px;
+      }
+    }
+
+    #bikeReservationLine .line {
+      position: relative;
+      background: black;
+      border-radius: 8px;
+      width: 16px;
+      height: 100%;
+
+      #dot-1, #dot-2 {
+        position: absolute;
+        left: 3px;
+      }
+      #dot-1 { top: 3px;  }
+      #dot-2 { bottom: 3px; opacity: 0.5 }
+    }
+  }
+
+  // ********** summary **********
+
+  .summary {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid black;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+
+    #travel-time {
+      align-self: flex-start;
+      text-align: center;
+      width: 100px;
+    }
+
+    #travel-distance {
+      flex-grow: 1;
+    }
+
+    #total-cost {
+      align-self: flex-end;
+      width: 150px;
+      text-align: right;
+    }
+  }
+}
+
+.positive {
+  color: green;
 }

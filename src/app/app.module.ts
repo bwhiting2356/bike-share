@@ -32,6 +32,7 @@ import { ComponentsModule } from "../components/components.module";
 
 import { environment } from "../environments/environment";
 import { SearchResultPage } from '../pages/search-result/search-result';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 
@@ -47,6 +48,7 @@ import { SearchResultPage } from '../pages/search-result/search-result';
   imports: [
     BrowserModule,
     ComponentsModule,
+    PipesModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     IonicModule.forRoot(MyApp),
   ],
