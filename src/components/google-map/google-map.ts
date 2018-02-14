@@ -38,96 +38,20 @@ export class GoogleMapComponent implements OnChanges {
       ]
     });
 
-    if (this.origin) {
-      let originMarker = new google.maps.Marker({
-        position: this.origin,
-        map: this.map,
-        title: 'Origin',
-      });
-    }
-
-    if (this.stationStart) {
-      let stationStartMarker = new google.maps.Marker({
-        position: this.stationStart,
-        map: this.map,
-        title: 'Station Start',
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10
-        },
-      });
-    }
-
-    if (this.stationEnd) {
-      let stationEndMarker = new google.maps.Marker({
-        position: this.stationEnd,
-        map: this.map,
-        title: 'Station End',
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10
-        },
-      });
-    }
-
-    if (this.destination) {
-      let destinationMarker = new google.maps.Marker({
-        position: this.destination,
-        map: this.map,
-        title: 'Destination'
-      });
-    }
+    if (this.origin) this.addMarker(this.origin);
+    if (this.destination) this.addMarker(this.destination);
     if (this.origin || this.destination) this.fitBounds();
 
+    if (this.stationStart) this.addMarker(this.stationStart, true);
+    if (this.stationEnd) this.addMarker(this.stationEnd, true);
+
     if (this.stationList) {
-      this.stationList.forEach(station => {
-        new google.maps.Marker({
-          position: station,
-          map: this.map,
-          title: 'Station',
-          icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 10
-          },
-        });
-      })
+      this.stationList.forEach(station => this.addMarker(station, true));
     }
 
-    if (this.walking1Points) {
-      var flightPath = new google.maps.Polyline({
-        path: this.walking1Points,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-
-      flightPath.setMap(this.map);
-    }
-
-    if (this.walking2Points) {
-      var flightPath = new google.maps.Polyline({
-        path: this.walking2Points,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-
-      flightPath.setMap(this.map);
-    }
-
-    if (this.bicyclingPoints) {
-      var flightPath = new google.maps.Polyline({
-        path: this.bicyclingPoints,
-        geodesic: true,
-        strokeColor: 'blue',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-
-      flightPath.setMap(this.map);
-    }
+    if (this.walking1Points) this.addPolyline(this.walking1Points, WALKING);
+    if (this.walking2Points) this.addPolyline(this.walking2Points, WALKING);
+    if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, BICYCLING);
   }
 
   fitBounds() {
@@ -138,4 +62,47 @@ export class GoogleMapComponent implements OnChanges {
     if (this.destination) bounds.extend(this.destination);
     this.map.fitBounds(bounds);
   }
+
+  addMarker(position, station = false) {
+    let markerOptions = {
+      position: position,
+      map: this.map,
+    };
+
+    if (station) {
+      markerOptions["icon"] = {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10
+      }
+    }
+    new google.maps.Marker(markerOptions);
+  }
+
+  addPolyline(points, mode) {
+    let path;
+    if (mode === WALKING) {
+      path = new google.maps.Polyline({
+        path: this.walking1Points,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+    } else if (mode === BICYCLING) {
+      path = new google.maps.Polyline({
+        path: points,
+        geodesic: true,
+        strokeColor: 'blue',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+    }
+
+    path.setMap(this.map);
+  }
 }
+
+const WALKING = 'WALKING';
+const BICYCLING = 'BICYCLING';
