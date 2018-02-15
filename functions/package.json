@@ -12,6 +12,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@google/maps": "^0.4.5",
+    "axios": "^0.17.1",
     "firebase-admin": "~5.8.1",
     "firebase-functions": "^0.8.1"
   },

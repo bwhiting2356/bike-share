@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var functions = require("firebase-functions");
 var googleMapsClient_1 = require("./googleMapsClient");
 var memoize_1 = require("../memoize");
-exports.getDirections = functions.https.onRequest(function (request, response) {
+exports.getDirections = functions.https
+    .onRequest(function (request, response) {
     var _a = request.body, origin = _a.origin, destination = _a.destination, mode = _a.mode;
     var mapQuery = {
         origin: origin,

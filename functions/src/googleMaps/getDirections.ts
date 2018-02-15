@@ -2,7 +2,8 @@ import * as functions from 'firebase-functions';
 import { googleMapsClient } from './googleMapsClient';
 import { memoize } from '../memoize';
 
-export const getDirections = functions.https.onRequest((request, response) => {
+export const getDirections = functions.https
+  .onRequest((request, response) => {
   const { origin, destination, mode } = request.body;
 
   const mapQuery = {

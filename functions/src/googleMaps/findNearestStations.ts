@@ -19,33 +19,10 @@ const compareStationData = (a, b) => {
   return a.data.distance.value - b.data.distance.value;
 };
 
+export const findNearestStations = functions.https
+  .onRequest((request, response) => {
 
-
-export const findNearestStations = functions.firestore
-  .document('/users/{userId}')
-  .onUpdate(event => {
-
-    const userData = event.data.data();
-    const previousUserData = event.data.previous.data();
-    let location;
-
-    // have the origin coords changed since the previous value?
-
-    if (JSON.stringify(userData.searchOrigin) !== JSON.stringify(previousUserData.searchOrigin)) {
-      location = serverMapGeoPointToLatLng(userData.searchOrigin);
-    }
-
-    // have the destination coords changed since the previous value?
-
-    if (JSON.stringify(userData.searchDestination) !== JSON.stringify(previousUserData.searchDestination)) {
-      location = serverMapGeoPointToLatLng(userData.searchDestination);
-    }
-
-    // if neither was changed, exit this function
-
-    if (!location) return Promise.resolve();
-
-    // check to see if this location query was cached
+    const { location } = request.body;
 
     const funcFindNearestStations = loc => {
 
@@ -79,8 +56,8 @@ export const findNearestStations = functions.firestore
           };
 
           return new Promise(function (resolve) {
-            googleMapsClient.distanceMatrix(req, function (err, response) {
-              const mergedData = mergeDataWithIds(response.json.rows[0].elements, stationsPlusId);
+            googleMapsClient.distanceMatrix(req, function (err, res) {
+              const mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsPlusId);
               const sortedData = mergedData.sort(compareStationData);
               resolve({response: sortedData})
             });
@@ -89,5 +66,6 @@ export const findNearestStations = functions.firestore
     };
 
     return memoize(funcFindNearestStations)(location)
-  });
+      .then(result => response.send(result));
 
+  });

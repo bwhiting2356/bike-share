@@ -1,7 +1,6 @@
 import * as admin from 'firebase-admin';
 
 export const memoize = func => {
-
   return params => {
     const stringParams = JSON.stringify(params);
     return admin.firestore()

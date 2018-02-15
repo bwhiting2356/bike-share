@@ -18,24 +18,9 @@ var mergeDataWithIds = function (response, stationsPlusIds) {
 var compareStationData = function (a, b) {
     return a.data.distance.value - b.data.distance.value;
 };
-exports.findNearestStations = functions.firestore
-    .document('/users/{userId}')
-    .onUpdate(function (event) {
-    var userData = event.data.data();
-    var previousUserData = event.data.previous.data();
-    var location;
-    // have the origin coords changed since the previous value?
-    if (JSON.stringify(userData.searchOrigin) !== JSON.stringify(previousUserData.searchOrigin)) {
-        location = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchOrigin);
-    }
-    // have the destination coords changed since the previous value?
-    if (JSON.stringify(userData.searchDestination) !== JSON.stringify(previousUserData.searchDestination)) {
-        location = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchDestination);
-    }
-    // if neither was changed, exit this function
-    if (!location)
-        return Promise.resolve();
-    // check to see if this location query was cached
+exports.findNearestStations = functions.https
+    .onRequest(function (request, response) {
+    var location = request.body.location;
     var funcFindNearestStations = function (loc) {
         return admin.firestore().collection('/stations')
             .get()
@@ -59,14 +44,15 @@ exports.findNearestStations = functions.firestore
                 mode: 'walking'
             };
             return new Promise(function (resolve) {
-                googleMapsClient_1.googleMapsClient.distanceMatrix(req, function (err, response) {
-                    var mergedData = mergeDataWithIds(response.json.rows[0].elements, stationsPlusId);
+                googleMapsClient_1.googleMapsClient.distanceMatrix(req, function (err, res) {
+                    var mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsPlusId);
                     var sortedData = mergedData.sort(compareStationData);
                     resolve({ response: sortedData });
                 });
             });
         });
     };
-    return memoize_1.memoize(funcFindNearestStations)(location);
+    return memoize_1.memoize(funcFindNearestStations)(location)
+        .then(function (result) { return response.send(result); });
 });
 //# sourceMappingURL=findNearestStations.js.map
