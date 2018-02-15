@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const googleMapsClient = require('./googleMapsClient').googleMapsClient;
-exports.getDirections = functions.https.onRequest(function (request, res) {
+exports.getWalkingDirections = functions.https.onRequest(function (request, res) {
     const origin = request.body.origin;
     const destination = request.body.destination;
     const mode = request.body.mode;
@@ -19,4 +19,4 @@ exports.getDirections = functions.https.onRequest(function (request, res) {
         });
     });
 });
-//# sourceMappingURL=getDirections.js.map
+//# sourceMappingURL=getWalkingDirections.js.map

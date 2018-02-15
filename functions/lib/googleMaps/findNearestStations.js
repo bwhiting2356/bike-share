@@ -63,6 +63,8 @@ exports.findNearestStations = functions.firestore
             return admin.firestore()
                 .collection('/stationWalkingDistanceQueries')
                 .doc(query).set({ response: result });
+        })
+            .then(function () {
         });
     });
     // TODO: clean this up with better control flow

@@ -1,6 +1,12 @@
-var googleMapsClient = require('./googleMapsClient');
+const functions = require('firebase-functions');
 
-exports.getDirections = function(origin, destination, mode) {
+const googleMapsClient = require('./googleMapsClient').googleMapsClient;
+
+exports.getDirections = functions.https.onRequest(function(request, res) {
+  const origin = request.body.origin;
+  const destination = request.body.destination;
+  const mode = request.body.mode;
+
   var req = {
     origin: origin,
     destination: destination,
@@ -8,12 +14,12 @@ exports.getDirections = function(origin, destination, mode) {
   };
 
   return new Promise(function(resolve) {
-    googleMapsClient.directions(req, function(err, response) {
+    return googleMapsClient.directions(req, function(err, response) {
       var result = response.json.routes[0].legs[0].steps.map(function(step) {
         return step.start_location
       });
       result.push(req.destination);
-      resolve(result);
+      resolve(res.send(result));
     });
   });
-};
+});
