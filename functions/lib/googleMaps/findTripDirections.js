@@ -1,6 +1,6 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const serverMapGeoPointToLatLng = require('./serverMapGeoPointToLatLng').serverMapGeoPointToLatLng;
+var functions = require('firebase-functions');
+var admin = require('firebase-admin');
+var serverMapGeoPointToLatLng = require('./serverMapGeoPointToLatLng').serverMapGeoPointToLatLng;
 exports.findTripDirections = functions.firestore
     .document('/users/{userId}')
     .onUpdate(function (event) {

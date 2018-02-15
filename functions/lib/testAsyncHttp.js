@@ -1,10 +1,10 @@
-const functions = require('firebase-functions');
-const googleMapsClient = require('./googleMaps/googleMapsClient').googleMapsClient;
-const memoize = require('./memoize').memoize;
+var functions = require('firebase-functions');
+var googleMapsClient = require('./googleMaps/googleMapsClient').googleMapsClient;
+var memoize = require('./memoize').memoize;
 exports.testAsyncHttp = functions.https.onRequest(function (request, response) {
-    const origin = request.body.origin;
-    const destination = request.body.destination;
-    const mode = request.body.mode;
+    var origin = request.body.origin;
+    var destination = request.body.destination;
+    var mode = request.body.mode;
     var query = {
         origin: origin,
         destination: destination,

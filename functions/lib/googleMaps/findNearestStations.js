@@ -1,7 +1,7 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const googleMapsClient = require('./googleMapsClient').googleMapsClient;
-const serverMapGeoPointToLatLng = require('./serverMapGeoPointToLatLng').serverMapGeoPointToLatLng;
+var functions = require('firebase-functions');
+var admin = require('firebase-admin');
+var googleMapsClient = require('./googleMapsClient').googleMapsClient;
+var serverMapGeoPointToLatLng = require('./serverMapGeoPointToLatLng').serverMapGeoPointToLatLng;
 exports.findNearestStations = functions.firestore
     .document('/users/{userId}')
     .onUpdate(function (event) {
@@ -44,7 +44,7 @@ exports.findNearestStations = functions.firestore
                 return station.data;
             });
             // make request to google
-            const req = {
+            var req = {
                 origins: [location],
                 destinations: stations,
                 mode: 'walking'
