@@ -21,6 +21,7 @@ import 'rxjs/add/observable/fromPromise';
 @Component({
   selector: 'page-address-modal',
   templateUrl: 'address-modal.html',
+  providers: [Keyboard]
 })
 export class AddressModalPage implements AfterViewInit {
   @ViewChild('searchbar') searchbar: Searchbar;
@@ -29,6 +30,7 @@ export class AddressModalPage implements AfterViewInit {
   userAddress$;
 
   constructor(
+    private keyboard: Keyboard,
     private autocompleteService: AutocompleteService,
     private geolocationService: GeolocationService,
     private viewCtrl: ViewController,
@@ -49,7 +51,8 @@ export class AddressModalPage implements AfterViewInit {
 
   ionViewDidEnter() {
     setTimeout(() => {
-      this.searchbar.setFocus()
+      this.searchbar.setFocus();
+      this.keyboard.show();
     }, 150)
   }
 

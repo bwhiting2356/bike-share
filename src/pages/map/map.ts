@@ -53,13 +53,12 @@ export class MapPage {
     this.geolocationService.getCurrentPosition();
     this.center = this.geolocationService.userLocation$;
     this.stationList = this.firebaseService.stationList;
-    this.stationList.subscribe(console.log);
   }
 
   ionViewDidLoad() {
     this.geolocationService.getCurrentPosition();
     this.firebaseService.signInAnonymously().then(() => {
-      this.timeTargetChange();
+      // this.timeTargetChange();
     })
 
   }

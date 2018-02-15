@@ -11,6 +11,10 @@ import { LatLng } from '../../shared/LatLng';
 import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
 import { mapGeoPointToLatLng } from '../../shared/mapGeoPointToLatLng';
 
+import 'rxjs/add/operator/take';
+
+
+
 @Injectable()
 export class FirebaseService {
   stationList: Observable<LatLng[]>;
@@ -33,30 +37,54 @@ export class FirebaseService {
   signInAnonymously() {
     return this.afAuth.auth.signInAnonymously().then((result) => {
       this.userId = result.uid;
-      this.userDataRef = this.db.collection('users').doc(this.userId);
+      this.userDataRef = this.db.collection('/users').doc(this.userId);
+      // console.log(result);
+      // return this.db.doc(`/users/${this.userId}`)
+      //   .update({lastLogin: new Date()})
+      //   .catch((error) => {
+      //     console.log(error);
+      //     return this.db.doc(`/users/${this.userId}`).set({lastLogin: new Date()})
+      //   })
+      // this.userDataRef = this.db.collection('/users').doc(this.userId);
     });
   }
 
   // TODO: create nested searchParams structure rather than flat properties? How do I update or make a reference?
 
-  updateSearchOrigin(searchOrigin: LatLng) {
-
-    this.userDataRef.update({ searchOrigin: mapLatLngToGeoPoint(searchOrigin) });
+  updateSearchOrigin(latlng: LatLng) {
+    const searchOrigin = mapLatLngToGeoPoint(latlng);
+    this.userDataRef
+      .update({ searchOrigin })
+      .catch(error => {
+        this.userDataRef.set({ searchOrigin })
+      });
   }
 
-  updateSearchDestination(searchDestination: LatLng) {
-    this.userDataRef.update({ searchDestination: mapLatLngToGeoPoint(searchDestination) });
+  updateSearchDestination(latlng: LatLng) {
+    const searchDestination = mapLatLngToGeoPoint(latlng);
+    this.userDataRef
+      .update({ searchDestination })
+      .catch(error => {
+        this.userDataRef.set({ searchDestination })
+      });
   }
 
   updateTimeTarget(searchTimeTarget: string) {
-    this.userDataRef.update({ searchTimeTarget });
+    this.userDataRef
+      .update({ searchTimeTarget })
+      .catch(error => {
+        this.userDataRef.set({ searchTimeTarget })
+      });
   }
 
   updateDatetime(date: string) {
     const searchDatetime = new Date(date);
-    this.userDataRef.update({ searchDatetime })
+    this.userDataRef
+      .update({ searchDatetime })
+      .catch(error => {
+        this.userDataRef.set({ searchDatetime })
+      })
   }
-
 }
 
 export const clientMapGeoPointToLatLng = (geopoint): LatLng => {

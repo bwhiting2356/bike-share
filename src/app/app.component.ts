@@ -15,7 +15,7 @@ import { SearchResultPage } from "../pages/search-result/search-result";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SearchResultPage;
+  rootPage: any = MapPage;
 
   pages: Array<{title: string, component: any}>;
 
