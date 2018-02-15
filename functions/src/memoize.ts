@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 
 export const memoize = func => {
-  console.log("func name in the output!!")
+
   return params => {
     const stringParams = JSON.stringify(params);
     return admin.firestore()
@@ -9,14 +9,16 @@ export const memoize = func => {
       .doc(stringParams)
       .get()
       .then(docSnapshot => {
-        if (docSnapshot.exists) return Promise.resolve(docSnapshot.data());
+        if (docSnapshot.exists) {
+          return Promise.resolve(docSnapshot.data());
+        }
         return func(params)
           .then(response => {
             return admin.firestore()
               .collection(func.name)
               .doc(stringParams)
               .set({response: response})
-              .then(() => response )
+              .then(() => response)
           })
       });
   }

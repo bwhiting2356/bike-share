@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var admin = require("firebase-admin");
 exports.memoize = function (func) {
-    console.log("func name in the output!!");
     return function (params) {
         var stringParams = JSON.stringify(params);
         return admin.firestore()
@@ -10,8 +9,9 @@ exports.memoize = function (func) {
             .doc(stringParams)
             .get()
             .then(function (docSnapshot) {
-            if (docSnapshot.exists)
+            if (docSnapshot.exists) {
                 return Promise.resolve(docSnapshot.data());
+            }
             return func(params)
                 .then(function (response) {
                 return admin.firestore()

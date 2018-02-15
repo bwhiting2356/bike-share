@@ -32,6 +32,8 @@ exports.findNearestStations = functions.firestore
 
     // check to see if this location query was cached
 
+    return memoize()
+
     return admin.firestore()
       .collection('/stationWalkingDistanceQueries')
       .doc(JSON.stringify(location)).get()
