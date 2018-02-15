@@ -1,6 +1,6 @@
 var functions = require('firebase-functions');
 var googleMapsClient = require('./googleMapsClient').googleMapsClient;
-var memoize = require('./memoize').memoize;
+var memoize = require('../memoize').memoize;
 exports.getDirections = functions.https.onRequest(function (request, response) {
     var origin = request.body.origin;
     var destination = request.body.destination;

@@ -14,7 +14,3 @@ exports.getDirections = getDirections;
 
 
 
-
-
-
-
