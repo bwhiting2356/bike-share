@@ -9,7 +9,6 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MapPage } from '../pages/map/map';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
-import { HistoryPage } from '../pages/history/history';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,7 +33,8 @@ import { ComponentsModule } from "../components/components.module";
 import { environment } from "../environments/environment";
 import { SearchResultPage } from '../pages/search-result/search-result';
 import { PipesModule } from '../pipes/pipes.module';
-
+import { TripsPage } from '../pages/trips/trips';
+import { TripDetailPage } from '../pages/trip-detail/trip-detail';
 
 
 
@@ -46,7 +46,8 @@ import { PipesModule } from '../pipes/pipes.module';
     MapPage,
     AddressModalPage,
     SearchResultPage,
-    HistoryPage
+    TripsPage,
+    TripDetailPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +64,8 @@ import { PipesModule } from '../pipes/pipes.module';
     MapPage,
     AddressModalPage,
     SearchResultPage,
-    HistoryPage
+    TripsPage,
+    TripDetailPage
   ],
   providers: [
     StatusBar,

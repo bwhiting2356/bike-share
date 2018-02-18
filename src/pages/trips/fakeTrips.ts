@@ -46,7 +46,7 @@ export const TripStatus = {
   COMPLETED: 'Completed',
   CANCELLED: 'Cancelled',
   PROPOSED: 'Proposed',
-  SCHEDULE: 'Scheduled'
+  SCHEDULED: 'Scheduled'
 }
 
 export class Trip {

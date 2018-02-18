@@ -98,27 +98,72 @@ export class GoogleMapComponent implements OnChanges {
   addPolyline(points, mode) {
     let path;
     if (mode === WALKING) {
+      const walkingLineSymbol = {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: 'white',
+        fillOpacity: 1,
+        scale: 4
+      };
+
       path = new google.maps.Polyline({
         path: this.walking1Points,
+
         geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeColor: 'black',
+        strokeOpacity: 1,
+        strokeWeight: 1,
+        zIndex: 3,
+        icons: [{
+          icon: walkingLineSymbol,
+          offset: '0',
+          repeat: '15px'
+        }],
       });
+
+      // TODO: make these icons better (fiverr? upwork?)
 
     } else if (mode === BICYCLING) {
       path = new google.maps.Polyline({
         path: points,
         geodesic: true,
-        strokeColor: 'blue',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeColor: '#00B3FD',
+        strokeOpacity: 1,
+        strokeWeight: 5,
+        zIndex: 1,
       });
+
+      // google.maps.Polyline({
+      //   path: points,
+      //   strokeColor: '#00B3FD',
+      //   strokeOpacity: 1,
+      //   strokeWeight: 5,
+      //   zIndex: 1,
+      // });
 
     }
 
     path.setMap(this.map);
   }
+  // static createWalkingPolyline(points) {
+  //   const walkingLineSymbol = {
+  //     path: google.maps.SymbolPath.CIRCLE,
+  //     fillOpacity: 1,
+  //     scale: 4
+  //   };
+  //
+  //   return new google.maps.Polyline({
+  //     path: points,
+  //     strokeColor: 'white',
+  //     strokeOpacity: 0,
+  //     strokeWeight: 4,
+  //     zIndex: 3,
+  //     icons: [{
+  //       icon: walkingLineSymbol,
+  //       offset: '0',
+  //       repeat: '15px'
+  //     }],
+  //   });
+  // }
 }
 
 const WALKING = 'WALKING';

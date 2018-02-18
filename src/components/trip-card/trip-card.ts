@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Trip } from '../../pages/history/fakeTrips';
+import { Trip } from '../../pages/trips/fakeTrips';
 
 /**
  * Generated class for the TripCardComponent component.

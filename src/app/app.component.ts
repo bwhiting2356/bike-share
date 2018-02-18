@@ -9,7 +9,7 @@ import { MapPage } from '../pages/map/map';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { SearchResultPage } from "../pages/search-result/search-result";
 import { PaymentsPage } from '../pages/payments/payments';
-import { HistoryPage } from '../pages/history/history';
+import { TripsPage } from '../pages/trips/trips';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +17,7 @@ import { HistoryPage } from '../pages/history/history';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HistoryPage;
+  rootPage: any = TripsPage;
 
   pages: Array<{title: string, component: any, icon: string}>;
 
@@ -27,7 +27,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Map', icon: 'pin', component: MapPage },
-      { title: 'History', icon: 'time', component: HistoryPage }
+      { title: 'Trips', icon: 'bicycle', component: TripsPage }
     ];
 
   }

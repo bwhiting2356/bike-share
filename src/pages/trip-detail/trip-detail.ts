@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { fakeTrips, Trip } from './fakeTrips'
-
 /**
- * Generated class for the HistoryPage page.
+ * Generated class for the TripDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,18 +10,16 @@ import { fakeTrips, Trip } from './fakeTrips'
 
 @IonicPage()
 @Component({
-  selector: 'page-history',
-  templateUrl: 'history.html',
+  selector: 'page-trip-detail',
+  templateUrl: 'trip-detail.html',
 })
-export class HistoryPage {
-  trips: Trip[];
+export class TripDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.trips = fakeTrips;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HistoryPage');
+    console.log('ionViewDidLoad TripDetailPage');
   }
 
 }
