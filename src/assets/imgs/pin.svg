@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="24px" viewBox="0 0 16 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 8</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="iPhone-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-159.000000, -57.000000)">
+        <g id="Group-8" transform="translate(159.000000, 57.000000)">
+            <path d="M1.60220411,13.0323499 C0.596213978,11.6707703 0,9.97768365 0,8.14285714 C0,3.64568132 3.581722,0 8,0 C12.418278,0 16,3.64568132 16,8.14285714 C16,9.97768365 15.403786,11.6707703 14.3977959,13.0323499 L8,24 L1.60220411,13.0323499 Z" id="Combined-Shape" fill="#000000"></path>
+            <circle id="Oval-14" fill="#FFFFFF" cx="8" cy="8" r="3"></circle>
+        </g>
+    </g>
+</svg>

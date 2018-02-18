@@ -1,5 +1,9 @@
 import { Component, ViewChild, Input, OnChanges } from '@angular/core';
+
+// shared
+
 import { LatLng } from '../../../shared/LatLng';
+import { bicyclePolylineBorderColor, bicyclePolylineMainColor } from '../../../shared/ThemeVariables';
 
 declare var google;
 
@@ -71,10 +75,13 @@ export class GoogleMapComponent implements OnChanges {
 
   addMarker(position, station = false) {
     const color = station ? 'blue' : 'red';  // TODO: put in theme colors
+    const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg'
     let markerOptions = {
       position: position,
       map: this.map,
-      icon: GoogleMapComponent.pinSymbol(color)
+      icon: {
+        url: url
+      }
     };
 
     // TODO: z-index lower?
@@ -105,7 +112,7 @@ export class GoogleMapComponent implements OnChanges {
   static createBicyclingPolyline(points) {
     return new google.maps.Polyline({
       path: points,
-      strokeColor: '#00B3FD',
+      strokeColor: bicyclePolylineMainColor,
       strokeOpacity: 1,
       strokeWeight: 5,
       zIndex: 1,
@@ -115,7 +122,7 @@ export class GoogleMapComponent implements OnChanges {
   static createBicyclingPolylineBorder(points) {
     return new google.maps.Polyline({
       path: points,
-      strokeColor: '#3379C3',
+      strokeColor: bicyclePolylineBorderColor,
       strokeOpacity: 1,
       strokeWeight: 7,
       zIndex: 0,

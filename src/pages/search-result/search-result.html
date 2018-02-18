@@ -26,7 +26,7 @@
           <div class="trip-details">
             <div id="departureTime" class="time">{{ trip.data.departureTime | date:"h:mm a" }}</div>
             <div id="originIcon" class="icon">
-              <img src="assets/imgs/origin.svg" alt="">
+              <img src="assets/imgs/pin.svg" alt="">
             </div>
             <div id="originAddress" class="address">{{ trip.data.origin.address }}</div>
             <div id="walkingDots1" class="icon">
@@ -40,10 +40,21 @@
             </div>
             <div id="reservation1Time" class="time">{{ trip.data.stationStart.time | date:"h:mm a" }}</div>
             <div id="bikeReservationLine" class="icon">
-              <div class="line">
-                <img id="dot-1" src="assets/imgs/station.svg" alt="">
-                <img id="dot-2" src="assets/imgs/station.svg" alt="">
-              </div>
+              <!--<div class="line">-->
+                <img id="station-1" src="assets/imgs/station.svg" alt="">
+                <svg id="bike-line" width="10px" height="60px" viewBox="0 0 10 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <defs>
+                    <rect id="path-1" x="183" y="81" width="10" height="60" rx="1"></rect>
+                  </defs>
+                  <g id="iPhone-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-183.000000, -81.000000)">
+                    <g id="Rectangle-26">
+                      <use [attr.fill]="bicyclePolylineMainColor" fill-rule="evenodd" xlink:href="#path-1"></use>
+                      <rect [attr.stroke]="bicyclePolylineBorderColor" stroke-width="1" x="183.5" y="81.5" width="9" height="59" rx="1"></rect>
+                    </g>
+                  </g>
+                </svg>
+                <img id="station-2" src="assets/imgs/station.svg" alt="">
+              <!--</div>-->
             </div>
             <div id="reservation1Desc" class="reservation">Bike pickup reservation</div>
             <div id="reservation1Address" class="address">{{ trip.data.stationStart.address}}</div>
@@ -73,7 +84,7 @@
             </div>
             <div id="walkingDots2" class="icon">
               <img
-                *ngFor="let i of [1, 2, 3, 4]"
+                *ngFor="let i of [1, 2, 3]"
                 src="assets/imgs/walk-dot.svg" alt="">
             </div>
             <div id="walkingTravelInfo2" class="travel-info">
@@ -82,7 +93,7 @@
             </div>
             <div id="arrivalTime" class="time">{{ trip.data.arrivalTime | date:'h:mm a'}}</div>
             <div id="destinationIcon" class="icon">
-              <img src="assets/imgs/destination.svg" alt="">
+              <img src="assets/imgs/pin.svg" alt="">
             </div>
             <div id="destinationAddress" class="address">{{ trip.data.destination.address }}</div>
           </div>

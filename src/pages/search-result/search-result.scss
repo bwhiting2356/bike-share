@@ -2,18 +2,6 @@ $search-bar-height: 100px;
 $travel-info-height: 45px;
 
 page-search-result {
-  //#menu-fab {
-  //  position: absolute;
-  //  top: 20px;
-  //  left: 10px;
-  //  z-index: 3;
-  //
-  //  button {
-  //    background-color: white;
-  //    border: 1px solid grey;
-  //    color: black;
-  //  }
-  //}
 
   .flex-container {
     width: 100%;
@@ -79,7 +67,7 @@ ion-content {
       ".                 bikeReservationLine  reservation1Address ."
       ".                 bikeReservationLine  bikeTravelInfo      bikePrice"
       "reservation2Time  bikeReservationLine  reservation2Desc    reservation2Price"
-      ".                 walkingDots2         reservation2Address ."
+      ".                 bikeReservationLine  reservation2Address ."
       ".                 walkingDots2         walkingTravelInfo2  ."
       "arrivalTime       destinationIcon      destinationAddress  ."
       "totalTime         .                    totalDistance       totalPrice";
@@ -161,19 +149,24 @@ ion-content {
       }
     }
 
-    #bikeReservationLine .line {
+    #bikeReservationLine {
       position: relative;
-      background: black;
-      border-radius: 8px;
       width: 16px;
       height: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
 
-      #dot-1, #dot-2 {
-        position: absolute;
-        left: 3px;
-      }
-      #dot-1 { top: 3px;  }
-      #dot-2 { bottom: 3px; opacity: 0.5 }
+      //#bike-line {
+      //  flex-grow: 2;
+      //}
+      //
+      //#dot-1, #dot-2 {
+      //  position: absolute;
+      //  left: 3px;
+      //}
+      //#dot-1 { top: 3px;  }
+      //#dot-2 { bottom: 3px; }
     }
   }
 

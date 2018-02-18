@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 
+// pages
+
 import { AddressModalPage } from '../address-modal/address-modal';
+import { SearchResultPage } from '../search-result/search-result';
+
+// shared
+
 import { LatLng } from '../../../shared/LatLng';
 
 // rxjs
@@ -14,16 +20,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
-import { SearchResultPage } from '../search-result/search-result';
 
 
 
-/**
- * Generated class for the MapPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({

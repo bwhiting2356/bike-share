@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { Trip, tripA } from '../../../shared/Trip';
+import { bicyclePolylineMainColor, bicyclePolylineBorderColor } from '../../../shared/ThemeVariables';
 
 /**
  * Generated class for the SearchResultPage page.
@@ -16,6 +17,8 @@ import { Trip, tripA } from '../../../shared/Trip';
 })
 export class SearchResultPage {
   trip: Trip;
+  bicyclePolylineMainColor;
+  bicyclePolylineBorderColor;
 
   get priceMessage() {
     if (this.trip.totalPrice > 0) {
@@ -29,6 +32,8 @@ export class SearchResultPage {
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
     this.trip = tripA;
+    this.bicyclePolylineMainColor = bicyclePolylineMainColor;
+    this.bicyclePolylineBorderColor = bicyclePolylineBorderColor;
   }
 
 }
