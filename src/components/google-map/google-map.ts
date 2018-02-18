@@ -10,6 +10,10 @@ declare var google;
 export class GoogleMapComponent implements OnChanges {
   @ViewChild('mapContainer') mapContainer;
   @Input() zoom: number = 14;
+  @Input() zoomControl: boolean = true;
+  @Input() scrollWheel: boolean = true;
+  @Input() streetViewControl: boolean = false;
+  @Input() gestureHandling: string = 'greedy';
   @Input() center: LatLng;
   @Input() origin: LatLng;
   @Input() destination: LatLng;
@@ -18,6 +22,16 @@ export class GoogleMapComponent implements OnChanges {
   @Input() walking1Points: LatLng[];
   @Input() walking2Points: LatLng[];
   @Input() bicyclingPoints: LatLng[];
+
+  /**
+   *
+   *     [scrollwheel]="false"
+   [fitBounds]="bounds"
+   [zoomControl]="false"
+   [streetViewControl]="false"
+   gestureHandling: 'none',
+   zoomControl: false
+   */
 
   @Input() stationList: LatLng[];
   map: any;
@@ -30,6 +44,9 @@ export class GoogleMapComponent implements OnChanges {
       maxZoom: 16,
       center: this.center,
       disableDefaultUI: true,
+      zoomControl: this.zoomControl,
+      streetViewControl: this.streetViewControl,
+      gestureHandling: this.gestureHandling,
       styles: [
         {
           featureType: 'poi',

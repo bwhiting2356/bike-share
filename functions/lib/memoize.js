@@ -17,8 +17,8 @@ exports.memoize = function (func) {
                 return admin.firestore()
                     .collection(func.name)
                     .doc(stringParams)
-                    .set({ response: response })
-                    .then(function () { return response; });
+                    .set({ data: response })
+                    .then(function () { return ({ data: response }); });
             });
         });
     };

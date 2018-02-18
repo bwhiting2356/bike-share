@@ -2,13 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var functions = require("firebase-functions");
 var admin = require("firebase-admin");
-var findNearestStations_1 = require("./googleMaps/findNearestStations");
+// import { findNearestStations } from  './googleMaps/findNearestStations';
 // import { findTripDirections } from './googleMaps/findTripDirections';
-var testAsyncHttp_1 = require("./testAsyncHttp");
+// import { testAsyncHttp } from './testAsyncHttp';
 var getDirections_1 = require("./googleMaps/getDirections");
+var searchParamsUpdated_1 = require("./googleMaps/searchParamsUpdated");
 admin.initializeApp(functions.config().firebase);
-exports.findNearestStations = findNearestStations_1.findNearestStations;
+// exports.findNearestStations = findNearestStations;
 // exports.findTripDirections = findTripDirections;
-exports.testAsyncHttp = testAsyncHttp_1.testAsyncHttp;
+// exports.testAsyncHttp = testAsyncHttp;
 exports.getDirections = getDirections_1.getDirections;
+exports.searchParamsUpdated = searchParamsUpdated_1.searchParamsUpdated;
 //# sourceMappingURL=index.js.map

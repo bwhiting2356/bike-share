@@ -1,13 +1,15 @@
 import * as admin from 'firebase-admin';
+import { DocumentSnapshot } from "@google-cloud/firestore";
 
-export const memoize = func => {
+export const memoize = (func: (params) => Promise<any>): (params) => Promise<any> => {
   return params => {
-    const stringParams = JSON.stringify(params);
+
+    const stringParams: string = JSON.stringify(params);
     return admin.firestore()
       .collection(func.name)
       .doc(stringParams)
       .get()
-      .then(docSnapshot => {
+      .then((docSnapshot: DocumentSnapshot) => {
         if (docSnapshot.exists) {
           return Promise.resolve(docSnapshot.data());
         }
@@ -16,8 +18,8 @@ export const memoize = func => {
             return admin.firestore()
               .collection(func.name)
               .doc(stringParams)
-              .set({response: response})
-              .then(() => response)
+              .set({data: response })
+              .then(() => ({ data: response }));
           })
       });
   }

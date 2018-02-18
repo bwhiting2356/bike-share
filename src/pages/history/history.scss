@@ -1,0 +1,16 @@
+page-history {
+  //trip-card {
+  //  max-width: 300px
+  //}
+  .trips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .trip-container {
+    max-width: 380px;
+    flex-grow: 1;
+  }
+
+}

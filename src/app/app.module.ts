@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { MapPage } from '../pages/map/map';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
+import { HistoryPage } from '../pages/history/history';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,6 +37,7 @@ import { PipesModule } from '../pipes/pipes.module';
 
 
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -43,7 +45,8 @@ import { PipesModule } from '../pipes/pipes.module';
     ListPage,
     MapPage,
     AddressModalPage,
-    SearchResultPage
+    SearchResultPage,
+    HistoryPage
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { PipesModule } from '../pipes/pipes.module';
     ListPage,
     MapPage,
     AddressModalPage,
-    SearchResultPage
+    SearchResultPage,
+    HistoryPage
   ],
   providers: [
     StatusBar,

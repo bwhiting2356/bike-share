@@ -8,6 +8,8 @@ import { ListPage } from '../pages/list/list';
 import { MapPage } from '../pages/map/map';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { SearchResultPage } from "../pages/search-result/search-result";
+import { PaymentsPage } from '../pages/payments/payments';
+import { HistoryPage } from '../pages/history/history';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,18 +17,17 @@ import { SearchResultPage } from "../pages/search-result/search-result";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = MapPage;
+  rootPage: any = HistoryPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon: string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'Map', component: MapPage}
+      { title: 'Map', icon: 'pin', component: MapPage },
+      { title: 'History', icon: 'time', component: HistoryPage }
     ];
 
   }
