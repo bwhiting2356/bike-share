@@ -1,4 +1,74 @@
-export const fakeResult = {
+
+
+import { LatLng } from './LatLng';
+
+export interface TripData {
+  origin: {
+    coords: LatLng;
+    address: string;
+  },
+  departureTime: Date;
+  walking1Travel: {
+    distance: number;
+    minutes: number;
+    points: LatLng[];
+  },
+  stationStart: {
+    coords: LatLng;
+    address: string;
+    price: number;
+    time: Date;
+  },
+  bicyclingTravel: {
+    distance: number;
+    minutes: number;
+    points: LatLng[];
+    price: number;
+  },
+  stationEnd: {
+    coords: LatLng;
+    address: string;
+    price: number;
+    time: Date;
+  },
+  walking2Travel: {
+    distance: number;
+    minutes: number;
+    points: LatLng[];
+  },
+  destination: {
+    coords: LatLng;
+    address: string;
+  },
+  arrivalTime: Date;
+  status: string;
+}
+
+export const TripStatus = {
+  COMPLETED: 'Completed',
+  CANCELLED: 'Cancelled',
+  PROPOSED: 'Proposed',
+  SCHEDULED: 'Scheduled'
+};
+
+export class Trip {
+  constructor(public data: TripData) {  // parse date strings into date objects?
+  }
+
+  get totalTime(): number {
+    return Math.abs(this.data.arrivalTime.getTime() - this.data.departureTime.getTime());
+  }
+
+  get totalDistance(): number {
+    return this.data.walking1Travel.distance + this.data.bicyclingTravel.distance + this.data.walking2Travel.distance;
+  }
+
+  get totalPrice(): number {
+    return this.data.stationStart.price + this.data.bicyclingTravel.price + this.data.stationEnd.price;
+  }
+}
+
+const data: TripData = {
   origin: {
     coords: {lat: 37.425919, lng:  -122.072343},
     address: '321 Magnolia Ave'
@@ -6,7 +76,7 @@ export const fakeResult = {
   departureTime: new Date(),
   walking1Travel: {
     distance: 3650,
-    time: 58,
+    minutes: 58,
     points: [
       { lat: 37.426015, lng: -122.0723955 },
       { lat: 37.4261534, lng: -122.0719905 },
@@ -23,7 +93,7 @@ export const fakeResult = {
       { lat: 37.4229558, lng: -122.0813309 },
       { lat: 37.4229551, lng: -122.0813755 },
       { lat: 37.422827, lng: -122.081668 }
-      ],
+    ],
   },
   stationStart: {
     coords: {lat: 37.422827, lng:  -122.081668 },
@@ -33,7 +103,7 @@ export const fakeResult = {
   },
   bicyclingTravel: {
     distance: 4,
-    time: 15,
+    minutes: 15,
     points: [
       { lat: 37.4227605, lng: -122.0815514 },
       { lat: 37.4224445, lng: -122.082257 },
@@ -54,7 +124,7 @@ export const fakeResult = {
       { lat: 37.4483872, lng: -122.1266485 },
       { lat: 37.4488344, lng: -122.1254075 },
       { lat: 37.4518688, lng: -122.1296444 }
-      ],
+    ],
     price: 1.50,
   },
   stationEnd: {
@@ -65,7 +135,7 @@ export const fakeResult = {
   },
   walking2Travel: {
     distance: 134,
-    time: 5,
+    minutes: 5,
     points: [ { lat: 37.4519147, lng: -122.1295495 },
       { lat: 37.4526442, lng: -122.1303591 },
       { lat: 37.4487815, lng: -122.1324926 },
@@ -78,5 +148,13 @@ export const fakeResult = {
     coords: {lat: 37.448327, lng: -122.135429},
     address: '432 Millbrae Location'
   },
-  arrivalTime: new Date()
+  arrivalTime: new Date(),
+  status: TripStatus.COMPLETED
 };
+
+export const tripA = new Trip(data);
+const tripB = new Trip(data);
+const tripC = new Trip(data);
+
+export const fakeTrips: Trip[] = [tripA, tripB, tripC];
+

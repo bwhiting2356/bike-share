@@ -4,6 +4,7 @@ import { TripCardComponent } from './trip-card/trip-card';
 import { PipesModule } from '../pipes/pipes.module';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
+
 @NgModule({
 	declarations: [GoogleMapComponent,
     TripCardComponent],

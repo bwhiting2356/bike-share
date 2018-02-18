@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
-import { fakeResult } from './fakeResult';
+import { Trip, tripA } from '../../../shared/Trip';
 
 /**
  * Generated class for the SearchResultPage page.
@@ -15,21 +15,20 @@ import { fakeResult } from './fakeResult';
   templateUrl: 'search-result.html',
 })
 export class SearchResultPage {
+  trip: Trip;
 
-  result;
+  get priceMessage() {
+    if (this.trip.totalPrice > 0) {
+      return 'Total earnings';
+    } else {
+      return 'Total cost';
+    }
+  }
+
   constructor(
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
-    this.result = fakeResult;
-  }
-
-  ionViewDidLoad() {
-    // let loading = this.loadingCtrl.create({
-    //   content: 'Searching database..'
-    // });
-    //
-    // loading.present();
-    console.log('ionViewDidLoad SearchResultPage');
+    this.trip = tripA;
   }
 
 }

@@ -11,7 +11,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TimePipe implements PipeTransform {
   transform(minutes: number): string {
     if (minutes < 60) {
-      return minutes + 'm'
+      return minutes + ' min'
     } else {
       const hours = minutes / 60;
       const roundedHours = Math.round(hours * 10) / 10;

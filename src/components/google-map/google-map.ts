@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, ViewChild, Input, OnChanges } from '@angular/core';
 import { LatLng } from '../../../shared/LatLng';
 
 declare var google;
@@ -22,17 +22,6 @@ export class GoogleMapComponent implements OnChanges {
   @Input() walking1Points: LatLng[];
   @Input() walking2Points: LatLng[];
   @Input() bicyclingPoints: LatLng[];
-
-  /**
-   *
-   *     [scrollwheel]="false"
-   [fitBounds]="bounds"
-   [zoomControl]="false"
-   [streetViewControl]="false"
-   gestureHandling: 'none',
-   zoomControl: false
-   */
-
   @Input() stationList: LatLng[];
   map: any;
 
@@ -66,9 +55,9 @@ export class GoogleMapComponent implements OnChanges {
       this.stationList.forEach(station => this.addMarker(station, true));
     }
 
-    if (this.walking1Points) this.addPolyline(this.walking1Points, WALKING);
-    if (this.walking2Points) this.addPolyline(this.walking2Points, WALKING);
-    if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, BICYCLING);
+    if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
+    if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
+    if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, GoogleMapComponent.BICYCLING);
   }
 
   fitBounds() {
@@ -81,90 +70,111 @@ export class GoogleMapComponent implements OnChanges {
   }
 
   addMarker(position, station = false) {
+    const color = station ? 'blue' : 'red';  // TODO: put in theme colors
     let markerOptions = {
       position: position,
       map: this.map,
+      icon: GoogleMapComponent.pinSymbol(color)
     };
 
-    if (station) {
-      markerOptions["icon"] = {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10
-      }
-    }
+    // TODO: z-index lower?
+
     new google.maps.Marker(markerOptions);
   }
 
-  addPolyline(points, mode) {
-    let path;
-    if (mode === WALKING) {
-      const walkingLineSymbol = {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: 'white',
-        fillOpacity: 1,
-        scale: 4
-      };
+  addPolyline(points: LatLng[], mode: string) {
+    if (mode === GoogleMapComponent.WALKING) {
+      const walkingPolyline = GoogleMapComponent.createWalkingPolyline(points);
+      walkingPolyline.setMap(this.map);
+      const walkingPolylineBorder = GoogleMapComponent.createWalkingPolylineBorder(points);
+      walkingPolylineBorder.setMap(this.map);
 
-      path = new google.maps.Polyline({
-        path: this.walking1Points,
-
-        geodesic: true,
-        strokeColor: 'black',
-        strokeOpacity: 1,
-        strokeWeight: 1,
-        zIndex: 3,
-        icons: [{
-          icon: walkingLineSymbol,
-          offset: '0',
-          repeat: '15px'
-        }],
-      });
-
-      // TODO: make these icons better (fiverr? upwork?)
-
-    } else if (mode === BICYCLING) {
-      path = new google.maps.Polyline({
-        path: points,
-        geodesic: true,
-        strokeColor: '#00B3FD',
-        strokeOpacity: 1,
-        strokeWeight: 5,
-        zIndex: 1,
-      });
-
-      // google.maps.Polyline({
-      //   path: points,
-      //   strokeColor: '#00B3FD',
-      //   strokeOpacity: 1,
-      //   strokeWeight: 5,
-      //   zIndex: 1,
-      // });
-
+    } else if (mode === GoogleMapComponent.BICYCLING) {
+      const bicyclingPolyline = GoogleMapComponent.createBicyclingPolyline(points);
+      bicyclingPolyline.setMap(this.map);
+      const bicyclingPolylineBorder = GoogleMapComponent.createBicyclingPolylineBorder(points);
+      bicyclingPolylineBorder.setMap(this.map);
     }
-
-    path.setMap(this.map);
   }
-  // static createWalkingPolyline(points) {
-  //   const walkingLineSymbol = {
-  //     path: google.maps.SymbolPath.CIRCLE,
-  //     fillOpacity: 1,
-  //     scale: 4
-  //   };
-  //
-  //   return new google.maps.Polyline({
-  //     path: points,
-  //     strokeColor: 'white',
-  //     strokeOpacity: 0,
-  //     strokeWeight: 4,
-  //     zIndex: 3,
-  //     icons: [{
-  //       icon: walkingLineSymbol,
-  //       offset: '0',
-  //       repeat: '15px'
-  //     }],
-  //   });
-  // }
+
+  // ***************   static properties and methods ***************
+
+  static WALKING = 'WALKING';
+  static BICYCLING = 'BICYCLING';
+
+  static createBicyclingPolyline(points) {
+    return new google.maps.Polyline({
+      path: points,
+      strokeColor: '#00B3FD',
+      strokeOpacity: 1,
+      strokeWeight: 5,
+      zIndex: 1,
+    });
+  }
+
+  static createBicyclingPolylineBorder(points) {
+    return new google.maps.Polyline({
+      path: points,
+      strokeColor: '#3379C3',
+      strokeOpacity: 1,
+      strokeWeight: 7,
+      zIndex: 0,
+    });
+  }
+
+  static createWalkingPolyline(points) {
+    const walkingLineSymbol = {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillOpacity: 1,
+      scale: 4
+    };
+
+    return new google.maps.Polyline({
+      path: points,
+      strokeColor: 'white',
+      strokeOpacity: 0,
+      strokeWeight: 4,
+      zIndex: 3,
+      icons: [{
+        icon: walkingLineSymbol,
+        offset: '0',
+        repeat: '15px'
+      }],
+    });
+  }
+
+  static createWalkingPolylineBorder(points) {
+    const walkingLineSymbol = {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillOpacity: 1,
+      scale: 5
+    };
+
+    return new google.maps.Polyline({
+      path: points,
+      // geodesic: true,
+      strokeColor: 'black',
+      strokeOpacity: 0,
+      strokeWeight: 5,
+      zIndex: 2,
+      icons: [{
+        icon: walkingLineSymbol,
+        offset: '0',
+        repeat: '15px'
+      }],
+    });
+  }
+
+  static pinSymbol(color: string) {
+    return {
+      path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+      fillColor: color,
+      fillOpacity: 1,
+      strokeColor: '#000',
+      strokeWeight: 2,
+      scale: 1
+    };
+  }
 }
 
-const WALKING = 'WALKING';
-const BICYCLING = 'BICYCLING';
+

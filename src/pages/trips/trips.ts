@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { fakeTrips, Trip, TripStatus } from './fakeTrips'
 import { TripDetailPage } from '../trip-detail/trip-detail';
+import { fakeTrips, Trip, TripStatus } from '../../../shared/Trip';
 
 /**
  * Generated class for the HistoryPage page.

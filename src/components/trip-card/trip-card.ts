@@ -1,12 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Trip } from '../../pages/trips/fakeTrips';
+import { Trip } from '../../../shared/Trip';
 
-/**
- * Generated class for the TripCardComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'trip-card',
   templateUrl: 'trip-card.html',

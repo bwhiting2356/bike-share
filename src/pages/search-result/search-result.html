@@ -9,26 +9,26 @@
 
   <div class="flex-container">
     <div id="map">
-      <google-map *ngIf="result"
-                  [origin]="result.origin.coords"
-                  [destination]="result.destination.coords"
-                  [stationStart]="result.stationStart.coords"
-                  [stationEnd]="result.stationEnd.coords"
-                  [walking1Points]="result.walking1Travel.points"
-                  [bicyclingPoints]="result.bicyclingTravel.points"
-                  [walking2Points]="result.walking2Travel.points"
+      <google-map *ngIf="trip"
+                  [origin]="trip.data.origin.coords"
+                  [destination]="trip.data.destination.coords"
+                  [stationStart]="trip.data.stationStart.coords"
+                  [stationEnd]="trip.data.stationEnd.coords"
+                  [walking1Points]="trip.data.walking1Travel.points"
+                  [bicyclingPoints]="trip.data.bicyclingTravel.points"
+                  [walking2Points]="trip.data.walking2Travel.points"
       >
       </google-map>
     </div>
-    <div id="search" *ngIf="result">
+    <div id="search" *ngIf="trip">
       <ion-content padding-horizontal>
         <div class="container">
           <div class="trip-details">
-            <div id="departureTime" class="time">{{ result.departureTime | date:"h:mm a" }}</div>
+            <div id="departureTime" class="time">{{ trip.data.departureTime | date:"h:mm a" }}</div>
             <div id="originIcon" class="icon">
               <img src="assets/imgs/origin.svg" alt="">
             </div>
-            <div id="originAddress" class="address">{{ result.origin.address }}</div>
+            <div id="originAddress" class="address">{{ trip.data.origin.address }}</div>
             <div id="walkingDots1" class="icon">
               <img
                 *ngFor="let i of [1, 2, 3]"
@@ -36,9 +36,9 @@
             </div>
             <div id="walkingTravelInfo1" class="travel-info">
               <ion-icon name="walk"></ion-icon>
-              <span>Walk {{ result.walking1Travel.time }} min ({{ result.walking1Travel.distance}} ft)</span>
+              <span>Walk {{ trip.data.walking1Travel.minutes | time }} ({{ trip.data.walking1Travel.distance | distance }})</span>
             </div>
-            <div id="reservation1Time" class="time">{{ result.stationStart.time | date:"h:mm a" }}</div>
+            <div id="reservation1Time" class="time">{{ trip.data.stationStart.time | date:"h:mm a" }}</div>
             <div id="bikeReservationLine" class="icon">
               <div class="line">
                 <img id="dot-1" src="assets/imgs/station.svg" alt="">
@@ -46,30 +46,30 @@
               </div>
             </div>
             <div id="reservation1Desc" class="reservation">Bike pickup reservation</div>
-            <div id="reservation1Address" class="address">{{ result.stationStart.address}}</div>
+            <div id="reservation1Address" class="address">{{ trip.data.stationStart.address}}</div>
             <div
               id="reservation1Price"
               class="price"
-              [ngClass]="{positive: result.stationStart.price > 0}">
-              {{ result.stationStart.price | currency:'USD':true }}
+              [ngClass]="{positive: trip.data.stationStart.price > 0}">
+              {{ trip.data.stationStart.price | currency:'USD':true }}
             </div>
             <div id="bikeTravelInfo" class="travel-info">
               <ion-icon name="bicycle"></ion-icon>
-              <span>Ride {{ result.bicyclingTravel.time }} min ({{ result.bicyclingTravel.distance}} ft)</span>
+              <span>Ride {{ trip.data.bicyclingTravel.minutes | time }} ({{ trip.data.bicyclingTravel.distance | distance }})</span>
             </div>
             <div
               id="bikePrice"
               class="price"
-              [ngClass]="{positive: result.bicyclingTravel.price > 0}">
-              {{ result.bicyclingTravel.price | currency:'USD':true }}</div>
-            <div id="reservation2Time" class="time">{{ result.stationEnd.time | date:'h:mm a'}}</div>
+              [ngClass]="{positive: trip.data.bicyclingTravel.price > 0}">
+              {{ trip.data.bicyclingTravel.price | currency:'USD':true }}</div>
+            <div id="reservation2Time" class="time">{{ trip.data.stationEnd.time | date:'h:mm a'}}</div>
             <div id="reservation2Desc" class="reservation">Bike dropoff reservation</div>
-            <div id="reservation2Address" class="address">{{ result.stationEnd.address }}</div>
+            <div id="reservation2Address" class="address">{{ trip.data.stationEnd.address }}</div>
             <div
               id="reservation2Price"
               class="price"
-              [ngClass]="{positive: result.stationEnd.price > 0}">
-              {{ result.stationEnd.price | currency:'USD':true }}
+              [ngClass]="{positive: trip.data.stationEnd.price > 0}">
+              {{ trip.data.stationEnd.price | currency:'USD':true }}
             </div>
             <div id="walkingDots2" class="icon">
               <img
@@ -78,18 +78,20 @@
             </div>
             <div id="walkingTravelInfo2" class="travel-info">
               <ion-icon name="walk"></ion-icon>
-              <span>Walk {{ result.walking2Travel.time }} min ({{ result.walking2Travel.distance }} ft)</span>
+              <span>Walk {{ trip.data.walking2Travel.minutes | time }} ({{ trip.data.walking2Travel.distance  | distance }})</span>
             </div>
-            <div id="arrivalTime" class="time">{{ result.arrivalTime | date:'h:mm a'}}</div>
+            <div id="arrivalTime" class="time">{{ trip.data.arrivalTime | date:'h:mm a'}}</div>
             <div id="destinationIcon" class="icon">
               <img src="assets/imgs/destination.svg" alt="">
             </div>
-            <div id="destinationAddress" class="address">{{ result.destination.address }}</div>
+            <div id="destinationAddress" class="address">{{ trip.data.destination.address }}</div>
           </div>
           <div class="summary">
-            <span id="travel-time">{{ totalTime  | time }}</span>
-            <span id="travel-distance">{{ totalDistance | distance }}</span>
-            <span id="total-cost">Total cost: {{ totalPrice | currency:'USD':true }}</span>
+            <span id="travel-time">{{ trip.totalTime  | time }}</span>
+            <span id="travel-distance">{{ trip.totalDistance | distance }}</span>
+            <span id="total-cost">
+              {{ priceMessage }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ trip.totalPrice | currency:'USD':true }}</span>
+            </span>
           </div>
         </div>
 
