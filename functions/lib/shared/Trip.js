@@ -1,0 +1,37 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TripStatus = {
+    COMPLETED: 'Completed',
+    CANCELLED: 'Cancelled',
+    PROPOSED: 'Proposed',
+    SCHEDULED: 'Scheduled'
+};
+var Trip = /** @class */ (function () {
+    function Trip(data) {
+        this.data = data;
+    }
+    Object.defineProperty(Trip.prototype, "totalTime", {
+        get: function () {
+            return Math.abs(this.data.arrivalTime.getTime() - this.data.departureTime.getTime());
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Trip.prototype, "totalDistance", {
+        get: function () {
+            return this.data.walking1Travel.distance + this.data.bicyclingTravel.distance + this.data.walking2Travel.distance;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Trip.prototype, "totalPrice", {
+        get: function () {
+            return this.data.stationStart.price + this.data.bicyclingTravel.price + this.data.stationEnd.price;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Trip;
+}());
+exports.Trip = Trip;
+//# sourceMappingURL=Trip.js.map

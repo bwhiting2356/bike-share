@@ -37,28 +37,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var functions = require("firebase-functions");
-var serverMapGeoPointToLatLng_1 = require("./serverMapGeoPointToLatLng");
-var findNearestStations_1 = require("./findNearestStations");
-var getDirections_1 = require("./getDirections");
+var findNearestStations_1 = require("./googleMaps/findNearestStations");
+var getDirections_1 = require("./googleMaps/getDirections");
+var serverMapGeoPointToLatLng_1 = require("./googleMaps/serverMapGeoPointToLatLng");
 exports.searchParamsUpdated = functions.firestore
     .document('/users/{userId}')
     .onUpdate(function (event) { return __awaiter(_this, void 0, void 0, function () {
     var _this = this;
-    var userData, origin, destination, nearestOriginStationsPromise, nearestDestinationStationsPromise, walking1PointsPromise, bicyclingPointsPromise, walking2PointsPromise, stationStart, stationEnd;
+    var originCoords, originAddress, destinationCoords, destinationAddress, nearestOriginStationsPromise, nearestDestinationStationsPromise, walking1PointsPromise, walking2PointsPromise, stationStartCoords, stationStartAddress, stationEndCoords, stationEndAddress, userData;
     return __generator(this, function (_a) {
         userData = event.data.data();
-        origin = userData.searchOrigin ? serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchOrigin) : null;
-        destination = userData.searchDestination ? serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchDestination) : null;
-        if (origin) {
-            nearestOriginStationsPromise = findNearestStations_1.findNearestStations(origin);
+        if (userData.searchOrigin) {
+            originCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchOrigin.coords);
+            originAddress = userData.searchOrigin.address;
+            console.log('origin coords: ', originCoords);
+            console.log('origin address: ', originAddress);
+            nearestOriginStationsPromise = findNearestStations_1.findNearestStations(originCoords);
             nearestOriginStationsPromise
                 .then(function (response) { return __awaiter(_this, void 0, void 0, function () {
                 var walking1Query;
                 return __generator(this, function (_a) {
-                    stationStart = response.data[0].coords;
+                    stationStartCoords = response.data[0].coords;
+                    stationStartAddress = response.data[0].address;
                     walking1Query = {
-                        origin: origin,
-                        destination: stationStart,
+                        origin: originCoords,
+                        destination: stationStartCoords,
                         mode: 'walking'
                     };
                     walking1PointsPromise = getDirections_1.getDirections(walking1Query);
@@ -69,17 +72,21 @@ exports.searchParamsUpdated = functions.firestore
                 console.log('line 43: ', err);
             });
         }
-        // have the destination coords changed since the previous value?
-        if (destination) {
-            nearestDestinationStationsPromise = findNearestStations_1.findNearestStations(destination);
+        if (userData.searchDestination) {
+            destinationCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchDestination.coords);
+            destinationAddress = userData.searchDestination.address;
+            console.log('destination coords: ', destinationCoords);
+            console.log('destination address: ', destinationAddress);
+            nearestDestinationStationsPromise = findNearestStations_1.findNearestStations(destinationCoords);
             nearestDestinationStationsPromise
                 .then(function (response) { return __awaiter(_this, void 0, void 0, function () {
                 var walking2Query;
                 return __generator(this, function (_a) {
-                    stationEnd = response.data[0].coords;
+                    stationEndCoords = response.data[0].coords;
+                    stationEndAddress = response.data[0].address;
                     walking2Query = {
-                        origin: origin,
-                        destination: stationEnd,
+                        origin: destinationCoords,
+                        destination: stationEndCoords,
                         mode: 'walking'
                     };
                     walking2PointsPromise = getDirections_1.getDirections(walking2Query);
@@ -91,7 +98,7 @@ exports.searchParamsUpdated = functions.firestore
             });
         }
         // if neither was changed, exit this function
-        if (origin && destination) {
+        if (userData.searchOrigin && userData.searchDestination) {
             return [2 /*return*/, Promise.all([nearestOriginStationsPromise, nearestDestinationStationsPromise])
                     .then(function (results) { return __awaiter(_this, void 0, void 0, function () {
                     var bicyclingQuery;
@@ -111,13 +118,17 @@ exports.searchParamsUpdated = functions.firestore
                     return Promise.all([walking1PointsPromise, walking2PointsPromise])
                         .then(function (walkingResults) {
                         console.log('all items: ');
-                        console.log('origin: ', origin);
-                        console.log('walking1Points: ', walkingResults[0]);
-                        console.log('stationStart: ', stationStart);
-                        console.log('bicyclingPoints: ', bicyclingResults);
-                        console.log('stationEnd: ', stationEnd);
-                        console.log('walking2Points: ', walkingResults[1]);
-                        console.log('destination: ', destination);
+                        console.log('origin coords: ', originCoords);
+                        console.log('origin address: ', originAddress);
+                        console.log('walking1Points: ', walkingResults[0].data);
+                        console.log('stationStart coords: ', stationStartCoords);
+                        console.log('stationStart address: ', stationStartAddress);
+                        console.log('bicyclingPoints: ', bicyclingResults.data);
+                        console.log('stationEnd coords: ', stationEndCoords);
+                        console.log('stationEnd address: ', stationEndAddress);
+                        console.log('walking2Points: ', walkingResults[1].data);
+                        console.log('destination coords: ', destinationCoords);
+                        console.log('destination address: ', destinationAddress);
                     });
                 })];
         }

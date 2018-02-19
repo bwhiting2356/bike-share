@@ -6,12 +6,13 @@ import { memoize } from '../memoize';
 import { LatLng } from '../shared/LatLng';
 import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
 
-const mergeDataWithIds = (response, stationsPlusIds) => {
+const mergeDataWithIds = (response, stationsData) => {
   const newData = [];
   for (let i = 0; i < response.length; i++) {
     newData.push({
-      id: stationsPlusIds[i].id,
-      coords: stationsPlusIds[i].coords,
+      id: stationsData[i].id,
+      coords: stationsData[i].coords,
+      address: stationsData[i].address,
       data: response[i]
     })
   }
@@ -27,34 +28,33 @@ const funcFindNearestStations = (loc: LatLng) => {
     .get()
     .then(querySnapshot => {
 
-      const stationsPlusId = [];
+      const stationsData = [];
 
       // get all the stations from the database (maybe just keep this in a constant if it never changes?)
 
       querySnapshot.docs.forEach(function (queryDocumentSnapshot) {
-        stationsPlusId.push({
+        stationsData.push({
           id: queryDocumentSnapshot.id,
-          coords: serverMapGeoPointToLatLng(queryDocumentSnapshot.data().coords)
+          coords: serverMapGeoPointToLatLng(queryDocumentSnapshot.data().coords),
+          address: queryDocumentSnapshot.data().address
         })
       });
 
       // make a version with only the data, to send to the google maps api
 
-      const stations = stationsPlusId.map(function (station) {
-        return station.coords
-      });
+      const stationsCoords = stationsData.map(station => station.coords);
 
       // make request to google
 
       const req: DistanceMatixQuery = {
         origins: [loc],
-        destinations: stations,
+        destinations: stationsCoords,
         mode: 'walking'
       };
 
       return new Promise(resolve => {
         googleMapsClient.distanceMatrix(req, function (err, res) {
-          const mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsPlusId);
+          const mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsData);
           const sortedData = mergedData.sort(compareStationData);
           resolve(sortedData)
         });
