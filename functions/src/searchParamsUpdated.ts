@@ -97,6 +97,21 @@ export const searchParamsUpdated = functions.firestore
           return Promise.all([walking1PointsPromise, walking2PointsPromise])
             .then(walkingResults => {
 
+              // const tripData: TripData = {
+              //   origin: {
+              //     coords: originCoords,
+              //     address: originAddress
+              //   },
+              //   destination: {
+              //     coords: destinationCoords,
+              //     address: destinationAddress,
+              //   },
+              // }
+
+              // TODO: get departure time
+              // TODO: Get travel times from each directinos leg
+              // TODO: Compute arrival time
+
               console.log('all items: ');
               console.log('origin coords: ', originCoords);
               console.log('origin address: ', originAddress)
