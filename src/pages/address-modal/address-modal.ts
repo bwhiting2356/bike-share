@@ -9,6 +9,11 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { Renderer } from '@angular/core';
 
 import 'rxjs/add/observable/fromPromise';
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/first";
+
+import { FormControl } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 /**
  * Generated class for the AddressModalPage page.
@@ -25,9 +30,12 @@ import 'rxjs/add/observable/fromPromise';
 })
 export class AddressModalPage implements AfterViewInit {
   @ViewChild('searchbar') searchbar: Searchbar;
-  autocompleteResults: Observable<any>;
+  searchControl: FormControl;
+  latestSearchTerm: BehaviorSubject<string> = new BehaviorSubject('');
+  fetching: boolean = false;
+  autocompleteResults;
   title: string;
-  userAddress$;
+  userAddress: string = '';
 
   constructor(
     private keyboard: Keyboard,
@@ -36,17 +44,35 @@ export class AddressModalPage implements AfterViewInit {
     private viewCtrl: ViewController,
     public navCtrl: NavController,
     public navParams: NavParams) {
-    this.userAddress$ = this.geolocationService.userAddress$;
+    this.searchControl = new FormControl();
+    this.geolocationService.userAddress$.first().subscribe(address => {
+      this.userAddress = address || undefined;
+    });
   }
 
   ngAfterViewInit() {
+    // var eventObservable = Observable.fromEvent(
+    //   this.searchbar.nativeElement, 'keyup');
+    this.searchbar.debounce
 
     // TODO: focus input after animation (web and mobile)
   }
 
   ionViewDidLoad() {
     this.title = this.navParams.get('title');
-
+    this.latestSearchTerm.debounceTime(400).subscribe(value => {
+      if (value) {
+        this.fetching = true;
+        this.autocompleteService.getPlacePredictions(value).then(results => {
+          this.autocompleteResults = results;
+          this.fetching = false;
+        })
+      } else {
+        this.fetching = false;
+        this.autocompleteResults = null;
+      }
+    })
+    // TODO: sometimes old results coming in after new ones - use switchMap?
   }
 
   ionViewDidEnter() {
@@ -61,13 +87,11 @@ export class AddressModalPage implements AfterViewInit {
   }
 
   clearInput() {
-    this.autocompleteResults = Observable.of(null);
+    this.autocompleteResults = null;
   }
 
   chooseCurrentLocation() {
-    this.userAddress$.subscribe(address => {
-      this.viewCtrl.dismiss(address);
-    })
+    this.viewCtrl.dismiss(this.userAddress);
   }
 
   chooseAutocompleteItem(result) {
@@ -81,12 +105,10 @@ export class AddressModalPage implements AfterViewInit {
   }
 
   searchChange(e) {
-    const value = e.target.value;
-    if (value) {
-      this.autocompleteResults = Observable.fromPromise(this.autocompleteService.getPlacePredictions(e.target.value));
-    } else {
-      this.autocompleteResults = Observable.of(null);
-    }
+    this.latestSearchTerm.next(e.target.value);
   }
+
+  // TODO: debounce autocomplete input
+  // TODO: add spinner when waiting for response
 
 }

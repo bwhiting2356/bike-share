@@ -11,3 +11,5 @@ export class TripCardComponent {
   constructor() {}
 
 }
+
+// TODO: fix map rendering in the trip card

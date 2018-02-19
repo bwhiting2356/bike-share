@@ -36,7 +36,7 @@
             </div>
             <div id="walkingTravelInfo1" class="travel-info">
               <ion-icon name="walk"></ion-icon>
-              <span>Walk {{ trip.data.walking1Travel.minutes | time }} ({{ trip.data.walking1Travel.distance | distance }})</span>
+              <span>Walk {{ trip.data.walking1Travel.seconds | time }} ({{ trip.data.walking1Travel.feet | distance }})</span>
             </div>
             <div id="reservation1Time" class="time">{{ trip.data.stationStart.time | date:"h:mm a" }}</div>
             <div id="bikeReservationLine" class="icon">
@@ -66,7 +66,7 @@
             </div>
             <div id="bikeTravelInfo" class="travel-info">
               <ion-icon name="bicycle"></ion-icon>
-              <span>Ride {{ trip.data.bicyclingTravel.minutes | time }} ({{ trip.data.bicyclingTravel.distance | distance }})</span>
+              <span>Ride {{ trip.data.bicyclingTravel.seconds | time }} ({{ trip.data.bicyclingTravel.feet | distance }})</span>
             </div>
             <div
               id="bikePrice"
@@ -89,7 +89,7 @@
             </div>
             <div id="walkingTravelInfo2" class="travel-info">
               <ion-icon name="walk"></ion-icon>
-              <span>Walk {{ trip.data.walking2Travel.minutes | time }} ({{ trip.data.walking2Travel.distance  | distance }})</span>
+              <span>Walk {{ trip.data.walking2Travel.seconds | time }} ({{ trip.data.walking2Travel.feet  | distance }})</span>
             </div>
             <div id="arrivalTime" class="time">{{ trip.data.arrivalTime | date:'h:mm a'}}</div>
             <div id="destinationIcon" class="icon">

@@ -22,7 +22,7 @@ import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
 
 
-
+// TODO: rename this page to 'search' with a magnfifying glass icon'
 
 @IonicPage()
 @Component({
@@ -57,7 +57,8 @@ export class MapPage {
   ionViewDidLoad() {
     this.geolocationService.getCurrentPosition();
     this.firebaseService.signInAnonymously().then(() => {
-      // this.timeTargetChange();
+      this.timeTargetChange();
+      this.datetimeChange();
     })
 
   }
@@ -65,12 +66,12 @@ export class MapPage {
   openOriginModal() {
     const modal = this.modalCtrl.create(AddressModalPage, {title: "Origin" });
     modal.present();
-    modal.onDidDismiss((choice) => {
-      if (choice) {
-        this.origin = choice;
-        this.geolocationService.geocode(choice).then(latlng => {
+    modal.onDidDismiss((address) => {
+      if (address) {
+        this.origin = address;
+        this.geolocationService.geocode(address).then(latlng => {
           this.originCoords.next(latlng);
-          this.firebaseService.updateSearchOrigin(latlng);
+          this.firebaseService.updateSearchOrigin(latlng, address);
         });
       }
       // TODO; maybe add a spinner while we're waiting for the geolocation to come back from the server
@@ -80,16 +81,18 @@ export class MapPage {
   openDestinationModal() {
     const modal = this.modalCtrl.create(AddressModalPage, {title: "Destination"});
     modal.present();
-    modal.onDidDismiss((choice) => {
-      if (choice) {
-        this.destination = choice;
-        this.geolocationService.geocode(choice).then(latlng => {
+    modal.onDidDismiss((address) => {
+      if (address) {
+        this.destination = address;
+        this.geolocationService.geocode(address).then(latlng => {
           this.destinationCoords.next(latlng);
-          this.firebaseService.updateSearchDestination(latlng);
+          this.firebaseService.updateSearchDestination(latlng, address);
         });
       }
     });
   }
+
+  // TODO: on dismiss, add spinner to map while we're waiting for the results of the geocoding
 
   get disableButton() {
     return !this.origin || !this.destination;

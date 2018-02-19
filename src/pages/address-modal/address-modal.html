@@ -15,28 +15,31 @@
   <ion-searchbar
     #searchbar
     id="searchbar"
-    (input)="searchChange($event)"
+    (ionInput)="searchChange($event)"
     (ionClear)="clearInput()"
     placeholder="Address or place name">
   </ion-searchbar>
   <ion-list>
-      <div *ngIf="userAddress$ | async">
-        <ion-item no-lines (click)="chooseCurrentLocation()">
-          <ion-icon
-            name="locate"
-            item-start>
-          </ion-icon>
-          Current Location
-        </ion-item>
-        <div class="small-divider"></div>
-      </div>
+    <div *ngIf="userAddress">
+      <ion-item no-lines (click)="chooseCurrentLocation()">
+        <ion-icon
+          name="locate"
+          item-start>
+        </ion-icon>
+        Current Location
+      </ion-item>
+      <div class="small-divider"></div>
+    </div>
+    <div *ngIf="!fetching">
       <ion-item
         (click)="chooseAutocompleteItem(result)"
-        *ngFor="let result of autocompleteResults | async">
+        *ngFor="let result of autocompleteResults">
         <ion-icon name="pin" item-start></ion-icon>
         {{ result.structured_formatting.main_text }}
         <p>{{ result.structured_formatting.secondary_text }}</p>
       </ion-item>
-    <div class="placeholder-message" *ngIf="!(autocompleteResults | async)">No results to show</div>
+    </div>
+    <div class="no-results" *ngIf="!autocompleteResults">No results to show</div>
   </ion-list>
+  <div class="fetching" *ngIf="fetching"><ion-spinner></ion-spinner></div>
 </ion-content>

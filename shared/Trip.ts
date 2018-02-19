@@ -1,5 +1,3 @@
-
-
 import { LatLng } from './LatLng';
 
 export interface TripData {
@@ -9,8 +7,8 @@ export interface TripData {
   },
   departureTime: Date;
   walking1Travel: {
-    distance: number;
-    minutes: number;
+    feet: number;
+    seconds: number;
     points: LatLng[];
   },
   stationStart: {
@@ -20,8 +18,8 @@ export interface TripData {
     time: Date;
   },
   bicyclingTravel: {
-    distance: number;
-    minutes: number;
+    feet: number;
+    seconds: number;
     points: LatLng[];
     price: number;
   },
@@ -32,8 +30,8 @@ export interface TripData {
     time: Date;
   },
   walking2Travel: {
-    distance: number;
-    minutes: number;
+    feet: number;
+    seconds: number;
     points: LatLng[];
   },
   destination: {
@@ -60,7 +58,7 @@ export class Trip {
   }
 
   get totalDistance(): number {
-    return this.data.walking1Travel.distance + this.data.bicyclingTravel.distance + this.data.walking2Travel.distance;
+    return this.data.walking1Travel.feet + this.data.bicyclingTravel.feet + this.data.walking2Travel.feet;
   }
 
   get totalPrice(): number {
@@ -75,8 +73,8 @@ const data: TripData = {
   },
   departureTime: new Date(),
   walking1Travel: {
-    distance: 3650,
-    minutes: 58,
+    feet: 3650,
+    seconds: 58,
     points: [
       { lat: 37.426015, lng: -122.0723955 },
       { lat: 37.4261534, lng: -122.0719905 },
@@ -102,8 +100,8 @@ const data: TripData = {
     price: 0.50,
   },
   bicyclingTravel: {
-    distance: 4,
-    minutes: 15,
+    feet: 4,
+    seconds: 15,
     points: [
       { lat: 37.4227605, lng: -122.0815514 },
       { lat: 37.4224445, lng: -122.082257 },
@@ -134,8 +132,8 @@ const data: TripData = {
     price: -0.50,
   },
   walking2Travel: {
-    distance: 134,
-    minutes: 5,
+    feet: 134,
+    seconds: 5,
     points: [ { lat: 37.4519147, lng: -122.1295495 },
       { lat: 37.4526442, lng: -122.1303591 },
       { lat: 37.4487815, lng: -122.1324926 },

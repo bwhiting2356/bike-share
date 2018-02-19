@@ -5,7 +5,7 @@ page-address-modal {
     background-color: lightgrey;
   }
 
-  .placeholder-message {
+  .no-results {
     text-align: center;
     font-weight: lighter;
     font-style: italic;
@@ -13,4 +13,16 @@ page-address-modal {
     font-size: 0.9em;
     margin-top: 200px;
   }
+
+  ion-content {
+    position: relative;
+
+    .fetching {
+      position: absolute;
+      left: calc(50% - 16px); // minus half the width of the spinner
+      top: 200px;
+    }
+  }
+
+
 }

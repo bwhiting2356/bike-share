@@ -39,14 +39,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var functions = require("firebase-functions");
 var findNearestStations_1 = require("./googleMaps/findNearestStations");
 var getDirections_1 = require("./googleMaps/getDirections");
+var Trip_1 = require("./shared/Trip");
 var serverMapGeoPointToLatLng_1 = require("./googleMaps/serverMapGeoPointToLatLng");
+var admin = require("firebase-admin");
 exports.searchParamsUpdated = functions.firestore
     .document('/users/{userId}')
     .onUpdate(function (event) { return __awaiter(_this, void 0, void 0, function () {
     var _this = this;
-    var originCoords, originAddress, destinationCoords, destinationAddress, nearestOriginStationsPromise, nearestDestinationStationsPromise, walking1PointsPromise, walking2PointsPromise, stationStartCoords, stationStartAddress, stationEndCoords, stationEndAddress, userData;
+    var originCoords, originAddress, destinationCoords, destinationAddress, nearestOriginStationsPromise, nearestDestinationStationsPromise, walking1PointsPromise, walking2PointsPromise, stationStartCoords, stationStartAddress, stationEndCoords, stationEndAddress, userData, departureTime, previousResultDeletePromise;
     return __generator(this, function (_a) {
         userData = event.data.data();
+        departureTime = new Date(userData.searchDatetime);
+        previousResultDeletePromise = admin.firestore()
+            .doc('/users/' + event.params.userId).update({ searchResult: null });
         if (userData.searchOrigin) {
             originCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchOrigin.coords);
             originAddress = userData.searchOrigin.address;
@@ -117,31 +122,59 @@ exports.searchParamsUpdated = functions.firestore
                 }); }).then(function (bicyclingResults) {
                     return Promise.all([walking1PointsPromise, walking2PointsPromise])
                         .then(function (walkingResults) {
-                        // const tripData: TripData = {
-                        //   origin: {
-                        //     coords: originCoords,
-                        //     address: originAddress
-                        //   },
-                        //   destination: {
-                        //     coords: destinationCoords,
-                        //     address: destinationAddress,
-                        //   },
-                        // }
+                        var stationStartTime = new Date();
+                        stationStartTime.setSeconds(departureTime.getSeconds() + walkingResults[0].data.seconds);
+                        var stationEndTime = new Date();
+                        stationEndTime.setSeconds(stationStartTime.getSeconds() + bicyclingResults.data.seconds);
+                        var arrivalTime = new Date();
+                        arrivalTime.setSeconds(stationEndTime.getSeconds() + walkingResults[1].data.seconds);
+                        var tripData = {
+                            origin: {
+                                coords: originCoords,
+                                address: originAddress
+                            },
+                            departureTime: departureTime,
+                            walking1Travel: {
+                                seconds: walkingResults[0].data.seconds,
+                                feet: walkingResults[0].data.feet,
+                                points: walkingResults[0].data.points
+                            },
+                            stationStart: {
+                                coords: stationStartCoords,
+                                address: stationStartAddress,
+                                price: -0.50,
+                                time: stationStartTime
+                            },
+                            bicyclingTravel: {
+                                seconds: bicyclingResults.data.seconds,
+                                feet: bicyclingResults.data.feet,
+                                points: bicyclingResults.data.points,
+                                price: -0.80 // TODO: actually compute price
+                            },
+                            stationEnd: {
+                                coords: stationEndCoords,
+                                address: stationEndAddress,
+                                price: 0.75,
+                                time: stationEndTime
+                            },
+                            walking2Travel: {
+                                seconds: walkingResults[1].data.seconds,
+                                feet: walkingResults[1].data.feet,
+                                points: walkingResults[1].data.points
+                            },
+                            destination: {
+                                coords: destinationCoords,
+                                address: destinationAddress,
+                            },
+                            arrivalTime: arrivalTime,
+                            status: Trip_1.TripStatus.PROPOSED
+                        };
+                        return previousResultDeletePromise.then(function () {
+                            admin.firestore().doc('/users/' + event.params.userId).update({ searchResult: tripData });
+                        });
                         // TODO: get departure time
                         // TODO: Get travel times from each directinos leg
                         // TODO: Compute arrival time
-                        console.log('all items: ');
-                        console.log('origin coords: ', originCoords);
-                        console.log('origin address: ', originAddress);
-                        console.log('walking1Points: ', walkingResults[0].data);
-                        console.log('stationStart coords: ', stationStartCoords);
-                        console.log('stationStart address: ', stationStartAddress);
-                        console.log('bicyclingPoints: ', bicyclingResults.data);
-                        console.log('stationEnd coords: ', stationEndCoords);
-                        console.log('stationEnd address: ', stationEndAddress);
-                        console.log('walking2Points: ', walkingResults[1].data);
-                        console.log('destination coords: ', destinationCoords);
-                        console.log('destination address: ', destinationAddress);
                     });
                 })];
         }

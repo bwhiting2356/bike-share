@@ -35,38 +35,32 @@ export class FirebaseService {
   }
 
   signInAnonymously() {
-    return this.afAuth.auth.signInAnonymously().then((result) => {
+    return this.afAuth.auth.signInAnonymously().then(result => {
       this.userId = result.uid;
       this.userDataRef = this.db.collection('/users').doc(this.userId);
-      // console.log(result);
-      // return this.db.doc(`/users/${this.userId}`)
-      //   .update({lastLogin: new Date()})
-      //   .catch((error) => {
-      //     console.log(error);
-      //     return this.db.doc(`/users/${this.userId}`).set({lastLogin: new Date()})
-      //   })
-      // this.userDataRef = this.db.collection('/users').doc(this.userId);
     });
   }
 
   // TODO: create nested searchParams structure rather than flat properties? How do I update or make a reference?
 
-  updateSearchOrigin(latlng: LatLng) {
-    const searchOrigin = mapLatLngToGeoPoint(latlng);
+  updateSearchOrigin(coords: LatLng, address: string) {
+    const searchOrigin = mapLatLngToGeoPoint(coords);
     this.userDataRef
-      .update({ searchOrigin })
-      .catch(error => {
-        this.userDataRef.set({ searchOrigin })
-      });
+      .update({ searchOrigin: { coords: searchOrigin, address } })
+      .catch(err => {
+        this.userDataRef.set({ searchDestination: { coords: searchOrigin, address } })
+      })
   }
 
-  updateSearchDestination(latlng: LatLng) {
-    const searchDestination = mapLatLngToGeoPoint(latlng);
+  // TODO: nest the search params inside of an object (also change on the backend)
+
+  updateSearchDestination(coords: LatLng, address: string) {
+    const searchDestination = mapLatLngToGeoPoint(coords);
     this.userDataRef
-      .update({ searchDestination })
-      .catch(error => {
-        this.userDataRef.set({ searchDestination })
-      });
+      .update({ searchDestination: { coords: searchDestination, address } })
+      .catch(err => {
+        this.userDataRef.set({ searchDestination: { coords: searchDestination, address } })
+      })
   }
 
   updateTimeTarget(searchTimeTarget: string) {

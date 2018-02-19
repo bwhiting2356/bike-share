@@ -19,7 +19,7 @@ var Trip = /** @class */ (function () {
     });
     Object.defineProperty(Trip.prototype, "totalDistance", {
         get: function () {
-            return this.data.walking1Travel.distance + this.data.bicyclingTravel.distance + this.data.walking2Travel.distance;
+            return this.data.walking1Travel.feet + this.data.bicyclingTravel.feet + this.data.walking2Travel.feet;
         },
         enumerable: true,
         configurable: true

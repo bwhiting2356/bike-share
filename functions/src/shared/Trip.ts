@@ -7,8 +7,8 @@ export interface TripData {
   },
   departureTime: Date;
   walking1Travel: {
-    distance: number;
-    minutes: number;
+    feet: number;
+    seconds: number;
     points: LatLng[];
   },
   stationStart: {
@@ -18,8 +18,8 @@ export interface TripData {
     time: Date;
   },
   bicyclingTravel: {
-    distance: number;
-    minutes: number;
+    feet: number;
+    seconds: number;
     points: LatLng[];
     price: number;
   },
@@ -30,8 +30,8 @@ export interface TripData {
     time: Date;
   },
   walking2Travel: {
-    distance: number;
-    minutes: number;
+    feet: number;
+    seconds: number;
     points: LatLng[];
   },
   destination: {
@@ -58,7 +58,7 @@ export class Trip {
   }
 
   get totalDistance(): number {
-    return this.data.walking1Travel.distance + this.data.bicyclingTravel.distance + this.data.walking2Travel.distance;
+    return this.data.walking1Travel.feet + this.data.bicyclingTravel.feet + this.data.walking2Travel.feet;
   }
 
   get totalPrice(): number {

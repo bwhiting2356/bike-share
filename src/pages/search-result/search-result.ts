@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { Trip, tripA } from '../../../shared/Trip';
 import { bicyclePolylineMainColor, bicyclePolylineBorderColor } from '../../../shared/ThemeVariables';
+import { FirebaseService } from '../../services/firebase-service';
 
 /**
  * Generated class for the SearchResultPage page.
@@ -29,9 +30,19 @@ export class SearchResultPage {
   }
 
   constructor(
+    private firebaseService: FirebaseService,
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
-    this.trip = tripA;
+
+    firebaseService.userDataRef
+      .valueChanges().subscribe(values => {
+        if (values && values.searchResult) {
+          this.trip = new Trip(values.searchResult);
+        } else {
+          this.trip = null;
+        }
+        console.log(this.trip);
+    });
     this.bicyclePolylineMainColor = bicyclePolylineMainColor;
     this.bicyclePolylineBorderColor = bicyclePolylineBorderColor;
   }

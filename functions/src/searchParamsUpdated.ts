@@ -1,16 +1,16 @@
 import * as functions from 'firebase-functions';
 import { findNearestStations } from './googleMaps/findNearestStations';
 import { getDirections } from "./googleMaps/getDirections";
-import { TripData } from './shared/Trip';
+import { TripData, TripStatus } from './shared/Trip';
 import { serverMapGeoPointToLatLng } from "./googleMaps/serverMapGeoPointToLatLng";
+import * as admin from 'firebase-admin';
 
 
 export const searchParamsUpdated = functions.firestore
   .document('/users/{userId}')
   .onUpdate(async event => {
 
-    let
-      originCoords,
+    let originCoords,
       originAddress,
       destinationCoords,
       destinationAddress,
@@ -24,6 +24,10 @@ export const searchParamsUpdated = functions.firestore
       stationEndAddress;
 
     const userData = event.data.data();
+    const departureTime = new Date(userData.searchDatetime); // TODO: make this work for other time target
+
+    const previousResultDeletePromise = admin.firestore()
+      .doc('/users/' + event.params.userId).update({searchResult: null});
 
     if (userData.searchOrigin) {
       originCoords = serverMapGeoPointToLatLng(userData.searchOrigin.coords);
@@ -97,33 +101,66 @@ export const searchParamsUpdated = functions.firestore
           return Promise.all([walking1PointsPromise, walking2PointsPromise])
             .then(walkingResults => {
 
-              // const tripData: TripData = {
-              //   origin: {
-              //     coords: originCoords,
-              //     address: originAddress
-              //   },
-              //   destination: {
-              //     coords: destinationCoords,
-              //     address: destinationAddress,
-              //   },
-              // }
+              const stationStartTime: Date = new Date();
+              stationStartTime.setSeconds(departureTime.getSeconds() + walkingResults[0].data.seconds);
+
+              const stationEndTime: Date = new Date();
+              stationEndTime.setSeconds(stationStartTime.getSeconds() + bicyclingResults.data.seconds);
+
+              const arrivalTime: Date = new Date();
+              arrivalTime.setSeconds(stationEndTime.getSeconds() + walkingResults[1].data.seconds);
+
+              const tripData: TripData = {
+                origin: {
+                  coords: originCoords,
+                  address: originAddress
+                },
+                departureTime: departureTime,
+                walking1Travel: {
+                  seconds: walkingResults[0].data.seconds,
+                  feet: walkingResults[0].data.feet,
+                  points: walkingResults[0].data.points
+                },
+                stationStart: {
+                  coords: stationStartCoords,
+                  address: stationStartAddress,
+                  price: -0.50, // TODO: actually compute price,
+                  time: stationStartTime
+                },
+                bicyclingTravel: {
+                  seconds: bicyclingResults.data.seconds,
+                  feet: bicyclingResults.data.feet,
+                  points: bicyclingResults.data.points,
+                  price: -0.80 // TODO: actually compute price
+                },
+                stationEnd: {
+                  coords: stationEndCoords,
+                  address: stationEndAddress,
+                  price: 0.75, // TODO: actually compute price
+                  time: stationEndTime
+                },
+                walking2Travel: {
+                  seconds: walkingResults[1].data.seconds,
+                  feet: walkingResults[1].data.feet,
+                  points: walkingResults[1].data.points
+                },
+                destination: {
+                  coords: destinationCoords,
+                  address: destinationAddress,
+                },
+                arrivalTime: arrivalTime,
+                status: TripStatus.PROPOSED
+              };
+
+
+              return previousResultDeletePromise.then(() => {
+                admin.firestore().doc('/users/' + event.params.userId).update({searchResult: tripData})
+              });
+
 
               // TODO: get departure time
               // TODO: Get travel times from each directinos leg
               // TODO: Compute arrival time
-
-              console.log('all items: ');
-              console.log('origin coords: ', originCoords);
-              console.log('origin address: ', originAddress)
-              console.log('walking1Points: ', walkingResults[0].data);
-              console.log('stationStart coords: ', stationStartCoords);
-              console.log('stationStart address: ', stationStartAddress);
-              console.log('bicyclingPoints: ', bicyclingResults.data)
-              console.log('stationEnd coords: ', stationEndCoords);
-              console.log('stationEnd address: ', stationEndAddress);
-              console.log('walking2Points: ', walkingResults[1].data);
-              console.log('destination coords: ', destinationCoords);
-              console.log('destination address: ', destinationAddress);
             })
         })
     } else {
