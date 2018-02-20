@@ -139,6 +139,7 @@ export const searchBikeTrips = functions.https.onRequest(async (request, respons
     const datetime = new Date(request.body.datetime);
     const timeTarget = request.body.timeTarget;
     const trip = await funcSearchBikeTrips(origin, destination, datetime, timeTarget);
+    console.log('trip: ', JSON.stringify(trip));
     response.send(trip);
   })
 

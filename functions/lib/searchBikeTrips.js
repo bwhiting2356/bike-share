@@ -162,6 +162,7 @@ exports.searchBikeTrips = functions.https.onRequest(function (request, response)
                         return [4 /*yield*/, funcSearchBikeTrips(origin, destination, datetime, timeTarget)];
                     case 1:
                         trip = _a.sent();
+                        console.log('trip: ', JSON.stringify(trip));
                         response.send(trip);
                         return [2 /*return*/];
                 }
