@@ -6,7 +6,7 @@ import { searchBikeTrips } from "./searchBikeTrips";
 
 admin.initializeApp(functions.config().firebase);
 
-exports.searchParamsUpdated = searchParamsUpdated;
+// exports.searchParamsUpdated = searchParamsUpdated;
 exports.searchBikeTrips = searchBikeTrips;
 
 
