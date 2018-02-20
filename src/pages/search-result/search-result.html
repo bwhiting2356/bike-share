@@ -101,7 +101,6 @@
             <span id="travel-distance">{{ trip.totalFeet | distance }}</span>
             <span id="total-cost">
               {{ priceMessage }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ priceAbsValue | currency:'USD':true }}</span>
-            <!-- TODO: remove the negative sign from the display of the total (I think) -->
             </span>
           </div>
         </div>

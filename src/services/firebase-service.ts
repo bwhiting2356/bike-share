@@ -14,7 +14,7 @@ import { mapGeoPointToLatLng } from '../../shared/mapGeoPointToLatLng';
 import 'rxjs/add/operator/take';
 import { HttpClient } from '@angular/common/http';
 import { SearchQuery } from '../../shared/SearchQuery';
-
+import { stations } from "./stationsOnly";
 
 
 @Injectable()
@@ -92,8 +92,3 @@ export class FirebaseService {
 export const clientMapGeoPointToLatLng = (geopoint): LatLng => {
   return { lat: geopoint.coords.latitude, lng: geopoint.coords.longitude };
 };
-
-
-
-
-
