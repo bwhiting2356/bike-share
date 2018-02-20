@@ -50,12 +50,17 @@ export const TripStatus = {
 };
 
 export class Trip {
+  departureTime: Date;
+  arrivalTime: Date;
+
   constructor(public data: TripData) {  // parse date strings into date objects?
+    this.arrivalTime = new Date(this.data.arrivalTime);
+    this.departureTime = new Date(this.data.departureTime);
   }
 
   get totalSeconds(): number {
 
-    const seconds = Math.abs(this.data.arrivalTime.getSeconds() - this.data.departureTime.getSeconds());
+    const seconds = Math.abs(this.arrivalTime.getSeconds() - this.departureTime.getSeconds());
     console.log("seconds: ", seconds);
     return seconds;
   }

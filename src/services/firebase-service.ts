@@ -15,11 +15,13 @@ import 'rxjs/add/operator/take';
 import { HttpClient } from '@angular/common/http';
 import { SearchQuery } from '../../shared/SearchQuery';
 import { stations } from "./stationsOnly";
+import { Trip } from "../../shared/Trip";
 
 
 @Injectable()
 export class FirebaseService {
   stationList: Observable<LatLng[]>;
+  searchResult: Observable<any>;
   userId: string;
   userDataRef;
 
@@ -84,8 +86,7 @@ export class FirebaseService {
   }
 
   search(searchQuery: SearchQuery) {
-    this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/searchBikeTrips', searchQuery)
-      .subscribe(response => console.log("http response: ", response));
+    this.searchResult = this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/searchBikeTrips', searchQuery)
   }
 }
 

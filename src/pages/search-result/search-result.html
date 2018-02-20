@@ -23,7 +23,7 @@
       <ion-content padding-horizontal>
         <div class="container">
           <div class="trip-details">
-            <div id="departureTime" class="time">{{ trip.data.departureTime | date:"h:mm a" }}</div>
+            <div id="departureTime" class="time">{{ trip.departureTime | date:"h:mm a" }}</div>
             <div id="originIcon" class="icon">
               <img src="assets/imgs/pin.svg" alt="">
             </div>
@@ -90,7 +90,7 @@
               <ion-icon name="walk"></ion-icon>
               <span>Walk {{ trip.data.walking2Travel.seconds | time }} ({{ trip.data.walking2Travel.feet  | distance }})</span>
             </div>
-            <div id="arrivalTime" class="time">{{ trip.data.arrivalTime | date:'h:mm a'}}</div>
+            <div id="arrivalTime" class="time">{{ trip.arrivalTime | date:'h:mm a'}}</div>
             <div id="destinationIcon" class="icon">
               <img src="assets/imgs/pin.svg" alt="">
             </div>

@@ -38,15 +38,20 @@ export class SearchResultPage {
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
 
-    firebaseService.userDataRef
-      .valueChanges().subscribe(values => {
-        if (values && values.searchResult) {
-          this.trip = new Trip(values.searchResult);
-        } else {
-          this.trip = null;
-        }
-        console.log(this.trip);
-    });
+    this.firebaseService.searchResult.subscribe(result => {
+      console.log(result);
+      this.trip = new Trip(result);
+    })
+
+    // firebaseService.userDataRef
+    //   .valueChanges().subscribe(values => {
+    //     if (values && values.searchResult) {
+    //       this.trip = new Trip(values.searchResult);
+    //     } else {
+    //       this.trip = null;
+    //     }
+    //     console.log(this.trip);
+    // });
     this.bicyclePolylineMainColor = bicyclePolylineMainColor;
     this.bicyclePolylineBorderColor = bicyclePolylineBorderColor;
   }

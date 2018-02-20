@@ -37,6 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var functions = require("firebase-functions");
+var cors = require('cors')({
+    origin: true,
+});
 var findNearestStations_1 = require("./googleMaps/findNearestStations");
 var getDirections_1 = require("./googleMaps/getDirections");
 var Trip_1 = require("./shared/Trip");
@@ -145,20 +148,26 @@ var funcSearchBikeTrips = function (origin, destination, datetime, timeTarget) {
     });
 }); };
 exports.searchBikeTrips = functions.https.onRequest(function (request, response) { return __awaiter(_this, void 0, void 0, function () {
-    var origin, destination, datetime, timeTarget, trip;
+    var _this = this;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                origin = request.body.origin;
-                destination = request.body.destination;
-                datetime = new Date(request.body.datetime);
-                timeTarget = request.body.timeTarget;
-                return [4 /*yield*/, funcSearchBikeTrips(origin, destination, datetime, timeTarget)];
-            case 1:
-                trip = _a.sent();
-                response.send(trip);
-                return [2 /*return*/];
-        }
+        cors(request, response, function () { return __awaiter(_this, void 0, void 0, function () {
+            var origin, destination, datetime, timeTarget, trip;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        origin = request.body.origin;
+                        destination = request.body.destination;
+                        datetime = new Date(request.body.datetime);
+                        timeTarget = request.body.timeTarget;
+                        return [4 /*yield*/, funcSearchBikeTrips(origin, destination, datetime, timeTarget)];
+                    case 1:
+                        trip = _a.sent();
+                        response.send(trip);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        return [2 /*return*/];
     });
 }); });
 //# sourceMappingURL=searchBikeTrips.js.map

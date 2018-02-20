@@ -1,10 +1,13 @@
 import * as functions from 'firebase-functions';
+const cors = require('cors')({
+  origin: true,
+});
 import { findNearestStations } from './googleMaps/findNearestStations';
 import { getDirections } from "./googleMaps/getDirections";
 import { TripData, TripStatus } from './shared/Trip';
 import { serverMapGeoPointToLatLng } from "./googleMaps/serverMapGeoPointToLatLng";
-import * as admin from 'firebase-admin';
-import { memoize } from './memoize';
+
+
 import { LatLng } from './shared/LatLng';
 
 const funcSearchBikeTrips = async (
@@ -128,14 +131,17 @@ const funcSearchBikeTrips = async (
   });
 };
 
-
 export const searchBikeTrips = functions.https.onRequest(async (request, response) => {
-  const origin = request.body.origin;
-  const destination = request.body.destination;
-  const datetime = new Date(request.body.datetime);
-  const timeTarget = request.body.timeTarget;
-  const trip = await funcSearchBikeTrips(origin, destination, datetime, timeTarget);
-  response.send(trip);
+
+  cors(request, response, async () => {
+    const origin = request.body.origin;
+    const destination = request.body.destination;
+    const datetime = new Date(request.body.datetime);
+    const timeTarget = request.body.timeTarget;
+    const trip = await funcSearchBikeTrips(origin, destination, datetime, timeTarget);
+    response.send(trip);
+  })
+
 });
 
 
