@@ -7,9 +7,9 @@
   <div id="map">
     <google-map
       [center]="center | async"
-      [origin]="originCoords | async"
+      [origin]="originCoords"
       [stationList]="stationList | async"
-      [destination]="destinationCoords | async">
+      [destination]="destinationCoords">
     </google-map>
   </div>
   <div id="search">

@@ -32,9 +32,9 @@ import { GeolocationService } from '../../services/geolocation-service';
 export class MapPage {
   center;
   origin: string;
-  originCoords: BehaviorSubject<LatLng>;
+  originCoords: LatLng;
   destination: string;
-  destinationCoords: BehaviorSubject<LatLng>;
+  destinationCoords: LatLng;
   stationList: Observable<LatLng[]>;
   timeTarget: string = 'Depart at';
   datetime;
@@ -47,8 +47,8 @@ export class MapPage {
     public navParams: NavParams
   ) {
     this.datetime = new Date().toISOString();
-    this.originCoords = new BehaviorSubject(null);
-    this.destinationCoords = new BehaviorSubject(null);
+    // this.originCoords = new BehaviorSubject(null);
+    // this.destinationCoords = new BehaviorSubject(null);
     this.geolocationService.getCurrentPosition();
     this.center = this.geolocationService.userLocation$;
     this.stationList = this.firebaseService.stationList;
@@ -70,7 +70,7 @@ export class MapPage {
       if (address) {
         this.origin = address;
         this.geolocationService.geocode(address).then(latlng => {
-          this.originCoords.next(latlng);
+          this.originCoords = latlng;
           this.firebaseService.updateSearchOrigin(latlng, address);
         });
       }
@@ -85,7 +85,7 @@ export class MapPage {
       if (address) {
         this.destination = address;
         this.geolocationService.geocode(address).then(latlng => {
-          this.destinationCoords.next(latlng);
+          this.destinationCoords = latlng;
           this.firebaseService.updateSearchDestination(latlng, address);
         });
       }
@@ -107,6 +107,20 @@ export class MapPage {
   }
 
   submitSearch() {
+    this.firebaseService.search(
+      {
+        origin: {
+          coords: this.originCoords,
+          address: this.origin
+        },
+        destination: {
+          coords: this.destinationCoords,
+          address: this.destination
+        },
+        timeTarget: this.timeTarget,
+        datetime: this.datetime
+      }
+    );
     this.navCtrl.push(SearchResultPage);
   }
 }

@@ -16,8 +16,7 @@
                   [stationEnd]="trip.data.stationEnd.coords"
                   [walking1Points]="trip.data.walking1Travel.points"
                   [bicyclingPoints]="trip.data.bicyclingTravel.points"
-                  [walking2Points]="trip.data.walking2Travel.points"
-      >
+                  [walking2Points]="trip.data.walking2Travel.points">
       </google-map>
     </div>
     <div id="search" *ngIf="trip">
@@ -98,10 +97,11 @@
             <div id="destinationAddress" class="address">{{ trip.data.destination.address }}</div>
           </div>
           <div class="summary">
-            <span id="travel-time">{{ trip.totalTime  | time }}</span>
-            <span id="travel-distance">{{ trip.totalDistance | distance }}</span>
+            <span id="travel-time">{{ trip.totalSeconds | time }}</span>
+            <span id="travel-distance">{{ trip.totalFeet | distance }}</span>
             <span id="total-cost">
-              {{ priceMessage }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ trip.totalPrice | currency:'USD':true }}</span>
+              {{ priceMessage }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ priceAbsValue | currency:'USD':true }}</span>
+            <!-- TODO: remove the negative sign from the display of the total (I think) -->
             </span>
           </div>
         </div>

@@ -12,6 +12,8 @@ import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
 import { mapGeoPointToLatLng } from '../../shared/mapGeoPointToLatLng';
 
 import 'rxjs/add/operator/take';
+import { HttpClient } from '@angular/common/http';
+import { SearchQuery } from '../../shared/SearchQuery';
 
 
 
@@ -22,6 +24,7 @@ export class FirebaseService {
   userDataRef;
 
   constructor(
+    private http: HttpClient,
     private afAuth: AngularFireAuth,
     private db: AngularFirestore) {
 
@@ -47,7 +50,7 @@ export class FirebaseService {
     const searchOrigin = mapLatLngToGeoPoint(coords);
     this.userDataRef
       .update({ searchOrigin: { coords: searchOrigin, address } })
-      .catch(err => {
+      .catch(_ => {
         this.userDataRef.set({ searchDestination: { coords: searchOrigin, address } })
       })
   }
@@ -58,7 +61,7 @@ export class FirebaseService {
     const searchDestination = mapLatLngToGeoPoint(coords);
     this.userDataRef
       .update({ searchDestination: { coords: searchDestination, address } })
-      .catch(err => {
+      .catch(_ => {
         this.userDataRef.set({ searchDestination: { coords: searchDestination, address } })
       })
   }
@@ -66,7 +69,7 @@ export class FirebaseService {
   updateTimeTarget(searchTimeTarget: string) {
     this.userDataRef
       .update({ searchTimeTarget })
-      .catch(error => {
+      .catch(_ => {
         this.userDataRef.set({ searchTimeTarget })
       });
   }
@@ -75,15 +78,21 @@ export class FirebaseService {
     const searchDatetime = new Date(date);
     this.userDataRef
       .update({ searchDatetime })
-      .catch(error => {
+      .catch(_ => {
         this.userDataRef.set({ searchDatetime })
       })
+  }
+
+  search(searchQuery: SearchQuery) {
+    this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/searchBikeTrips', searchQuery)
+      .subscribe(response => console.log("http response: ", response));
   }
 }
 
 export const clientMapGeoPointToLatLng = (geopoint): LatLng => {
   return { lat: geopoint.coords.latitude, lng: geopoint.coords.longitude };
 };
+
 
 
 

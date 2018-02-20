@@ -53,11 +53,14 @@ export class Trip {
   constructor(public data: TripData) {  // parse date strings into date objects?
   }
 
-  get totalTime(): number {
-    return Math.abs(this.data.arrivalTime.getTime() - this.data.departureTime.getTime());
+  get totalSeconds(): number {
+
+    const seconds = Math.abs(this.data.arrivalTime.getSeconds() - this.data.departureTime.getSeconds());
+    console.log("seconds: ", seconds);
+    return seconds;
   }
 
-  get totalDistance(): number {
+  get totalFeet(): number {
     return this.data.walking1Travel.feet + this.data.bicyclingTravel.feet + this.data.walking2Travel.feet;
   }
 

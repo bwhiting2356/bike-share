@@ -6,18 +6,18 @@ exports.TripStatus = {
     PROPOSED: 'Proposed',
     SCHEDULED: 'Scheduled'
 };
-var Trip = /** @class */ (function () {
+var Trip = (function () {
     function Trip(data) {
         this.data = data;
     }
-    Object.defineProperty(Trip.prototype, "totalTime", {
+    Object.defineProperty(Trip.prototype, "totalSeconds", {
         get: function () {
-            return Math.abs(this.data.arrivalTime.getTime() - this.data.departureTime.getTime());
+            return Math.abs(this.data.arrivalTime.getSeconds() - this.data.departureTime.getSeconds());
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Trip.prototype, "totalDistance", {
+    Object.defineProperty(Trip.prototype, "totalFeet", {
         get: function () {
             return this.data.walking1Travel.feet + this.data.bicyclingTravel.feet + this.data.walking2Travel.feet;
         },

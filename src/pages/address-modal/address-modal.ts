@@ -102,13 +102,11 @@ export class AddressModalPage implements AfterViewInit {
       address += `, ${part2}`
     }
     this.viewCtrl.dismiss(address);
+
+    // TODO: leave of 'USA'? (looking ahead to presentation in the trip data)
   }
 
   searchChange(e) {
     this.latestSearchTerm.next(e.target.value);
   }
-
-  // TODO: debounce autocomplete input
-  // TODO: add spinner when waiting for response
-
 }

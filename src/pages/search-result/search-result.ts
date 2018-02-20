@@ -29,6 +29,10 @@ export class SearchResultPage {
     }
   }
 
+  get priceAbsValue() {
+    return Math.abs(this.trip.totalPrice);
+  }
+
   constructor(
     private firebaseService: FirebaseService,
     private loadingCtrl: LoadingController,

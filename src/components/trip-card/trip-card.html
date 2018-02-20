@@ -12,7 +12,7 @@
       [bicyclingPoints]="trip.data.bicyclingTravel.points">
     </google-map>
   </div>
-  <ion-item>
+  <ion-card-content>
     <h4 class="clearfix">
       <span class="title">{{ trip.data.status }} Trip</span>
       <span class="miles-minutes">{{ trip.totalDistance | distance }} <span class="middot">&#8226;</span> {{ trip.totalTime | time }}</span>
@@ -22,5 +22,5 @@
       <span class="time">{{ trip.data.departureTime | date:'h:mm a'}} - {{ trip.data.arrivalTime | date:'h:mm a'}}</span>
       <span class="price">{{ trip.totalPrice | currency:'USD':true }}</span>
     </p>
-  </ion-item>
+  </ion-card-content>
 </ion-card>
