@@ -17,7 +17,7 @@ import { TripsPage } from '../pages/trips/trips';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = MapPage;
+  rootPage: any = TripsPage;
 
   pages: Array<{title: string, component: any, icon: string}>;
 

@@ -17,26 +17,21 @@ import { fakeTrips, Trip, TripStatus } from '../../../shared/Trip';
   templateUrl: 'trips.html',
 })
 export class TripsPage {
-  currentTrips: Trip[];
   trips: Trip[];
-  timeDirection: string = 'upcoming';
+  pastTrips: Trip[];
+  upcomingTrips: Trip[];
+  timeDirection: string = 'past';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.trips = fakeTrips;
-  }
-
-  timeDirectionChange() {
-    if (this.timeDirection === 'upcoming') {
-      this.currentTrips = this.trips.filter(trip => {
-        return trip.data.status === TripStatus.SCHEDULED
-      })
-
-    } else {
-      this.currentTrips = this.trips.filter(trip => {
-        return trip.data.status !== TripStatus.SCHEDULED
-      })
-
-    }
+    this.pastTrips = this.trips.filter(trip => {
+      return trip.data.status === TripStatus.COMPLETED
+    });
+    this.upcomingTrips = this.trips.filter(trip => {
+      return trip.data.status === TripStatus.SCHEDULED
+    });
+    console.log(this.pastTrips);
+    console.log(this.upcomingTrips);
   }
 
   onTripClicked(trip: Trip) {

@@ -20,7 +20,7 @@
 
 
 <ion-content padding>
-  <ion-segment [(ngModel)]="timeDirection" (ngModelChange)="timeDirectionChange()">
+  <ion-segment [(ngModel)]="timeDirection">
     <ion-segment-button value="upcoming">
       Upcoming
     </ion-segment-button>
@@ -28,15 +28,30 @@
       Past
     </ion-segment-button>
   </ion-segment>
-  <div class="trips">
-    <div
-      class="trip-container"
-      *ngFor="let trip of currentTrips"
-      (click)="onTripClicked(trip)"
-    >
-      <!-- TODO: why does changing it from trips to currentTrips cause the map to not fit bounds properly? -->
-      <!-- TODO: animate them on and off by using separate divs? -->
-      <trip-card [trip]="trip"></trip-card>
-    </div>
-  </div>
+  <trip-list
+    *ngIf="timeDirection === 'past'"
+    [trips]="pastTrips">
+  </trip-list>
+  <trip-list
+    *ngIf="timeDirection === 'upcoming'"
+    [trips]="upcomingTrips">
+  </trip-list>
+  <!--<div class="trips" *ngIf="timeDirection === 'past'">-->
+    <!--<div-->
+      <!--class="trip-container"-->
+      <!--*ngFor="let trip of pastTrips"-->
+      <!--(click)="onTripClicked(trip)">-->
+      <!--<trip-card [trip]="trip"></trip-card>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="trips" *ngIf="timeDirection === 'upcoming'">-->
+    <!--<div-->
+      <!--class="trip-container"-->
+      <!--*ngFor="let trip of upcomingTrips"-->
+      <!--(click)="onTripClicked(trip)">-->
+      <!--<trip-card [trip]="trip"></trip-card>-->
+    <!--</div>-->
+  <!--</div>-->
 </ion-content>
+
+

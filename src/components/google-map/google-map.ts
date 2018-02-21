@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnChanges } from '@angular/core';
+import { Component, ViewChild, Input, OnChanges, OnInit } from '@angular/core';
 
 // shared
 
@@ -11,7 +11,7 @@ declare var google;
   selector: 'google-map',
   templateUrl: 'google-map.html'
 })
-export class GoogleMapComponent implements OnChanges {
+export class GoogleMapComponent implements OnChanges, OnInit {
   @ViewChild('mapContainer') mapContainer;
   @Input() zoom: number = 14;
   @Input() zoomControl: boolean = true;
@@ -31,11 +31,20 @@ export class GoogleMapComponent implements OnChanges {
 
   constructor() { }
 
-  ionViewDidEnter() {
-    this.fitBounds();
+  ngOnInit() {
+    console.log("on init")
+    // this.map.setZoom(14);
+    this.initMap();
+    // this.map.setZoom(10);
   }
 
   ngOnChanges() {
+    console.log("on changes")
+    this.initMap();
+
+  }
+
+  initMap() {
     this.map = new google.maps.Map(this.mapContainer.nativeElement, {
       zoom: this.zoom,
       maxZoom: 16,
@@ -54,7 +63,8 @@ export class GoogleMapComponent implements OnChanges {
 
     if (this.origin) this.addMarker(this.origin);
     if (this.destination) this.addMarker(this.destination);
-    if (this.origin || this.destination) this.fitBounds();
+    this.fitBounds();
+    // if (this.origin || this.destination) this.fitBounds();
 
     if (this.stationStart) this.addMarker(this.stationStart, true);
     if (this.stationEnd) this.addMarker(this.stationEnd, true);
@@ -69,12 +79,19 @@ export class GoogleMapComponent implements OnChanges {
   }
 
   fitBounds() {
+    this.map.setZoom(14);
     let bounds = new google.maps.LatLngBounds();
     if (this.origin) bounds.extend(this.origin);
     if (this.stationStart) bounds.extend(this.stationStart);
     if (this.stationEnd) bounds.extend(this.stationEnd);
     if (this.destination) bounds.extend(this.destination);
-    this.map.fitBounds(bounds);
+    console.log("bounds: ", bounds);
+    console.log("zoom: ", this.map.getZoom());
+    console.log("mapBounds: ", this.map.getBounds());
+    this.map.fitBounds(bounds, 0);
+
+    console.log("zoom: ", this.map.getZoom());
+    console.log("mapBounds: ", this.map.getBounds());
   }
 
   addMarker(position, station = false) {
@@ -174,17 +191,6 @@ export class GoogleMapComponent implements OnChanges {
         repeat: '15px'
       }],
     });
-  }
-
-  static pinSymbol(color: string) {
-    return {
-      path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
-      fillColor: color,
-      fillOpacity: 1,
-      strokeColor: '#000',
-      strokeWeight: 2,
-      scale: 1
-    };
   }
 }
 

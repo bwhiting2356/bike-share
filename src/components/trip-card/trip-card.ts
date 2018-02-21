@@ -8,7 +8,9 @@ import { Trip } from '../../../shared/Trip';
 export class TripCardComponent {
   @Input() trip: Trip;
 
-  constructor() {}
+  constructor() {
+    console.log('trip: ', this.trip);
+  }
 
 }
 
