@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
@@ -11,6 +12,7 @@ import { MapPage } from '../pages/map/map';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { TripsPage } from '../pages/trips/trips';
 import { TripDetailPage } from '../pages/trip-detail/trip-detail';
+import { SearchResultPage } from '../pages/search-result/search-result';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -40,8 +42,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Keyboard } from '@ionic-native/keyboard';
 
 import { environment } from "../environments/environment";
-import { SearchResultPage } from '../pages/search-result/search-result';
-
 
 
 
@@ -60,6 +60,7 @@ import { SearchResultPage } from '../pages/search-result/search-result';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     ComponentsModule,
     HttpClientModule,
     PipesModule,

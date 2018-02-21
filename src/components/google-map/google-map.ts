@@ -32,14 +32,10 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("on init")
-    // this.map.setZoom(14);
     this.initMap();
-    // this.map.setZoom(10);
   }
 
   ngOnChanges() {
-    console.log("on changes")
     this.initMap();
 
   }

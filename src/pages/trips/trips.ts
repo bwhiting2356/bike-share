@@ -20,18 +20,16 @@ export class TripsPage {
   trips: Trip[];
   pastTrips: Trip[];
   upcomingTrips: Trip[];
-  timeDirection: string = 'past';
+  timeDirection: string = 'upcoming';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.trips = fakeTrips;
     this.pastTrips = this.trips.filter(trip => {
-      return trip.data.status === TripStatus.COMPLETED
+      return trip.data.status === TripStatus.COMPLETED  // order
     });
     this.upcomingTrips = this.trips.filter(trip => {
-      return trip.data.status === TripStatus.SCHEDULED
+      return trip.data.status === TripStatus.COMPLETED // change this to SCHEDULED, also order
     });
-    console.log(this.pastTrips);
-    console.log(this.upcomingTrips);
   }
 
   onTripClicked(trip: Trip) {

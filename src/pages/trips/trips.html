@@ -28,14 +28,20 @@
       Past
     </ion-segment-button>
   </ion-segment>
-  <trip-list
-    *ngIf="timeDirection === 'past'"
-    [trips]="pastTrips">
-  </trip-list>
-  <trip-list
-    *ngIf="timeDirection === 'upcoming'"
-    [trips]="upcomingTrips">
-  </trip-list>
+  <ion-list *ngIf="timeDirection === 'past'">
+    <trip-card
+      *ngFor="let trip of pastTrips"
+      [trip]="trip"
+      (click)="onTripClicked(trip)">
+    </trip-card>
+  </ion-list>
+  <ion-list *ngIf="timeDirection === 'upcoming'">
+    <trip-card
+      *ngFor="let trip of upcomingTrips"
+      [trip]="trip"
+      (click)="onTripClicked(trip)">
+    </trip-card>
+  </ion-list>
   <!--<div class="trips" *ngIf="timeDirection === 'past'">-->
     <!--<div-->
       <!--class="trip-container"-->
