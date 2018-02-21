@@ -65,7 +65,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     if (this.stationStart) this.addMarker(this.stationStart, true);
     if (this.stationEnd) this.addMarker(this.stationEnd, true);
 
-    if (this.stationList) {
+    if (this.stationList && this.map.getZoom() > 14) { // don't show stations if I'm too zoomed out, stations too dense
       this.stationList.forEach(station => this.addMarker(station, true));
     }
 

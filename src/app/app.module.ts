@@ -8,7 +8,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { MapPage } from '../pages/map/map';
+import { SearchPage } from '../pages/search/search';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { TripsPage } from '../pages/trips/trips';
 import { TripDetailPage } from '../pages/trip-detail/trip-detail';
@@ -52,7 +52,7 @@ import { environment } from "../environments/environment";
     MyApp,
     HomePage,
     ListPage,
-    MapPage,
+    SearchPage,
     AddressModalPage,
     SearchResultPage,
     TripsPage,
@@ -72,7 +72,7 @@ import { environment } from "../environments/environment";
     MyApp,
     HomePage,
     ListPage,
-    MapPage,
+    SearchPage,
     AddressModalPage,
     SearchResultPage,
     TripsPage,

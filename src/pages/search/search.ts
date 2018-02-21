@@ -13,7 +13,6 @@ import { LatLng } from '../../../shared/LatLng';
 // rxjs
 
 import 'rxjs/add/operator/startWith';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 // services
@@ -26,10 +25,10 @@ import { GeolocationService } from '../../services/geolocation-service';
 
 @IonicPage()
 @Component({
-  selector: 'page-map',
-  templateUrl: 'map.html'
+  selector: 'page-search',
+  templateUrl: 'search.html'
 })
-export class MapPage {
+export class SearchPage {
   center;
   origin: string;
   originCoords: LatLng;

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { MapPage } from './map';
+import { SearchPage } from './search';
 import { GoogleMapComponent } from '../../components/google-map/google-map';
 
 @NgModule({
   declarations: [
     GoogleMapComponent,
-    MapPage,
+    SearchPage,
   ],
   imports: [
-    IonicPageModule.forChild(MapPage),
+    IonicPageModule.forChild(SearchPage),
   ],
 })
-export class MapPageModule {}
+export class SearchPageModule {}
