@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
-import { Trip, tripA } from '../../../shared/Trip';
+import { Trip, tripA, TripData } from '../../../shared/Trip';
 import { bicyclePolylineMainColor, bicyclePolylineBorderColor } from '../../../shared/ThemeVariables';
 import { FirebaseService } from '../../services/firebase-service';
 
@@ -38,10 +38,16 @@ export class SearchResultPage {
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
 
-    this.firebaseService.searchResult.subscribe(result => {
-      console.log(result);
-      this.trip = new Trip(result);
+    const searchQuery = this.navParams.get('searchQuery');
+    this.firebaseService.search(searchQuery).subscribe((response: TripData) => {
+      console.log('line 43');
+      this.trip = new Trip(response);
     })
+
+    // this.firebaseService.searchResult.subscribe(result => {
+    //   console.log("result: ", result);
+    //   this.trip = new Trip(result);
+    // })
 
     // firebaseService.userDataRef
     //   .valueChanges().subscribe(values => {

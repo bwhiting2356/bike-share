@@ -86,7 +86,7 @@ export class FirebaseService {
   }
 
   search(searchQuery: SearchQuery) {
-    this.searchResult = this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/searchBikeTrips', searchQuery)
+    return this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/searchBikeTrips', searchQuery)
   }
 }
 

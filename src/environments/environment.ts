@@ -1,4 +1,5 @@
 export const environment = {
+  production: false,
   firebaseConfig: {
     apiKey: "AIzaSyADf0xxHNN52LFACOPNEHKtMKn_H8EQnlQ",
     authDomain: "bike-share-1517478720061.firebaseapp.com",

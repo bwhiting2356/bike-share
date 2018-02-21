@@ -39,10 +39,6 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { Geolocation } from '@ionic-native/geolocation';
 import { Keyboard } from '@ionic-native/keyboard';
 
-
-
-
-
 import { environment } from "../environments/environment";
 import { SearchResultPage } from '../pages/search-result/search-result';
 

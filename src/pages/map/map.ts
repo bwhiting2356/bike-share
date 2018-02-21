@@ -107,20 +107,19 @@ export class MapPage {
   }
 
   submitSearch() {
-    this.firebaseService.search(
-      {
-        origin: {
-          coords: this.originCoords,
-          address: this.origin
-        },
-        destination: {
-          coords: this.destinationCoords,
-          address: this.destination
-        },
-        timeTarget: this.timeTarget,
-        datetime: this.datetime
-      }
-    );
-    this.navCtrl.push(SearchResultPage);
+    let searchQuery = {
+      origin: {
+        coords: this.originCoords,
+        address: this.origin
+      },
+      destination: {
+        coords: this.destinationCoords,
+        address: this.destination
+      },
+      timeTarget: this.timeTarget,
+      datetime: this.datetime
+    };
+
+    this.navCtrl.push(SearchResultPage, { searchQuery });
   }
 }

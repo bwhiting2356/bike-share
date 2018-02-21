@@ -59,10 +59,7 @@ export class Trip {
   }
 
   get totalSeconds(): number {
-
-    const seconds = Math.abs(this.arrivalTime.getSeconds() - this.departureTime.getSeconds());
-    console.log("seconds: ", seconds);
-    return seconds;
+    return Math.abs(+this.arrivalTime - +this.departureTime);
   }
 
   get totalFeet(): number {

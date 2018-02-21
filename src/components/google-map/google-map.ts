@@ -31,6 +31,10 @@ export class GoogleMapComponent implements OnChanges {
 
   constructor() { }
 
+  ionViewDidEnter() {
+    this.fitBounds();
+  }
+
   ngOnChanges() {
     this.map = new google.maps.Map(this.mapContainer.nativeElement, {
       zoom: this.zoom,
@@ -74,7 +78,7 @@ export class GoogleMapComponent implements OnChanges {
   }
 
   addMarker(position, station = false) {
-    const color = station ? 'blue' : 'red';  // TODO: put in theme colors
+    // const color = station ? 'blue' : 'red';  // TODO: put in theme colors
     const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg'
     let markerOptions = {
       position: position,
