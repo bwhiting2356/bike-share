@@ -81,13 +81,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     if (this.stationStart) bounds.extend(this.stationStart);
     if (this.stationEnd) bounds.extend(this.stationEnd);
     if (this.destination) bounds.extend(this.destination);
-    console.log("bounds: ", bounds);
-    console.log("zoom: ", this.map.getZoom());
-    console.log("mapBounds: ", this.map.getBounds());
     this.map.fitBounds(bounds, 0);
-
-    console.log("zoom: ", this.map.getZoom());
-    console.log("mapBounds: ", this.map.getBounds());
   }
 
   addMarker(position, station = false) {

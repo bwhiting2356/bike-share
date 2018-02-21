@@ -8,10 +8,6 @@ import { Trip } from '../../../shared/Trip';
 export class TripCardComponent {
   @Input() trip: Trip;
 
-  constructor() {
-    console.log('trip: ', this.trip);
-  }
+  constructor() { }
 
 }
-
-// TODO: fix map rendering in the trip card

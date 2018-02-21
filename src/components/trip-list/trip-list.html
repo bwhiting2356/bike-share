@@ -1,0 +1,11 @@
+<ion-list
+  [@moveOffLeft]="position"
+  [@moveOffRight]="position"
+  [@moveCenterFromLeft]="position"
+  [@moveCenterFromRight]="position">
+  <trip-card
+    *ngFor="let trip of trips"
+    [trip]="trip"
+    (click)="onTripClicked(trip)">
+  </trip-card>
+</ion-list>
