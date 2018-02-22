@@ -26,6 +26,24 @@ page-search {
       height: 100px;
       flex-grow: 2;
       z-index: 1;
+      position: relative;
+      //
+      //google-map {
+      //  position: absolute;
+      //}
+      //
+      //.spinner-container {
+      //  position: absolute;
+      //  width: 100%;
+      //  height: 100px;
+      //  background: red;
+      //
+      //  ion-spinner {
+      //
+      //  }
+      //}
+
+
     }
 
     #search {

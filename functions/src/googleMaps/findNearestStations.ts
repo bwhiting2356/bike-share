@@ -7,6 +7,7 @@ import { LatLng } from '../shared/LatLng';
 import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
 
 const mergeDataWithIds = (response, stationsData) => {
+  console.log("line 10 inside merge data");
   const newData = [];
   for (let i = 0; i < response.length; i++) {
     newData.push({
@@ -24,6 +25,7 @@ const compareStationData = (a, b) => {
 };
 
 const funcFindNearestStations = (loc: LatLng) => {
+  console.log("find nearest stations line 27");
   return admin.firestore().collection('/stations')
     .get()
     .then(querySnapshot => {
@@ -43,6 +45,7 @@ const funcFindNearestStations = (loc: LatLng) => {
       // make a version with only the data, to send to the google maps api
 
       const stationsCoords = stationsData.map(station => station.coords);
+      console.log("stations coords: ", stationsCoords);
 
       // make request to google
 
@@ -53,9 +56,15 @@ const funcFindNearestStations = (loc: LatLng) => {
       };
 
       return new Promise(resolve => {
-        googleMapsClient.distanceMatrix(req, function (err, res) {
+        googleMapsClient.distanceMatrix(req, (err, res) => {
+
+          console.log("find nearest stations line 59");
+          console.log('err: ', JSON.stringify(err));
+          console.log("res: ", JSON.stringify(res));
           const mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsData);
+          console.log("merged data:", mergedData);
           const sortedData = mergedData.sort(compareStationData);
+          console.log("sorted data:", sortedData);
           resolve(sortedData)
         });
       });

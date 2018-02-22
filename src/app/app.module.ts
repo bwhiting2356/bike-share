@@ -3,6 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
 // pages
 
 import { MyApp } from './app.component';
@@ -13,10 +16,6 @@ import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { TripsPage } from '../pages/trips/trips';
 import { TripDetailPage } from '../pages/trip-detail/trip-detail';
 import { SearchResultPage } from '../pages/search-result/search-result';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
 
 // services
 
@@ -33,6 +32,7 @@ import { ComponentsModule } from "../components/components.module";
 // firebase
 
 import { AngularFirestore } from "angularfire2/firestore";
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from "angularfire2/auth";
 
@@ -42,10 +42,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Keyboard } from '@ionic-native/keyboard';
 
 import { environment } from "../environments/environment";
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -87,6 +83,7 @@ import { environment } from "../environments/environment";
     Geolocation,
     Keyboard,
     AngularFirestore,
+    AngularFireDatabase,
     AngularFireAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

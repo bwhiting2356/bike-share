@@ -66,7 +66,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     if (this.stationStart) this.addMarker(this.stationStart, true);
     if (this.stationEnd) this.addMarker(this.stationEnd, true);
 
-    if (this.stationList && this.map.getZoom() > 14) { // don't show stations if I'm too zoomed out, stations too dense
+    if (this.stationList && this.map.getZoom() >= 14) { // don't show stations if I'm too zoomed out, stations too dense
       this.stationList.forEach(station => this.addMarker(station, true));
     }
 
@@ -85,7 +85,6 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   }
 
   addMarker(position, station = false) {
-    console.log("added marker");
     const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg'
     let markerOptions = {
       position: position,

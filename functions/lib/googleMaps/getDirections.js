@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var googleMapsClient_1 = require("./googleMapsClient");
 var memoize_1 = require("../memoize");
 var funcGetDirections = function (query) {
+    console.log("get directions line 7");
     return new Promise(function (resolve) {
         googleMapsClient_1.googleMapsClient.directions(query, function (err, res) {
             var leg = res.json.routes[0].legs[0];
@@ -11,6 +12,7 @@ var funcGetDirections = function (query) {
             var points = leg.steps
                 .map(function (step) { return step.start_location; });
             points.push(leg.end_location);
+            console.log("get directions line 15");
             resolve({ points: points, feet: feet, seconds: seconds });
         });
     });

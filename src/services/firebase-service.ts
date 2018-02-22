@@ -4,18 +4,16 @@ import { Observable } from "rxjs/Observable";
 // firebase
 
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireDatabase } from 'angularfire2/database';
+// import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 
 import { LatLng } from '../../shared/LatLng';
 import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
-import { mapGeoPointToLatLng } from '../../shared/mapGeoPointToLatLng';
 
 import 'rxjs/add/operator/take';
 import { HttpClient } from '@angular/common/http';
 import { SearchQuery } from '../../shared/SearchQuery';
-import { stations } from "./stationsOnly";
-import { Trip } from "../../shared/Trip";
 
 
 @Injectable()
@@ -27,12 +25,15 @@ export class FirebaseService {
 
   constructor(
     private http: HttpClient,
-    private afAuth: AngularFireAuth,
-    private db: AngularFirestore) {
 
-    this.stationList = this.db.collection('stations').valueChanges().map(geopoints => {
-      return geopoints.map(clientMapGeoPointToLatLng);
-    });
+    public afAuth: AngularFireAuth,
+    private dbFirestore: AngularFirestore,
+    private dbDatabase: AngularFireDatabase) {
+
+    this.signInAnonymously();
+
+    this.stationList = this.dbDatabase.list('/stations').valueChanges()
+      .map(stationList => stationList.map(station => station.coords));
 
     this.afAuth.idToken.subscribe(token => {
       this.userId = token;
@@ -42,47 +43,35 @@ export class FirebaseService {
   signInAnonymously() {
     return this.afAuth.auth.signInAnonymously().then(result => {
       this.userId = result.uid;
-      this.userDataRef = this.db.collection('/users').doc(this.userId);
+      this.userDataRef = this.dbFirestore.collection('/users').doc(this.userId);
     });
   }
 
   // TODO: create nested searchParams structure rather than flat properties? How do I update or make a reference?
 
   updateSearchOrigin(coords: LatLng, address: string) {
-    const searchOrigin = mapLatLngToGeoPoint(coords);
+    const originCoords = mapLatLngToGeoPoint(coords);
     this.userDataRef
-      .update({ searchOrigin: { coords: searchOrigin, address } })
-      .catch(_ => {
-        this.userDataRef.set({ searchDestination: { coords: searchOrigin, address } })
-      })
+      .set({ searchParams: { origin: { coords: originCoords, address } }}, { merge: true });
   }
 
   // TODO: nest the search params inside of an object (also change on the backend)
 
   updateSearchDestination(coords: LatLng, address: string) {
-    const searchDestination = mapLatLngToGeoPoint(coords);
+    const destinationCoords = mapLatLngToGeoPoint(coords);
     this.userDataRef
-      .update({ searchDestination: { coords: searchDestination, address } })
-      .catch(_ => {
-        this.userDataRef.set({ searchDestination: { coords: searchDestination, address } })
-      })
+      .set({ searchParams: { destination: { coords: destinationCoords, address } }}, { merge: true });
   }
 
-  updateTimeTarget(searchTimeTarget: string) {
+  updateTimeTarget(timeTarget: string) {
     this.userDataRef
-      .update({ searchTimeTarget })
-      .catch(_ => {
-        this.userDataRef.set({ searchTimeTarget })
-      });
+      .set({ searchParams: { timeTarget }}, { merge: true });
   }
 
   updateDatetime(date: string) {
-    const searchDatetime = new Date(date);
+    const datetime = new Date(date);
     this.userDataRef
-      .update({ searchDatetime })
-      .catch(_ => {
-        this.userDataRef.set({ searchDatetime })
-      })
+      .set({ searchParams: { datetime }}, { merge: true });
   }
 
   search(searchQuery: SearchQuery) {
@@ -90,6 +79,6 @@ export class FirebaseService {
   }
 }
 
-export const clientMapGeoPointToLatLng = (geopoint): LatLng => {
+export const clientMapGeoPointToLatLng = (geopoint): LatLng => { // TODO: save for when geoqueries come to firestore
   return { lat: geopoint.coords.latitude, lng: geopoint.coords.longitude };
 };

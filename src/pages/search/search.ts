@@ -54,30 +54,39 @@ export class SearchPage {
     this.datetime = new Date().toISOString();
     this.userLocation$ = this.geolocationService.userLocation$;
     this.stationList = this.firebaseService.stationList;
+    // this.stationList.subscribe(stations => {
+    //   console.log("line 58 statino list: ", stations);
+    //   }
+    // )
+
   }
 
   ionViewDidLoad() {
-    this.firebaseService.signInAnonymously().then(() => {
-      this.timeTargetChange();
-      this.datetimeChange();
+    this.firebaseService.afAuth.idToken.subscribe((token) => {
+      if (token) {
+        this.timeTargetChange();
+        this.datetimeChange();
+      }
     })
-  }
+  } // TODO: this might break something later if they sign in for real and it changes their search params
 
   openOriginModal() {
     const modal = this.modalCtrl.create(AddressModalPage, {title: "Origin" });
     modal.present();
     modal.onDidDismiss((address) => {
       if (address) {
+        this.fetching = true;
         if (address === CURRENT_LOCATION) {
           this.origin = CURRENT_LOCATION;
           this.userLocation$.take(1).subscribe(latlng => {
-            console.log("latlng", latlng);
+            this.fetching = false;
             this.originCoords = latlng;
             this.firebaseService.updateSearchOrigin(latlng, CURRENT_LOCATION);
           })
         } else {
           this.origin = address;
           this.geolocationService.geocode(address).then(latlng => {
+            this.fetching = false;
             this.originCoords = latlng;
             this.firebaseService.updateSearchOrigin(latlng, address);
           });
@@ -94,7 +103,6 @@ export class SearchPage {
     modal.onDidDismiss((address) => {
       if (address) {
         this.fetching = true;
-        console.log("fetching...")
         if (address === CURRENT_LOCATION) {
           this.destination = CURRENT_LOCATION;
           this.userLocation$.take(1).subscribe(latlng => {
@@ -105,6 +113,7 @@ export class SearchPage {
         } else {
           this.destination = address;
           this.geolocationService.geocode(address).then(latlng => {
+            this.fetching = false;
             this.destinationCoords = latlng;
             this.firebaseService.updateSearchDestination(latlng, address);
           });
