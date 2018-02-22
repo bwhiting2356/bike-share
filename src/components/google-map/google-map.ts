@@ -56,11 +56,12 @@ export class GoogleMapComponent implements OnChanges, OnInit {
         },
       ]
     });
+    this.map.setCenter(this.center);
 
-    if (this.origin) this.addMarker(this.origin);
+    if (this.origin) this.addMarker(this.origin); // TODO: why is it not showing up with just one marker?
     if (this.destination) this.addMarker(this.destination);
-    this.fitBounds();
-    // if (this.origin || this.destination) this.fitBounds();
+
+    if (this.origin || this.destination) this.fitBounds();
 
     if (this.stationStart) this.addMarker(this.stationStart, true);
     if (this.stationEnd) this.addMarker(this.stationEnd, true);
@@ -75,7 +76,6 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   }
 
   fitBounds() {
-    this.map.setZoom(14);
     let bounds = new google.maps.LatLngBounds();
     if (this.origin) bounds.extend(this.origin);
     if (this.stationStart) bounds.extend(this.stationStart);
@@ -85,7 +85,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   }
 
   addMarker(position, station = false) {
-    // const color = station ? 'blue' : 'red';  // TODO: put in theme colors
+    console.log("added marker");
     const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg'
     let markerOptions = {
       position: position,

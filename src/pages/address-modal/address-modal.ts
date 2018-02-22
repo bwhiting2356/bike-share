@@ -14,6 +14,7 @@ import "rxjs/add/operator/first";
 
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { LatLng } from '../../../shared/LatLng';
 
 /**
  * Generated class for the AddressModalPage page.
@@ -28,14 +29,16 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   templateUrl: 'address-modal.html',
   providers: [Keyboard]
 })
-export class AddressModalPage implements AfterViewInit {
+export class AddressModalPage {
   @ViewChild('searchbar') searchbar: Searchbar;
   searchControl: FormControl;
   latestSearchTerm: BehaviorSubject<string> = new BehaviorSubject('');
   fetching: boolean = false;
   autocompleteResults;
   title: string;
-  userAddress: string = '';
+
+  userLocation: LatLng;
+  showCurrentLocation: boolean;
 
   constructor(
     private keyboard: Keyboard,
@@ -44,18 +47,12 @@ export class AddressModalPage implements AfterViewInit {
     private viewCtrl: ViewController,
     public navCtrl: NavController,
     public navParams: NavParams) {
+    this.showCurrentLocation = false;
+
     this.searchControl = new FormControl();
-    this.geolocationService.userAddress$.first().subscribe(address => {
-      this.userAddress = address || undefined;
-    });
-  }
-
-  ngAfterViewInit() {
-    // var eventObservable = Observable.fromEvent(
-    //   this.searchbar.nativeElement, 'keyup');
-    this.searchbar.debounce
-
-    // TODO: focus input after animation (web and mobile)
+    this.geolocationService.foundPosition.take(1).subscribe(value => {
+      this.showCurrentLocation = value;
+    })
   }
 
   ionViewDidLoad() {
@@ -79,7 +76,7 @@ export class AddressModalPage implements AfterViewInit {
     setTimeout(() => {
       this.searchbar.setFocus();
       this.keyboard.show();
-    }, 150)
+    }, 150) // TODO: focus input after animation (mobile)
   }
 
   dismiss() {
@@ -91,7 +88,7 @@ export class AddressModalPage implements AfterViewInit {
   }
 
   chooseCurrentLocation() {
-    this.viewCtrl.dismiss(this.userAddress);
+    this.viewCtrl.dismiss("Current Location");
   }
 
   chooseAutocompleteItem(result) {
@@ -103,7 +100,7 @@ export class AddressModalPage implements AfterViewInit {
     }
     this.viewCtrl.dismiss(address);
 
-    // TODO: leave of 'USA'? (looking ahead to presentation in the trip data)
+    // TODO: leave off 'USA'? (looking ahead to presentation in the trip data)
   }
 
   searchChange(e) {

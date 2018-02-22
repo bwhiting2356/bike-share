@@ -13,6 +13,7 @@ import { LatLng } from '../../../shared/LatLng';
 // rxjs
 
 import 'rxjs/add/operator/startWith';
+import 'rxjs/add/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
 
 // services
@@ -21,7 +22,7 @@ import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
 
 
-// TODO: rename this page to 'search' with a magnfifying glass icon'
+const CURRENT_LOCATION = "Current Location";
 
 @IonicPage()
 @Component({
@@ -29,8 +30,11 @@ import { GeolocationService } from '../../services/geolocation-service';
   templateUrl: 'search.html'
 })
 export class SearchPage {
+  userLocation$: Observable<LatLng>;
+
   center;
   origin: string;
+
   originCoords: LatLng;
   destination: string;
   destinationCoords: LatLng;
@@ -46,20 +50,15 @@ export class SearchPage {
     public navParams: NavParams
   ) {
     this.datetime = new Date().toISOString();
-    // this.originCoords = new BehaviorSubject(null);
-    // this.destinationCoords = new BehaviorSubject(null);
-    this.geolocationService.getCurrentPosition();
-    this.center = this.geolocationService.userLocation$;
+    this.userLocation$ = this.geolocationService.userLocation$;
     this.stationList = this.firebaseService.stationList;
   }
 
   ionViewDidLoad() {
-    this.geolocationService.getCurrentPosition();
     this.firebaseService.signInAnonymously().then(() => {
       this.timeTargetChange();
       this.datetimeChange();
     })
-
   }
 
   openOriginModal() {
@@ -67,12 +66,22 @@ export class SearchPage {
     modal.present();
     modal.onDidDismiss((address) => {
       if (address) {
-        this.origin = address;
-        this.geolocationService.geocode(address).then(latlng => {
-          this.originCoords = latlng;
-          this.firebaseService.updateSearchOrigin(latlng, address);
-        });
+        if (address === CURRENT_LOCATION) {
+          this.origin = CURRENT_LOCATION;
+          this.userLocation$.take(1).subscribe(latlng => {
+            console.log("latlng", latlng);
+            this.originCoords = latlng;
+            this.firebaseService.updateSearchOrigin(latlng, CURRENT_LOCATION);
+          })
+        } else {
+          this.origin = address;
+          this.geolocationService.geocode(address).then(latlng => {
+            this.originCoords = latlng;
+            this.firebaseService.updateSearchOrigin(latlng, address);
+          });
+        }
       }
+
       // TODO; maybe add a spinner while we're waiting for the geolocation to come back from the server
     });
   }
@@ -82,11 +91,19 @@ export class SearchPage {
     modal.present();
     modal.onDidDismiss((address) => {
       if (address) {
-        this.destination = address;
-        this.geolocationService.geocode(address).then(latlng => {
-          this.destinationCoords = latlng;
-          this.firebaseService.updateSearchDestination(latlng, address);
-        });
+        if (address === CURRENT_LOCATION) {
+          this.destination = CURRENT_LOCATION;
+          this.userLocation$.take(1).subscribe(latlng => {
+            this.destinationCoords = latlng;
+            this.firebaseService.updateSearchDestination(latlng, CURRENT_LOCATION);
+          })
+        } else {
+          this.destination = address;
+          this.geolocationService.geocode(address).then(latlng => {
+            this.destinationCoords = latlng;
+            this.firebaseService.updateSearchDestination(latlng, address);
+          });
+        }
       }
     });
   }

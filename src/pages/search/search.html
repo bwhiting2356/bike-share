@@ -6,10 +6,10 @@
 <div class="flex-container">
   <div id="map">
     <google-map
-      [center]="center | async"
+      [center]="userLocation$ | async"
       [origin]="originCoords"
-      [stationList]="stationList | async"
-      [destination]="destinationCoords">
+      [destination]="destinationCoords"
+      [stationList]="stationList | async">
     </google-map>
   </div>
   <div id="search">

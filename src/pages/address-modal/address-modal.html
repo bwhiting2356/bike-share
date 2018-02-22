@@ -20,7 +20,7 @@
     placeholder="Address or place name">
   </ion-searchbar>
   <ion-list>
-    <div *ngIf="userAddress">
+    <div *ngIf="showCurrentLocation">
       <ion-item no-lines (click)="chooseCurrentLocation()">
         <ion-icon
           name="locate"

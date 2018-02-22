@@ -1,47 +1,34 @@
 import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 
 import 'rxjs/add/operator/mergeMap';
 
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { LatLng } from '../../shared/LatLng';
 
 declare var google;
 
 @Injectable()
 export class GeolocationService {
+  foundPosition: BehaviorSubject<boolean>;
   userLocation$: BehaviorSubject<LatLng>;
-  userAddress$: BehaviorSubject<string>;
   geocoder;
 
   constructor(
     private zone: NgZone,
     private geolocation: Geolocation) {
+    this.foundPosition = new BehaviorSubject(false);
+    this.userLocation$ = new BehaviorSubject(null)
     this.geocoder = new google.maps.Geocoder;
-    this.userLocation$ = new BehaviorSubject({lat: 0, lng: 0})
-    this.userAddress$ = new BehaviorSubject("");
-
-    this.userLocation$.subscribe(latlng => {
-      this.geocoder.geocode({location: latlng}, results => {
-        if (results && results[0]) {
-          this.userAddress$.next(results[0].formatted_address);
-        }
-      })
-    });
-  }
-
-  getCurrentPosition() {
-    this.geolocation.watchPosition()
-      .subscribe(position => {
-        if (position && position.coords) {
-          this.userLocation$.next({ lat: position.coords.latitude, lng: position.coords.longitude });
-        }
-      })
-
-    // TODO: is this bad design, to push a value into a subject inside of a subscribe function?
-  }
+    this.geolocation.watchPosition().subscribe(geoposition => {
+      this.foundPosition.next(true);
+      this.userLocation$.next({ lat: geoposition.coords.latitude, lng: geoposition.coords.longitude })
+    })
+  }  // TODO: is this bad design, to push a values into a subject inside of a subscribe function?
 
   geocode(address): Promise<LatLng> {
     return new Promise(resolve => {
