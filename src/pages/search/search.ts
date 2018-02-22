@@ -42,6 +42,8 @@ export class SearchPage {
   timeTarget: string = 'Depart at';
   datetime;
 
+  fetching: boolean;
+
   constructor(
     private modalCtrl: ModalController,
     private geolocationService: GeolocationService,
@@ -91,9 +93,12 @@ export class SearchPage {
     modal.present();
     modal.onDidDismiss((address) => {
       if (address) {
+        this.fetching = true;
+        console.log("fetching...")
         if (address === CURRENT_LOCATION) {
           this.destination = CURRENT_LOCATION;
           this.userLocation$.take(1).subscribe(latlng => {
+            this.fetching = false;
             this.destinationCoords = latlng;
             this.firebaseService.updateSearchDestination(latlng, CURRENT_LOCATION);
           })

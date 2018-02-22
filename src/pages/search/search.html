@@ -5,7 +5,8 @@
 </div>
 <div class="flex-container">
   <div id="map">
-    <google-map
+    <ion-spinner *ngIf="fetching"></ion-spinner>
+    <google-map *ngIf="!fetching"
       [center]="userLocation$ | async"
       [origin]="originCoords"
       [destination]="destinationCoords"
