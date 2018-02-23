@@ -49,7 +49,7 @@ var TravelMode = {
 exports.userDataUpdated = functions.firestore
     .document('/users/{userId}')
     .onWrite(function (event) { return __awaiter(_this, void 0, void 0, function () {
-    var userData, previousUserData, originCoords, originAddress, stationStartCoords, stationStartAddress, stationEndCoords, stationEndAddress, destinationCoords, destinationAddress, nearestStartStationPromise, walking1DirectionsPromise, nearestEndStationPromise, walking2DirectionsPromise, bicyclingDirectionsPromise;
+    var userData, previousUserData, originCoords, originAddress, stationStartCoords, stationStartAddress, stationEndCoords, stationEndAddress, destinationCoords, destinationAddress, nearestStartStationPromise, walking1DirectionsPromise, nearestEndStationPromise, walking2DirectionsPromise, bicyclingDirectionsPromise, deleteOperationPromise;
     return __generator(this, function (_a) {
         userData = event.data.data();
         previousUserData = event.data.previous.data();
@@ -92,6 +92,8 @@ exports.userDataUpdated = functions.firestore
             }
             if (userData.searchParams.origin && userData.searchParams.destination && // both fields exist
                 (JSON.stringify(userData.searchParams) !== JSON.stringify(previousUserData.searchParams))) {
+                deleteOperationPromise = admin.firestore()
+                    .doc('/users/' + event.params.userId).set({ searchResult: null }, { merge: true });
                 bicyclingDirectionsPromise = Promise.all([nearestStartStationPromise, nearestEndStationPromise])
                     .then(function (stationsCoords) {
                     var startCoords = stationsCoords[0];
@@ -107,6 +109,7 @@ exports.userDataUpdated = functions.firestore
                         walking1DirectionsPromise,
                         walking2DirectionsPromise,
                         bicyclingDirectionsPromise,
+                        deleteOperationPromise
                     ]).then(function (allDirections) {
                         var walking1Travel = allDirections[0].data;
                         var walking2Travel = allDirections[1].data;
@@ -155,7 +158,6 @@ exports.userDataUpdated = functions.firestore
                         return tripData;
                     })
                         .then(function (tripData) {
-                        console.log("trip data: ", tripData);
                         return admin.firestore()
                             .doc('/users/' + event.params.userId).set({ searchResult: tripData }, { merge: true });
                     })];

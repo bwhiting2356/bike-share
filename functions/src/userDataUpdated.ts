@@ -34,7 +34,8 @@ export const userDataUpdated = functions.firestore
       walking1DirectionsPromise,
       nearestEndStationPromise,
       walking2DirectionsPromise,
-      bicyclingDirectionsPromise;
+      bicyclingDirectionsPromise,
+      deleteOperationPromise;
 
     if (userData.searchParams) {
       if (userData.searchParams.origin) {
@@ -83,6 +84,10 @@ export const userDataUpdated = functions.firestore
 
       if (userData.searchParams.origin && userData.searchParams.destination && // both fields exist
         (JSON.stringify(userData.searchParams) !== JSON.stringify(previousUserData.searchParams))) { // the params have changed
+
+        deleteOperationPromise = admin.firestore()
+          .doc('/users/' + event.params.userId).set({ searchResult: null }, { merge: true });
+
         bicyclingDirectionsPromise = Promise.all([nearestStartStationPromise, nearestEndStationPromise])
           .then(stationsCoords => {
             const startCoords = stationsCoords[0];
@@ -100,6 +105,7 @@ export const userDataUpdated = functions.firestore
           walking1DirectionsPromise,
           walking2DirectionsPromise,
           bicyclingDirectionsPromise,
+          deleteOperationPromise
         ]).then( allDirections => {
           const walking1Travel = allDirections[0].data;
           const walking2Travel = allDirections[1].data;
@@ -150,7 +156,6 @@ export const userDataUpdated = functions.firestore
           return tripData;
         })
         .then(tripData => {
-          console.log("trip data: ", tripData);
           return admin.firestore()
             .doc('/users/' + event.params.userId).set({ searchResult: tripData }, { merge: true })
         })
