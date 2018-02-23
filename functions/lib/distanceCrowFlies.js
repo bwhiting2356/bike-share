@@ -6,7 +6,7 @@ exports.distanceCrowFlies = function (point1, point2) {
         || !point1.hasOwnProperty('lng')
         || !point2.hasOwnProperty('lat')
         || !point2.hasOwnProperty('lng')) {
-        throw new Error('point must be LatLng object');
+        throw new Error('point must be LatLng object  ');
     }
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(point2.lat - point1.lat); // deg2rad below

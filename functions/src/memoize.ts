@@ -3,7 +3,6 @@ import { DocumentSnapshot } from "@google-cloud/firestore";
 
 export const memoize = (func: (params) => Promise<any>): (params) => Promise<any> => {
   return params => {
-
     const stringParams: string = JSON.stringify(params);
     return admin.firestore()
       .collection(func.name)
@@ -21,6 +20,7 @@ export const memoize = (func: (params) => Promise<any>): (params) => Promise<any
               .set({data: response })
               .then(() => ({ data: response }));
           })
-      });
+      })
+      .catch(err => console.error("Error inside memoize: ", err));
   }
 };

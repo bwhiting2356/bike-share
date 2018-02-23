@@ -11,7 +11,6 @@ import { googleMapsClient } from "./googleMapsClient";
 // import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
 
 const mergeDataWithIds = (response, stationsData) => {
-  console.log("line 10 inside merge data");
   const newData = [];
   for (let i = 0; i < response.length; i++) {
     newData.push({
@@ -28,7 +27,7 @@ const compareStationData = (a, b) => {
   return a.data.distance.value - b.data.distance.value;
 };
 
-export const funcFindNearestStations = async (loc: LatLng) => {
+const funcFindNearestStations = async (loc: LatLng) => {
 
     return admin.firestore().collection('/stations')
     .get()
@@ -69,6 +68,8 @@ export const funcFindNearestStations = async (loc: LatLng) => {
 
 
 export const findNearestStations = memoize(funcFindNearestStations);
+
+console.log(funcFindNearestStations.name);
 
 
 

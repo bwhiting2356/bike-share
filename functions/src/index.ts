@@ -7,7 +7,6 @@ import { userDataUpdated } from "./userDataUpdated";
 admin.initializeApp(functions.config().firebase);
 
 exports.userDataUpdated = userDataUpdated;
-// exports.searchBikeTrips = searchBikeTrips;
 
 
 

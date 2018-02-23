@@ -44,7 +44,6 @@ var distanceCrowFlies_1 = require("../distanceCrowFlies");
 var googleMapsClient_1 = require("./googleMapsClient");
 // import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
 var mergeDataWithIds = function (response, stationsData) {
-    console.log("line 10 inside merge data");
     var newData = [];
     for (var i = 0; i < response.length; i++) {
         newData.push({
@@ -59,7 +58,7 @@ var mergeDataWithIds = function (response, stationsData) {
 var compareStationData = function (a, b) {
     return a.data.distance.value - b.data.distance.value;
 };
-exports.funcFindNearestStations = function (loc) { return __awaiter(_this, void 0, void 0, function () {
+var funcFindNearestStations = function (loc) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
         return [2 /*return*/, admin.firestore().collection('/stations')
                 .get()
@@ -94,5 +93,6 @@ exports.funcFindNearestStations = function (loc) { return __awaiter(_this, void 
             })];
     });
 }); };
-exports.findNearestStations = memoize_1.memoize(exports.funcFindNearestStations);
+exports.findNearestStations = memoize_1.memoize(funcFindNearestStations);
+console.log(funcFindNearestStations.name);
 //# sourceMappingURL=findNearestStations.js.map
