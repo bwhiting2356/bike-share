@@ -5,7 +5,6 @@ import { Observable } from "rxjs/Observable";
 
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
-// import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { LatLng } from '../../shared/LatLng';
@@ -13,7 +12,6 @@ import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
 
 import 'rxjs/add/operator/take';
 import { HttpClient } from '@angular/common/http';
-import { SearchQuery } from '../../shared/SearchQuery';
 
 
 @Injectable()
@@ -24,11 +22,8 @@ export class FirebaseService {
   userDataRef;
 
   constructor(
-    private http: HttpClient,
-
     public afAuth: AngularFireAuth,
-    private dbFirestore: AngularFirestore,
-    private dbDatabase: AngularFireDatabase) {
+    private dbFirestore: AngularFirestore) {
 
     this.signInAnonymously().then(result => {
       this.userId = result.uid;
@@ -36,8 +31,8 @@ export class FirebaseService {
       this.searchResult = this.userDataRef.valueChanges().map(data => data.searchResult);
     });
 
-    this.stationList = this.dbDatabase.list('/stations').valueChanges()
-      .map(stationList => stationList.map(station => station["coords"]));
+    this.stationList = this.dbFirestore.collection('/stations').valueChanges()
+      .map(stationList => stationList.map(station => clientMapGeoPointToLatLng(station["coords"])));
 
     this.afAuth.idToken.subscribe(token => {
       this.userId = token;
@@ -77,5 +72,5 @@ export class FirebaseService {
 }
 
 export const clientMapGeoPointToLatLng = (geopoint): LatLng => { // TODO: save for when geoqueries come to firestore
-  return { lat: geopoint.coords.latitude, lng: geopoint.coords.longitude };
+  return { lat: geopoint.latitude, lng: geopoint.longitude };
 };
