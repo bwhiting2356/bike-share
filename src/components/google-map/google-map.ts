@@ -14,7 +14,7 @@ declare var google;
 export class GoogleMapComponent implements OnChanges, OnInit {
   @ViewChild('mapContainer') mapContainer;
   @Input() zoom: number = 14;
-  @Input() zoomControl: boolean = true;
+  @Input() zoomControl: boolean = false;
   @Input() scrollWheel: boolean = true;
   @Input() streetViewControl: boolean = false;
   @Input() gestureHandling: string = 'greedy';

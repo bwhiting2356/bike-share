@@ -74,7 +74,7 @@ exports.userDataUpdated = functions.firestore
             }
             if (userData.searchParams.destination) {
                 destinationCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchParams.destination.coords);
-                destinationAddress = userData.searchParams.destination.coords;
+                destinationAddress = userData.searchParams.destination.address;
                 nearestEndStationPromise = findNearestStations_1.findNearestStations(destinationCoords)
                     .then(function (response) {
                     stationEndCoords = response.data[0].coords;
@@ -90,7 +90,7 @@ exports.userDataUpdated = functions.firestore
                     return getDirections_1.getDirections(walking1Query);
                 });
             }
-            if (userData.searchParams.origin && userData.searchParams.destination && // both fields exist
+            if (userData.searchParams.origin && userData.searchParams.destination &&
                 (JSON.stringify(userData.searchParams) !== JSON.stringify(previousUserData.searchParams))) {
                 deleteOperationPromise = admin.firestore()
                     .doc('/users/' + event.params.userId).set({ searchResult: null }, { merge: true });

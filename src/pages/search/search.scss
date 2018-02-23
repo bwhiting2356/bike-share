@@ -1,83 +1,89 @@
-$search-bar-height: 300px;
-
 page-search {
-  #menu-fab {
+  .menu-fab {
     position: absolute;
     top: 20px;
     left: 10px;
     z-index: 3;
 
+    @media (min-width: 800px) {
+      position: relative;
+      top: 0;
+    }
+
     button {
       background-color: white;
       border: 1px solid grey;
       color: black;
+
+
+      @media (min-width: 800px) {
+        margin: 0;
+        margin-bottom: 10px;
+        border-color: white;
+      }
     }
   }
 
-  .flex-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  ion-content {
+    height: 100vh;
+    width: 100vw;
 
-    #map {
-      align-self: flex-start;
-      width: 100%;
-      height: 100px;
-      flex-grow: 2;
-      z-index: 1;
-      position: relative;
-      //
-      //google-map {
-      //  position: absolute;
-      //}
-      //
-      //.spinner-container {
-      //  position: absolute;
-      //  width: 100%;
-      //  height: 100px;
-      //  background: red;
-      //
-      //  ion-spinner {
-      //
-      //  }
-      //}
+    .flex-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
 
-
-    }
-
-    #search {
-      border-top: 1px solid black;
-      flex-grow: 0;
-      align-self: flex-end;
-      background-color: white;
-      width: 100%;
-      height: 250px;  // TODO: this changes slightly depending on device, so should be dynamic
-
-      ion-content {
-        max-width: 600px;
-        margin: auto;
-      }
-    }
-
-    #time-container {
-      position: relative;
-
-      ion-select {
-        position: absolute;
-        left: 0;
-      }
-      ion-datetime {
-        position: absolute;
-        right: 0;
+      @media (min-width: 800px) {
+        flex-direction: row;
       }
 
+      .map {
+        flex-grow: 1;
+        display: inline-block;
+
+        width: 100%;
+        height: 100px;
+
+        @media (min-width: 800px) {
+          height: 100%;
+        }
+      }
+
+      .search {
+        flex-grow: 0;
+        display: inline-block;
+
+        width: 100%;
+        height: auto;
+        background-color: map_get($colors, 'dark');
+
+        @media (min-width: 800px) {
+          min-width: 400px;
+          max-width: 400px;
+          height: 100%;
+        }
+
+        ion-list {
+          margin: 0 auto;
+          max-width: 350px;
+        }
+      }
+
+      .time-container {
+        position: relative;
+
+        ion-select {
+          position: absolute;
+          left: 0;
+        }
+        ion-datetime {
+          position: absolute;
+          right: 0;
+        }
+
+      }
     }
   }
-}
-
-ion-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 }

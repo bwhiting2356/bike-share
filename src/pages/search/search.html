@@ -1,22 +1,19 @@
-<div id="menu-fab">
-  <button ion-button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-</div>
-<div class="flex-container">
-  <div id="map">
-    <!--<div class="spinner-container" *ngIf="fetching">-->
-      <!--<ion-spinner></ion-spinner>-->
-    <!--</div>-->
-    <google-map
-      [center]="userLocation$ | async"
-      [origin]="originCoords"
-      [destination]="destinationCoords"
-      [stationList]="stationList | async">
-    </google-map>
-  </div>
-  <div id="search">
-    <ion-content padding-horizontal>
+<ion-header>
+
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Search</ion-title>
+  </ion-navbar>
+
+
+</ion-header>
+
+<ion-content>
+  <div class="flex-container">
+    <div class="search" padding>
       <ion-list>
         <ion-item>
           <ion-label floating>Origin</ion-label>
@@ -35,7 +32,7 @@
             type="text"></ion-input>
         </ion-item>
 
-        <div ion-item id="time-container">
+        <div ion-item class="time-container">
           <ion-select
             [(ngModel)]="timeTarget"
             (ngModelChange)="timeTargetChange()"
@@ -50,7 +47,6 @@
             displayFormat="h:mm A MMM DD">
           </ion-datetime>
         </div>
-
         <button
           ion-button
           block
@@ -59,6 +55,14 @@
           Find bike rentals
         </button>
       </ion-list>
-    </ion-content>
+    </div>
+    <div class="map">
+      <google-map
+        [center]="userLocation$ | async"
+        [origin]="originCoords"
+        [destination]="destinationCoords"
+        [stationList]="stationList | async">
+      </google-map>
+    </div>
   </div>
-</div>
+</ion-content>

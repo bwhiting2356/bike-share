@@ -62,7 +62,7 @@ export const userDataUpdated = functions.firestore
 
       if (userData.searchParams.destination) {
         destinationCoords = serverMapGeoPointToLatLng(userData.searchParams.destination.coords);
-        destinationAddress = userData.searchParams.destination.coords;
+        destinationAddress = userData.searchParams.destination.address;
         nearestEndStationPromise = findNearestStations(destinationCoords)
           .then(response => {
             stationEndCoords = response.data[0].coords;

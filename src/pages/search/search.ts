@@ -12,8 +12,8 @@ import { LatLng } from '../../../shared/LatLng';
 
 // rxjs
 
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/observable/forkJoin';
+// import 'rxjs/add/operator/startWith';
+// import 'rxjs/add/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
 
 // services

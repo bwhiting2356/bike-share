@@ -33,25 +33,19 @@ export class FirebaseService {
 
     this.stationList = this.dbFirestore.collection('/stations').valueChanges()
       .map(stationList => stationList.map(station => clientMapGeoPointToLatLng(station["coords"])));
-
-    this.afAuth.idToken.subscribe(token => {
-      this.userId = token;
-    });
   }
 
   signInAnonymously() {
     return this.afAuth.auth.signInAnonymously();
   }
 
-  // TODO: create nested searchParams structure rather than flat properties? How do I update or make a reference?
+  // search methods
 
   updateSearchOrigin(coords: LatLng, address: string) {
     const originCoords = mapLatLngToGeoPoint(coords);
     this.userDataRef
       .set({ searchParams: { origin: { coords: originCoords, address } }}, { merge: true });
   }
-
-  // TODO: nest the search params inside of an object (also change on the backend)
 
   updateSearchDestination(coords: LatLng, address: string) {
     const destinationCoords = mapLatLngToGeoPoint(coords);
