@@ -33,7 +33,7 @@ export class FirebaseService {
     this.signInAnonymously();
 
     this.stationList = this.dbDatabase.list('/stations').valueChanges()
-      .map(stationList => stationList.map(station => station.coords));
+      .map(stationList => stationList.map(station => station["coords"]));
 
     this.afAuth.idToken.subscribe(token => {
       this.userId = token;

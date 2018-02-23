@@ -6,7 +6,7 @@ exports.TripStatus = {
     PROPOSED: 'Proposed',
     SCHEDULED: 'Scheduled'
 };
-var Trip = (function () {
+var Trip = /** @class */ (function () {
     function Trip(data) {
         this.data = data;
     }

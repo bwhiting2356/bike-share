@@ -38,6 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var functions = require("firebase-functions");
 var findNearestStations_1 = require("./googleMaps/findNearestStations");
+var serverMapGeoPointToLatLng_1 = require("./googleMaps/serverMapGeoPointToLatLng");
 exports.userDataUpdated = functions.firestore
     .document('/users/{userId}')
     .onWrite(function (event) { return __awaiter(_this, void 0, void 0, function () {
@@ -48,14 +49,15 @@ exports.userDataUpdated = functions.firestore
                 userData = event.data.data();
                 if (!userData.searchParams) return [3 /*break*/, 2];
                 if (!userData.searchParams.origin) return [3 /*break*/, 2];
-                originCoords = userData.searchParams.origin.coords;
-                return [4 /*yield*/, findNearestStations_1.findNearestStations(originCoords).then(function (response) {
-                        var coords = response.data[0].coords;
-                        var address = response.data[0].address;
-                        return { coords: coords, address: address };
-                    })];
+                originCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchParams.origin.coords);
+                return [4 /*yield*/, findNearestStations_1.findNearestStations(originCoords)];
             case 1:
                 nearestStartStation = _a.sent();
+                // .then(response => {
+                // const coords = response.data[0].coords;
+                // const address = response.data[0].address;
+                // return { coords, address }
+                // });
                 console.log("nearestStartStation: ", nearestStartStation);
                 _a.label = 2;
             case 2: return [2 /*return*/, Promise.resolve()];

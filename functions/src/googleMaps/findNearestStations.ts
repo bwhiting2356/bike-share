@@ -1,10 +1,14 @@
 import * as functions from 'firebase-functions';
+import * as GeoFire from 'geofire';
 const admin = require('firebase-admin');
-import { googleMapsClient } from './googleMapsClient';
+// import { googleMapsClient } from './googleMapsClient';
 import { serverMapGeoPointToLatLng } from './serverMapGeoPointToLatLng';
 import { memoize } from '../memoize';
 import { LatLng } from '../shared/LatLng';
-import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
+import { distanceCrowFlies } from '../distanceCrowFlies';
+import { DistanceMatixQuery } from "../shared/DistanceMatrixQuery";
+import { googleMapsClient } from "./googleMapsClient";
+// import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
 
 const mergeDataWithIds = (response, stationsData) => {
   console.log("line 10 inside merge data");
@@ -24,30 +28,25 @@ const compareStationData = (a, b) => {
   return a.data.distance.value - b.data.distance.value;
 };
 
-const funcFindNearestStations = (loc: LatLng) => {
-  console.log("find nearest stations line 27");
-  return admin.firestore().collection('/stations')
+export const funcFindNearestStations = async (loc: LatLng) => {
+
+    return admin.firestore().collection('/stations')
     .get()
-    .then(querySnapshot => {
+    .then((snapshot) => {
 
       const stationsData = [];
 
-      // get all the stations from the database (maybe just keep this in a constant if it never changes?)
-
-      querySnapshot.docs.forEach(function (queryDocumentSnapshot) {
+      snapshot.docs.forEach(doc => {
         stationsData.push({
-          id: queryDocumentSnapshot.id,
-          coords: serverMapGeoPointToLatLng(queryDocumentSnapshot.data().coords),
-          address: queryDocumentSnapshot.data().address
+          id: doc.id,
+          coords: serverMapGeoPointToLatLng(doc.data().coords),
+          distanceFromLoc: distanceCrowFlies(loc, serverMapGeoPointToLatLng(doc.data().coords)),
+          address: doc.data().address
         })
       });
-
-      // make a version with only the data, to send to the google maps api
-
-      const stationsCoords = stationsData.map(station => station.coords);
-      console.log("stations coords: ", stationsCoords);
-
-      // make request to google
+      const sortedStations = stationsData.sort((a, b) => a.distanceFromLoc - b.distanceFromLoc);
+      const closest10Stations = sortedStations.slice(0, 9);
+      const stationsCoords = closest10Stations.map(station => station.coords);
 
       const req: DistanceMatixQuery = {
         origins: [loc],
@@ -57,14 +56,11 @@ const funcFindNearestStations = (loc: LatLng) => {
 
       return new Promise(resolve => {
         googleMapsClient.distanceMatrix(req, (err, res) => {
-
-          console.log("find nearest stations line 59");
-          console.log('err: ', JSON.stringify(err));
-          console.log("res: ", JSON.stringify(res));
+          if (err) {
+            throw new Error('distance matrix error');
+          }
           const mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsData);
-          console.log("merged data:", mergedData);
           const sortedData = mergedData.sort(compareStationData);
-          console.log("sorted data:", sortedData);
           resolve(sortedData)
         });
       });
@@ -73,3 +69,6 @@ const funcFindNearestStations = (loc: LatLng) => {
 
 
 export const findNearestStations = memoize(funcFindNearestStations);
+
+
+
