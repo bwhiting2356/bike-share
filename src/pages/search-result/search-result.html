@@ -100,7 +100,7 @@
             <span id="travel-time">{{ trip.totalSeconds | time }}</span>
             <span id="travel-distance">{{ trip.totalFeet | distance }}</span>
             <span id="total-cost">
-              {{ priceMessage }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ priceAbsValue | currency:'USD':true }}</span>
+              {{ 'Total cost: ' }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ trip.totalPrice | currency:'USD':true }}</span>
             </span>
           </div>
         </div>

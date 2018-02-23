@@ -30,7 +30,11 @@ export class FirebaseService {
     private dbFirestore: AngularFirestore,
     private dbDatabase: AngularFireDatabase) {
 
-    this.signInAnonymously();
+    this.signInAnonymously().then(result => {
+      this.userId = result.uid;
+      this.userDataRef = this.dbFirestore.collection('/users').doc(this.userId);
+      this.searchResult = this.userDataRef.valueChanges().map(data => data.searchResult);
+    });
 
     this.stationList = this.dbDatabase.list('/stations').valueChanges()
       .map(stationList => stationList.map(station => station["coords"]));
@@ -41,10 +45,7 @@ export class FirebaseService {
   }
 
   signInAnonymously() {
-    return this.afAuth.auth.signInAnonymously().then(result => {
-      this.userId = result.uid;
-      this.userDataRef = this.dbFirestore.collection('/users').doc(this.userId);
-    });
+    return this.afAuth.auth.signInAnonymously();
   }
 
   // TODO: create nested searchParams structure rather than flat properties? How do I update or make a reference?
@@ -72,10 +73,6 @@ export class FirebaseService {
     const datetime = new Date(date);
     this.userDataRef
       .set({ searchParams: { datetime }}, { merge: true });
-  }
-
-  search(searchQuery: SearchQuery) {
-    return this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/searchBikeTrips', searchQuery)
   }
 }
 

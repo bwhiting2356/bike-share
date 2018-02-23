@@ -25,7 +25,7 @@ export class GeolocationService {
     this.userLocation$ = new BehaviorSubject(null)
     this.geocoder = new google.maps.Geocoder;
     this.geolocation.watchPosition().subscribe(geoposition => {
-      if (geoposition) {
+      if (geoposition && geoposition.coords) {
         this.foundPosition.next(true);
         this.userLocation$.next({ lat: geoposition.coords.latitude, lng: geoposition.coords.longitude })
       }

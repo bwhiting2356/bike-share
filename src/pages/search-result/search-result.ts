@@ -3,6 +3,7 @@ import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-an
 import { Trip, tripA, TripData } from '../../../shared/Trip';
 import { bicyclePolylineMainColor, bicyclePolylineBorderColor } from '../../../shared/ThemeVariables';
 import { FirebaseService } from '../../services/firebase-service';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the SearchResultPage page.
@@ -21,43 +22,37 @@ export class SearchResultPage {
   bicyclePolylineMainColor;
   bicyclePolylineBorderColor;
 
-  get priceMessage() {
-    if (this.trip.totalPrice > 0) {
-      return 'Total earnings';
-    } else {
-      return 'Total cost';
-    }
-  }
+  // get priceMessage() {
+  //   this.trip.take(1).subscribe(t => {
+  //     if (t) {
+  //       if (t.totalPrice > 0) {
+  //         return 'Total earnings';
+  //       } else {
+  //         return 'Total cost';
+  //       }
+  //     } else {
+  //       return null;
+  //     }
+  //   })
+  // }
 
-  get priceAbsValue() {
-    return Math.abs(this.trip.totalPrice);
-  }
+  // get priceAbsValue() {
+  //   return Math.abs(this.trip.totalPrice);
+  // }
 
   constructor(
     private firebaseService: FirebaseService,
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
 
-    const searchQuery = this.navParams.get('searchQuery');
-    this.firebaseService.search(searchQuery).subscribe((response: TripData) => {
-      console.log('line 43');
-      this.trip = new Trip(response);
-    })
+    this.firebaseService.searchResult.subscribe((response: TripData) => {
+      if (response) {
+        this.trip = new Trip(response);
+      } else {
+        this.trip = null;
+      }
+    });
 
-    // this.firebaseService.searchResult.subscribe(result => {
-    //   console.log("result: ", result);
-    //   this.trip = new Trip(result);
-    // })
-
-    // firebaseService.userDataRef
-    //   .valueChanges().subscribe(values => {
-    //     if (values && values.searchResult) {
-    //       this.trip = new Trip(values.searchResult);
-    //     } else {
-    //       this.trip = null;
-    //     }
-    //     console.log(this.trip);
-    // });
     this.bicyclePolylineMainColor = bicyclePolylineMainColor;
     this.bicyclePolylineBorderColor = bicyclePolylineBorderColor;
   }

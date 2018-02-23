@@ -54,10 +54,6 @@ export class SearchPage {
     this.datetime = new Date().toISOString();
     this.userLocation$ = this.geolocationService.userLocation$;
     this.stationList = this.firebaseService.stationList;
-    // this.stationList.subscribe(stations => {
-    //   console.log("line 58 statino list: ", stations);
-    //   }
-    // )
 
   }
 
@@ -137,19 +133,6 @@ export class SearchPage {
   }
 
   submitSearch() {
-    let searchQuery = {
-      origin: {
-        coords: this.originCoords,
-        address: this.origin
-      },
-      destination: {
-        coords: this.destinationCoords,
-        address: this.destination
-      },
-      timeTarget: this.timeTarget,
-      datetime: this.datetime
-    };
-
-    this.navCtrl.push(SearchResultPage, { searchQuery });
+    this.navCtrl.push(SearchResultPage);
   }
 }
