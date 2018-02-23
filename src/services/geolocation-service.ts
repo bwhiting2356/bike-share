@@ -25,8 +25,10 @@ export class GeolocationService {
     this.userLocation$ = new BehaviorSubject(null)
     this.geocoder = new google.maps.Geocoder;
     this.geolocation.watchPosition().subscribe(geoposition => {
-      this.foundPosition.next(true);
-      this.userLocation$.next({ lat: geoposition.coords.latitude, lng: geoposition.coords.longitude })
+      if (geoposition) {
+        this.foundPosition.next(true);
+        this.userLocation$.next({ lat: geoposition.coords.latitude, lng: geoposition.coords.longitude })
+      }
     })
   }  // TODO: is this bad design, to push a values into a subject inside of a subscribe function?
 
