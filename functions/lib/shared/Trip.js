@@ -10,14 +10,10 @@ var Trip = (function () {
     function Trip(data) {
         this.data = data;
     }
-    Object.defineProperty(Trip.prototype, "totalSeconds", {
-        get: function () {
-            return Math.abs(this.data.arrivalTime.getSeconds() - this.data.departureTime.getSeconds());
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(Trip.prototype, "totalFeet", {
+        // get totalSeconds(): number {
+        //   return Math.abs(this.data.arrivalTime.getSeconds() - this.data.departureTime.getSeconds());
+        // }
         get: function () {
             return this.data.walking1Travel.feet + this.data.bicyclingTravel.feet + this.data.walking2Travel.feet;
         },

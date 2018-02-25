@@ -27,11 +27,11 @@
       <div class="map">
         <google-map [origin]="origin"
                     [destination]="destination"
-                    [stationStart]="trip ? trip.data.stationStart.coords : null"
-                    [stationEnd]="trip ? trip.data.stationEnd.coords : null"
-                    [walking1Points]="trip ? trip.data.walking1Travel.points : null"
-                    [bicyclingPoints]="trip ? trip.data.bicyclingTravel.points : null"
-                    [walking2Points]="trip ? trip.data.walking2Travel.points : null">
+                    [stationStart]="trip ? trip.stationStart.coords : null"
+                    [stationEnd]="trip ? trip.stationEnd.coords : null"
+                    [walking1Points]="trip ? trip.walking1Travel.points : null"
+                    [bicyclingPoints]="trip ? trip.bicyclingTravel.points : null"
+                    [walking2Points]="trip ? trip.walking2Travel.points : null">
         </google-map>
       </div>
     </div>

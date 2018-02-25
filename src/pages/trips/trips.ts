@@ -49,10 +49,10 @@ export class TripsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.trips = fakeTrips;
     this.pastTrips = this.trips.filter(trip => {
-      return trip.data.status === TripStatus.COMPLETED  // order
+      return trip.status === TripStatus.COMPLETED  // order
     });
     this.upcomingTrips = this.trips.filter(trip => {
-      return trip.data.status === TripStatus.COMPLETED // change this to SCHEDULED, also order
+      return trip.status === TripStatus.COMPLETED // change this to SCHEDULED, also order
     });
   }
 

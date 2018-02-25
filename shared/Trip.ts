@@ -50,24 +50,44 @@ export const TripStatus = {
 };
 
 export class Trip {
+  origin;
   departureTime: Date;
+  walking1Travel;
+  stationStart;
+  bicyclingTravel;
+  stationEnd;
+  walking2Travel;
   arrivalTime: Date;
+  destination;
+  status;
 
-  constructor(public data: TripData) {  // parse date strings into date objects?
-    this.arrivalTime = new Date(this.data.arrivalTime);
-    this.departureTime = new Date(this.data.departureTime);
+  constructor(data: TripData) {  // parse date strings into date objects?
+    this.origin = data.origin;
+    this.departureTime = new Date(data.departureTime);
+    this.walking1Travel = data.walking1Travel;
+    this.stationStart = { ...data.stationStart, time: new Date(data.stationStart.time) };
+    this.bicyclingTravel = data.bicyclingTravel;
+    this.stationEnd = { ...data.stationEnd, time: new Date(data.stationEnd.time) };
+    this.walking2Travel = data.walking2Travel;
+    this.arrivalTime = new Date(data.arrivalTime);
+    this.destination = data.destination;
+    this.status = data.status;
   }
 
   get totalSeconds(): number {
-    return Math.abs(+this.arrivalTime - +this.departureTime);
+    return this.walking1Travel.seconds + this.walking2Travel.seconds + this.bicyclingTravel.seconds;
   }
 
   get totalFeet(): number {
-    return this.data.walking1Travel.feet + this.data.bicyclingTravel.feet + this.data.walking2Travel.feet;
+    return this.walking1Travel.feet + this.bicyclingTravel.feet + this.walking2Travel.feet;
   }
 
   get totalPrice(): number {
-    return this.data.stationStart.price + this.data.bicyclingTravel.price + this.data.stationEnd.price;
+    return this.stationStart.price + this.bicyclingTravel.price + this.stationEnd.price;
+  }
+
+  get priceMessage(): string {
+    return this.totalPrice > 0 ? 'Total earnings' : 'Total cost';
   }
 }
 
