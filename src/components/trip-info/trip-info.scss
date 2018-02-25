@@ -114,16 +114,10 @@ trip-info {
         display: flex;
         flex-direction: column;
 
-        //#bike-line {
-        //  flex-grow: 2;
-        //}
-        //
-        //#dot-1, #dot-2 {
-        //  position: absolute;
-        //  left: 3px;
-        //}
-        //#dot-1 { top: 3px;  }
-        //#dot-2 { bottom: 3px; }
+        .bicyclingPolyline {
+          fill: map_get($colors, 'bicyclingLine');
+          stroke: map_get($colors, 'bicyclingBorder')
+        }
       }
     }
 
