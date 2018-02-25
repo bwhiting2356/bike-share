@@ -6,29 +6,32 @@
 
 </ion-header>
 <ion-content>
-  <ion-spinner *ngIf="fetching"></ion-spinner>
-  <div class="result" *ngIf="!fetching">
+  <div class="result">
     <div class="flex-container">
       <div class="search" padding>
-        <ion-list>
-          <trip-info [trip]="trip"></trip-info>
-          <button
-            ion-button
-            block
-            [disabled]="disableButton"
-            (click)="submitSearch()">
-            Book this trip
-          </button>
+        <ion-spinner *ngIf="fetching"></ion-spinner>
+        <ion-list *ngIf="!fetching">
+          <div class="trip" *ngIf="trip">
+            <trip-info [trip]="trip" ></trip-info>
+            <button
+              ion-button
+              block
+              [disabled]="disableButton"
+              (click)="submitSearch()">
+              Book this trip
+            </button>
+          </div>
+          <div class="error" *ngIf="error"></div>
         </ion-list>
       </div>
       <div class="map">
-        <google-map [origin]="trip.data.origin.coords"
-                    [destination]="trip.data.destination.coords"
-                    [stationStart]="trip.data.stationStart.coords"
-                    [stationEnd]="trip.data.stationEnd.coords"
-                    [walking1Points]="trip.data.walking1Travel.points"
-                    [bicyclingPoints]="trip.data.bicyclingTravel.points"
-                    [walking2Points]="trip.data.walking2Travel.points">
+        <google-map [origin]="origin"
+                    [destination]="destination"
+                    [stationStart]="trip ? trip.data.stationStart.coords : null"
+                    [stationEnd]="trip ? trip.data.stationEnd.coords : null"
+                    [walking1Points]="trip ? trip.data.walking1Travel.points : null"
+                    [bicyclingPoints]="trip ? trip.data.bicyclingTravel.points : null"
+                    [walking2Points]="trip ? trip.data.walking2Travel.points : null">
         </google-map>
       </div>
     </div>

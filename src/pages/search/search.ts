@@ -133,6 +133,6 @@ export class SearchPage {
   }
 
   submitSearch() {
-    this.navCtrl.push(SearchResultPage);
+    this.navCtrl.push(SearchResultPage, {origin: this.originCoords, destination: this.destinationCoords });
   }
 }
