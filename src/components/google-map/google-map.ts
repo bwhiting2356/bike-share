@@ -78,8 +78,17 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   fitBounds() {
     let bounds = new google.maps.LatLngBounds();
     if (this.origin) bounds.extend(this.origin);
+    if (this.walking1Points) {
+      this.walking1Points.forEach(points => bounds.extend(points));
+    }
     if (this.stationStart) bounds.extend(this.stationStart);
+    if (this.bicyclingPoints) {
+      this.bicyclingPoints.forEach(points => bounds.extend(points));
+    }
     if (this.stationEnd) bounds.extend(this.stationEnd);
+    if (this.walking2Points) {
+      this.walking2Points.forEach(points => bounds.extend(points));
+    }
     if (this.destination) bounds.extend(this.destination);
     this.map.fitBounds(bounds, 20); // 20px padding
   }
