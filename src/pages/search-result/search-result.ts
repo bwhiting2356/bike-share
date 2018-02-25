@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
-import { Trip, TripData } from '../../../shared/Trip';
-import { bicyclePolylineMainColor, bicyclePolylineBorderColor } from '../../../shared/ThemeVariables';
+import { Trip } from '../../../shared/Trip';
 import { FirebaseService } from '../../services/firebase-service';
 import { LatLng } from '../../../shared/LatLng';
-import { Observable } from 'rxjs/Observable';
-
-/**
- * Generated class for the SearchResultPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
