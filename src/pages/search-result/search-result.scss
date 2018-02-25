@@ -23,49 +23,54 @@ page-search-result {
         flex-direction: row;
       }
 
-      .map {
-        flex-grow: 1;
-        display: inline-block;
-
-        width: 100%;
-        height: 100px;
-
-        @media (min-width: 800px) {
-          height: 100%;
-        }
-      }
-
       .search {
         flex-grow: 0;
         display: inline-block;
+        box-sizing: border-box;
 
         width: 100%;
         height: auto;
         background-color: map_get($colors, 'dark');
 
+        @media (min-width: 800px) {
+          width: 350px;
+          height: 100%;
+        }
+
         ion-list {
           margin: 0 auto;
           max-width: 350px;
-
-          @media (min-width: 800px) {
-            height: 100%;
-          }
         }
       }
 
-      .time-container {
-        position: relative;
+      .map {
+        flex-grow: 1;
+        display: inline-block;
+        box-sizing: border-box;
 
-        ion-select {
-          position: absolute;
-          left: 0;
-        }
-        ion-datetime {
-          position: absolute;
-          right: 0;
-        }
+        width: 100%;
+        height: 100px;
 
+        @media (min-width: 800px) {
+          margin-left: 0;
+          height: 100%;
+          width: calc(100% - 350px);
+        }
       }
+
+      //.time-container {
+      //  position: relative;
+      //
+      //  ion-select {
+      //    position: absolute;
+      //    left: 0;
+      //  }
+      //  ion-datetime {
+      //    position: absolute;
+      //    right: 0;
+      //  }
+      //
+      //}
     }
   }
 }
