@@ -3,13 +3,9 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { SearchPage } from '../pages/search/search';
-import { AddressModalPage } from '../pages/address-modal/address-modal';
-import { SearchResultPage } from "../pages/search-result/search-result";
-import { PaymentsPage } from '../pages/payments/payments';
 import { TripsPage } from '../pages/trips/trips';
+import { SearchResultPage } from '../pages/search-result/search-result';
 
 @Component({
   templateUrl: 'app.html'

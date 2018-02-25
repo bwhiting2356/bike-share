@@ -59,15 +59,13 @@ page-search {
         height: auto;
         background-color: map_get($colors, 'dark');
 
-        @media (min-width: 800px) {
-          min-width: 400px;
-          max-width: 400px;
-          height: 100%;
-        }
-
         ion-list {
           margin: 0 auto;
           max-width: 350px;
+
+          @media (min-width: 800px) {
+            height: 100%;
+          }
         }
       }
 

@@ -7,5 +7,11 @@ admin.initializeApp(functions.config().firebase);
 
 exports.userDataUpdated = userDataUpdated;
 
+exports.helloWorld = functions.https.onRequest((req, res) => {
+  console.log("hello from console");
+  res.send("Hello World");
+  // ...
+});
+
 
 

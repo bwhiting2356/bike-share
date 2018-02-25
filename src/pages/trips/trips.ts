@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { TripDetailPage } from '../trip-detail/trip-detail';
@@ -57,13 +56,13 @@ export class TripsPage {
     });
   }
 
-  get pastListPosition() {
-    return this.timeDirection === 'past' ? 'center' : 'right';
-  }
-
-  get upcomingListPosition() {
-    return this.timeDirection === 'upcoming' ? 'center' : 'left';
-  }
+  // get pastListPosition() {
+  //   return this.timeDirection === 'past' ? 'center' : 'right';
+  // }
+  //
+  // get upcomingListPosition() {
+  //   return this.timeDirection === 'upcoming' ? 'center' : 'left';
+  // }
 
   onTripClicked(trip: Trip) {
     this.navCtrl.push(TripDetailPage, { trip })

@@ -9,8 +9,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // pages
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { SearchPage } from '../pages/search/search';
 import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { TripsPage } from '../pages/trips/trips';
@@ -46,8 +44,6 @@ import { environment } from "../environments/environment";
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
     SearchPage,
     AddressModalPage,
     SearchResultPage,
@@ -66,8 +62,6 @@ import { environment } from "../environments/environment";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
     SearchPage,
     AddressModalPage,
     SearchResultPage,

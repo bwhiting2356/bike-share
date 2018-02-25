@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
-import { Trip, tripA, TripData } from '../../../shared/Trip';
+import { Trip, TripData } from '../../../shared/Trip';
 import { bicyclePolylineMainColor, bicyclePolylineBorderColor } from '../../../shared/ThemeVariables';
 import { FirebaseService } from '../../services/firebase-service';
-import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the SearchResultPage page.
@@ -19,6 +18,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class SearchResultPage {
   trip: Trip;
+  error: string;
+  fetching: boolean;
   bicyclePolylineMainColor;
   bicyclePolylineBorderColor;
 
@@ -45,9 +46,20 @@ export class SearchResultPage {
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams) {
 
-    this.firebaseService.searchResult.subscribe((response: TripData) => {
+    this.fetching = true;
+
+    this.firebaseService.searchResult.subscribe((response) => {
       if (response) {
-        this.trip = new Trip(response);
+        console.log('response: ', response);
+        if (response.error) {
+          this.trip = null;
+          this.error = response.error;
+          this.fetching = false;
+        } else {
+          this.trip = new Trip(response);
+          this.error = null;
+          this.fetching = false;
+        }
       } else {
         this.trip = null;
       }

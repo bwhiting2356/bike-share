@@ -1,12 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Searchbar } from 'ionic-angular';
 import { AutocompleteService } from '../../services/autocomplete-service';
 import { GeolocationService } from '../../services/geolocation-service';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { Keyboard } from '@ionic-native/keyboard';
-import { Renderer } from '@angular/core';
 
 import 'rxjs/add/observable/fromPromise';
 import "rxjs/add/operator/debounceTime";

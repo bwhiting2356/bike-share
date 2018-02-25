@@ -6,107 +6,12 @@
 
 </ion-header>
 <ion-content>
-  <ion-spinner *ngIf="!trip"></ion-spinner>
-
-  <div class="flex-container">
-    <div id="map">
-      <google-map *ngIf="trip"
-                  [origin]="trip.data.origin.coords"
-                  [destination]="trip.data.destination.coords"
-                  [stationStart]="trip.data.stationStart.coords"
-                  [stationEnd]="trip.data.stationEnd.coords"
-                  [walking1Points]="trip.data.walking1Travel.points"
-                  [bicyclingPoints]="trip.data.bicyclingTravel.points"
-                  [walking2Points]="trip.data.walking2Travel.points">
-      </google-map>
-    </div>
-    <div id="search" *ngIf="trip">
-      <ion-content padding-horizontal>
-        <div class="container">
-          <div class="trip-details">
-            <div id="departureTime" class="time">{{ trip.departureTime | date:"h:mm a" }}</div>
-            <div id="originIcon" class="icon">
-              <img src="assets/imgs/pin.svg" alt="">
-            </div>
-            <div id="originAddress" class="address">{{ trip.data.origin.address }}</div>
-            <div id="walkingDots1" class="icon">
-              <img
-                *ngFor="let i of [1, 2, 3]"
-                src="assets/imgs/walk-dot.svg" alt="">
-            </div>
-            <div id="walkingTravelInfo1" class="travel-info">
-              <ion-icon name="walk"></ion-icon>
-              <span>Walk {{ trip.data.walking1Travel.seconds | time }} ({{ trip.data.walking1Travel.feet | distance }})</span>
-            </div>
-            <div id="reservation1Time" class="time">{{ trip.data.stationStart.time | date:"h:mm a" }}</div>
-            <div id="bikeReservationLine" class="icon">
-              <!--<div class="line">-->
-                <img id="station-1" src="assets/imgs/station.svg" alt="">
-                <svg id="bike-line" width="10px" height="60px" viewBox="0 0 10 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <defs>
-                    <rect id="path-1" x="183" y="81" width="10" height="60" rx="1"></rect>
-                  </defs>
-                  <g id="iPhone-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-183.000000, -81.000000)">
-                    <g id="Rectangle-26">
-                      <use [attr.fill]="bicyclePolylineMainColor" fill-rule="evenodd" xlink:href="#path-1"></use>
-                      <rect [attr.stroke]="bicyclePolylineBorderColor" stroke-width="1" x="183.5" y="81.5" width="9" height="59" rx="1"></rect>
-                    </g>
-                  </g>
-                </svg>
-                <img id="station-2" src="assets/imgs/station.svg" alt="">
-              <!--</div>-->
-            </div>
-            <div id="reservation1Desc" class="reservation">Bike pickup reservation</div>
-            <div id="reservation1Address" class="address">{{ trip.data.stationStart.address}}</div>
-            <div
-              id="reservation1Price"
-              class="price"
-              [ngClass]="{positive: trip.data.stationStart.price > 0}">
-              {{ trip.data.stationStart.price | currency:'USD':true }}
-            </div>
-            <div id="bikeTravelInfo" class="travel-info">
-              <ion-icon name="bicycle"></ion-icon>
-              <span>Ride {{ trip.data.bicyclingTravel.seconds | time }} ({{ trip.data.bicyclingTravel.feet | distance }})</span>
-            </div>
-            <div
-              id="bikePrice"
-              class="price"
-              [ngClass]="{positive: trip.data.bicyclingTravel.price > 0}">
-              {{ trip.data.bicyclingTravel.price | currency:'USD':true }}</div>
-            <div id="reservation2Time" class="time">{{ trip.data.stationEnd.time | date:'h:mm a'}}</div>
-            <div id="reservation2Desc" class="reservation">Bike dropoff reservation</div>
-            <div id="reservation2Address" class="address">{{ trip.data.stationEnd.address }}</div>
-            <div
-              id="reservation2Price"
-              class="price"
-              [ngClass]="{positive: trip.data.stationEnd.price > 0}">
-              {{ trip.data.stationEnd.price | currency:'USD':true }}
-            </div>
-            <div id="walkingDots2" class="icon">
-              <img
-                *ngFor="let i of [1, 2, 3]"
-                src="assets/imgs/walk-dot.svg" alt="">
-            </div>
-            <div id="walkingTravelInfo2" class="travel-info">
-              <ion-icon name="walk"></ion-icon>
-              <span>Walk {{ trip.data.walking2Travel.seconds | time }} ({{ trip.data.walking2Travel.feet  | distance }})</span>
-            </div>
-            <div id="arrivalTime" class="time">{{ trip.arrivalTime | date:'h:mm a'}}</div>
-            <div id="destinationIcon" class="icon">
-              <img src="assets/imgs/pin.svg" alt="">
-            </div>
-            <div id="destinationAddress" class="address">{{ trip.data.destination.address }}</div>
-          </div>
-          <div class="summary">
-            <span id="travel-time">{{ trip.totalSeconds | time }}</span>
-            <span id="travel-distance">{{ trip.totalFeet | distance }}</span>
-            <span id="total-cost">
-              {{ 'Total cost: ' }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ trip.totalPrice | currency:'USD':true }}</span>
-            </span>
-          </div>
-        </div>
-
+  <ion-spinner *ngIf="fetching"></ion-spinner>
+  <div class="result" *ngIf="!fetching">
+    <div class="flex-container">
+      <div class="search" padding>
         <ion-list>
+          <trip-info [trip]="trip"></trip-info>
           <button
             ion-button
             block
@@ -115,8 +20,17 @@
             Book this trip
           </button>
         </ion-list>
-      </ion-content>
+      </div>
+      <div class="map">
+        <google-map [origin]="trip.data.origin.coords"
+                    [destination]="trip.data.destination.coords"
+                    [stationStart]="trip.data.stationStart.coords"
+                    [stationEnd]="trip.data.stationEnd.coords"
+                    [walking1Points]="trip.data.walking1Travel.points"
+                    [bicyclingPoints]="trip.data.bicyclingTravel.points"
+                    [walking2Points]="trip.data.walking2Travel.points">
+        </google-map>
+      </div>
     </div>
   </div>
-
 </ion-content>

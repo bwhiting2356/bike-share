@@ -53,115 +53,150 @@ exports.userDataUpdated = functions.firestore
     return __generator(this, function (_a) {
         userData = event.data.data();
         previousUserData = event.data.previous.data();
-        if (userData.searchParams) {
-            if (userData.searchParams.origin) {
-                originCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchParams.origin.coords);
-                originAddress = userData.searchParams.origin.address;
-                nearestStartStationPromise = findNearestStations_1.findNearestStations(originCoords)
-                    .then(function (response) {
-                    stationStartCoords = response.data[0].coords;
-                    stationStartAddress = response.data[0].address;
-                    return stationStartCoords;
-                });
-                walking1DirectionsPromise = nearestStartStationPromise.then(function (startCoords) {
-                    var walking1Query = {
-                        origin: originCoords,
-                        destination: startCoords,
-                        mode: TravelMode.WALKING
-                    };
-                    return getDirections_1.getDirections(walking1Query);
-                });
-            }
-            if (userData.searchParams.destination) {
-                destinationCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchParams.destination.coords);
-                destinationAddress = userData.searchParams.destination.address;
-                nearestEndStationPromise = findNearestStations_1.findNearestStations(destinationCoords)
-                    .then(function (response) {
-                    stationEndCoords = response.data[0].coords;
-                    stationEndAddress = response.data[0].address;
-                    return stationEndCoords;
-                });
-                walking2DirectionsPromise = nearestEndStationPromise.then(function (endCoords) {
-                    var walking1Query = {
-                        origin: destinationCoords,
-                        destination: endCoords,
-                        mode: TravelMode.WALKING
-                    };
-                    return getDirections_1.getDirections(walking1Query);
-                });
-            }
-            if (userData.searchParams.origin && userData.searchParams.destination &&
-                (JSON.stringify(userData.searchParams) !== JSON.stringify(previousUserData.searchParams))) {
-                deleteOperationPromise = admin.firestore()
-                    .doc('/users/' + event.params.userId).set({ searchResult: null }, { merge: true });
-                bicyclingDirectionsPromise = Promise.all([nearestStartStationPromise, nearestEndStationPromise])
-                    .then(function (stationsCoords) {
-                    var startCoords = stationsCoords[0];
-                    var endCoords = stationsCoords[1];
-                    var bicyclingQuery = {
-                        origin: startCoords,
-                        destination: endCoords,
-                        mode: TravelMode.BICYCLING
-                    };
-                    return getDirections_1.getDirections(bicyclingQuery);
-                });
-                return [2 /*return*/, Promise.all([
-                        walking1DirectionsPromise,
-                        walking2DirectionsPromise,
-                        bicyclingDirectionsPromise,
-                        deleteOperationPromise
-                    ]).then(function (allDirections) {
-                        var walking1Travel = allDirections[0].data;
-                        var walking2Travel = allDirections[1].data;
-                        var bicyclingTravel = allDirections[2].data;
-                        var tripData = {
-                            origin: {
-                                coords: originCoords,
-                                address: originAddress
-                            },
-                            departureTime: userData.searchParams.datetime,
-                            walking1Travel: {
-                                feet: walking1Travel.feet,
-                                seconds: walking1Travel.seconds,
-                                points: walking1Travel.points
-                            },
-                            stationStart: {
-                                coords: stationStartCoords,
-                                address: stationStartAddress,
-                                time: new Date(),
-                                price: 0.50 // fix!
-                            },
-                            bicyclingTravel: {
-                                feet: bicyclingTravel.feet,
-                                seconds: bicyclingTravel.seconds,
-                                points: bicyclingTravel.points,
-                                price: 0.75
-                            },
-                            walking2Travel: {
-                                feet: walking2Travel.feet,
-                                seconds: walking2Travel.seconds,
-                                points: walking2Travel.points
-                            },
-                            stationEnd: {
-                                coords: stationEndCoords,
-                                address: stationEndAddress,
-                                time: new Date(),
-                                price: -0.50 // fix!
-                            },
-                            destination: {
-                                coords: destinationCoords,
-                                address: destinationAddress
-                            },
-                            arrivalTime: new Date(),
-                            status: Trip_1.TripStatus.PROPOSED
-                        };
-                        return tripData;
+        try {
+            if (userData.searchParams) {
+                if (userData.searchParams.origin) {
+                    originCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchParams.origin.coords);
+                    originAddress = userData.searchParams.origin.address;
+                    nearestStartStationPromise = findNearestStations_1.findNearestStations(originCoords)
+                        .then(function (response) {
+                        stationStartCoords = response.data[0].coords;
+                        stationStartAddress = response.data[0].address;
+                        return stationStartCoords;
                     })
-                        .then(function (tripData) {
-                        return admin.firestore()
-                            .doc('/users/' + event.params.userId).set({ searchResult: tripData }, { merge: true });
-                    })];
+                        .catch(function (error) {
+                        return Promise.reject(error.message);
+                    });
+                    walking1DirectionsPromise = nearestStartStationPromise
+                        .then(function (startCoords) {
+                        var walking1Query = {
+                            origin: originCoords,
+                            destination: startCoords,
+                            mode: TravelMode.WALKING
+                        };
+                        return getDirections_1.getDirections(walking1Query);
+                    })
+                        .catch(function (error) {
+                        return Promise.reject(error.message);
+                    });
+                }
+                if (userData.searchParams.destination) {
+                    destinationCoords = serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(userData.searchParams.destination.coords);
+                    destinationAddress = userData.searchParams.destination.address;
+                    nearestEndStationPromise = findNearestStations_1.findNearestStations(destinationCoords)
+                        .then(function (response) {
+                        stationEndCoords = response.data[0].coords;
+                        stationEndAddress = response.data[0].address;
+                        return stationEndCoords;
+                    })
+                        .catch(function (error) {
+                        return Promise.reject(error.message);
+                    });
+                    walking2DirectionsPromise = nearestEndStationPromise
+                        .then(function (endCoords) {
+                        var walking1Query = {
+                            origin: destinationCoords,
+                            destination: endCoords,
+                            mode: TravelMode.WALKING
+                        };
+                        return getDirections_1.getDirections(walking1Query);
+                    })
+                        .catch(function (error) {
+                        return Promise.reject(error.message);
+                    });
+                }
+                if (userData.searchParams.origin && userData.searchParams.destination &&
+                    (JSON.stringify(userData.searchParams) !== JSON.stringify(previousUserData.searchParams))) {
+                    deleteOperationPromise = admin.firestore()
+                        .doc('/users/' + event.params.userId).set({ searchResult: null }, { merge: true });
+                    bicyclingDirectionsPromise = Promise.all([nearestStartStationPromise, nearestEndStationPromise])
+                        .then(function (stationsCoords) {
+                        var startCoords = stationsCoords[0];
+                        var endCoords = stationsCoords[1];
+                        var bicyclingQuery = {
+                            origin: startCoords,
+                            destination: endCoords,
+                            mode: TravelMode.BICYCLING
+                        };
+                        return getDirections_1.getDirections(bicyclingQuery);
+                    })
+                        .catch(function (error) {
+                        return Promise.reject(error.message);
+                    });
+                    return [2 /*return*/, Promise.all([
+                            walking1DirectionsPromise,
+                            walking2DirectionsPromise,
+                            bicyclingDirectionsPromise,
+                            deleteOperationPromise,
+                            nearestStartStationPromise,
+                            nearestEndStationPromise,
+                        ]).then(function (allDirections) {
+                            console.log("promise.all resolved");
+                            var walking1Travel = allDirections[0].data;
+                            var walking2Travel = allDirections[1].data;
+                            var bicyclingTravel = allDirections[2].data;
+                            var tripData = {
+                                origin: {
+                                    coords: originCoords,
+                                    address: originAddress
+                                },
+                                departureTime: userData.searchParams.datetime,
+                                walking1Travel: {
+                                    feet: walking1Travel.feet,
+                                    seconds: walking1Travel.seconds,
+                                    points: walking1Travel.points
+                                },
+                                stationStart: {
+                                    coords: stationStartCoords,
+                                    address: stationStartAddress,
+                                    time: new Date(),
+                                    price: 0.50 // fix!
+                                },
+                                bicyclingTravel: {
+                                    feet: bicyclingTravel.feet,
+                                    seconds: bicyclingTravel.seconds,
+                                    points: bicyclingTravel.points,
+                                    price: 0.75
+                                },
+                                walking2Travel: {
+                                    feet: walking2Travel.feet,
+                                    seconds: walking2Travel.seconds,
+                                    points: walking2Travel.points
+                                },
+                                stationEnd: {
+                                    coords: stationEndCoords,
+                                    address: stationEndAddress,
+                                    time: new Date(),
+                                    price: -0.50 // fix!
+                                },
+                                destination: {
+                                    coords: destinationCoords,
+                                    address: destinationAddress
+                                },
+                                arrivalTime: new Date(),
+                                status: Trip_1.TripStatus.PROPOSED
+                            };
+                            return tripData;
+                        })
+                            .then(function (tripData) {
+                            return admin.firestore()
+                                .doc('/users/' + event.params.userId).set({ searchResult: tripData }, { merge: true });
+                        })
+                            .catch(function (error) {
+                            return Promise.reject(error);
+                        })
+                            .catch(function (error) {
+                            console.log("error from promise all is: ", error);
+                            return admin.firestore()
+                                .doc('/users/' + event.params.userId).set({ searchResult: { error: error.message } }, { merge: true });
+                        })];
+                }
             }
+        }
+        catch (error) {
+            console.log("error from try/catch is: ", error);
+            return [2 /*return*/, admin.firestore()
+                    .doc('/users/' + event.params.userId).set({ searchResult: { error: error.message } }, { merge: true })];
         }
         return [2 /*return*/, Promise.resolve()];
     });

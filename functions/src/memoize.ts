@@ -21,6 +21,5 @@ export const memoize = (func: (params) => Promise<any>): (params) => Promise<any
               .then(() => ({ data: response }));
           })
       })
-      .catch(err => console.error("Error inside memoize: ", err));
   }
 };

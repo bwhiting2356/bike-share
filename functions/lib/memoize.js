@@ -20,8 +20,7 @@ exports.memoize = function (func) {
                     .set({ data: response })
                     .then(function () { return ({ data: response }); });
             });
-        })
-            .catch(function (err) { return console.error("Error inside memoize: ", err); });
+        });
     };
 };
 //# sourceMappingURL=memoize.js.map

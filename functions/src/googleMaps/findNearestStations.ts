@@ -27,7 +27,7 @@ const compareStationData = (a, b) => {
   return a.data.distance.value - b.data.distance.value;
 };
 
-const funcFindNearestStations = async (loc: LatLng) => {
+const funcFindNearestStations = (loc: LatLng) => {
 
     return admin.firestore().collection('/stations')
     .get()
@@ -45,6 +45,15 @@ const funcFindNearestStations = async (loc: LatLng) => {
       });
       const sortedStations = stationsData.sort((a, b) => a.distanceFromLoc - b.distanceFromLoc);
       const closest10Stations = sortedStations.slice(0, 9);
+
+      if (closest10Stations[0].distanceFromLoc > 5) {
+        // throw new Error("No nearby stations.")
+        return Promise.reject('No nearby stations');
+      }
+
+      console.log(JSON.stringify(closest10Stations));
+
+
       const stationsCoords = closest10Stations.map(station => station.coords);
 
       const req: DistanceMatixQuery = {
@@ -53,11 +62,9 @@ const funcFindNearestStations = async (loc: LatLng) => {
         mode: 'walking'
       };
 
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         googleMapsClient.distanceMatrix(req, (err, res) => {
-          if (err) {
-            throw new Error('distance matrix error');
-          }
+          if (err) reject(err);
           const mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsData);
           const sortedData = mergedData.sort(compareStationData);
           resolve(sortedData)
@@ -66,10 +73,7 @@ const funcFindNearestStations = async (loc: LatLng) => {
     });
 };
 
-
 export const findNearestStations = memoize(funcFindNearestStations);
-
-console.log(funcFindNearestStations.name);
 
 
 
