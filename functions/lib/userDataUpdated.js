@@ -42,6 +42,9 @@ var findNearestStations_1 = require("./googleMaps/findNearestStations");
 var serverMapGeoPointToLatLng_1 = require("./googleMaps/serverMapGeoPointToLatLng");
 var getDirections_1 = require("./googleMaps/getDirections");
 var Trip_1 = require("./shared/Trip");
+var addSeconds_1 = require("./shared/addSeconds");
+var subtractSeconds_1 = require("./shared/subtractSeconds");
+var timeTarget_1 = require("./shared/timeTarget");
 var TravelMode = {
     WALKING: 'walking',
     BICYCLING: 'bicycling'
@@ -131,16 +134,28 @@ exports.userDataUpdated = functions.firestore
                             nearestStartStationPromise,
                             nearestEndStationPromise,
                         ]).then(function (allDirections) {
-                            console.log("promise.all resolved");
                             var walking1Travel = allDirections[0].data;
                             var walking2Travel = allDirections[1].data;
                             var bicyclingTravel = allDirections[2].data;
+                            var departureTime, stationStartTime, stationEndTime, arrivalTime;
+                            if (userData.searchParams.timeTarget === timeTarget_1.TimeTarget.DEPART_AT) {
+                                departureTime = userData.searchParams.datetime;
+                                stationStartTime = addSeconds_1.addSeconds(departureTime, walking1Travel.seconds);
+                                stationEndTime = addSeconds_1.addSeconds(stationStartTime, bicyclingTravel.seconds);
+                                arrivalTime = addSeconds_1.addSeconds(stationEndTime, walking2Travel.seconds);
+                            }
+                            else if (userData.searchParams.timeTarget === timeTarget_1.TimeTarget.ARRIVE_BY) {
+                                arrivalTime = userData.searchParams.datetime;
+                                stationEndTime = subtractSeconds_1.subtractSeconds(arrivalTime, walking2Travel.seconds);
+                                stationStartTime = subtractSeconds_1.subtractSeconds(stationEndTime, bicyclingTravel.seconds);
+                                departureTime = subtractSeconds_1.subtractSeconds(stationStartTime, walking1Travel.seconds);
+                            }
                             var tripData = {
                                 origin: {
                                     coords: originCoords,
                                     address: originAddress
                                 },
-                                departureTime: userData.searchParams.datetime,
+                                departureTime: departureTime,
                                 walking1Travel: {
                                     feet: walking1Travel.feet,
                                     seconds: walking1Travel.seconds,
@@ -149,7 +164,7 @@ exports.userDataUpdated = functions.firestore
                                 stationStart: {
                                     coords: stationStartCoords,
                                     address: stationStartAddress,
-                                    time: new Date(),
+                                    time: stationStartTime,
                                     price: 0.50 // fix!
                                 },
                                 bicyclingTravel: {
@@ -166,14 +181,14 @@ exports.userDataUpdated = functions.firestore
                                 stationEnd: {
                                     coords: stationEndCoords,
                                     address: stationEndAddress,
-                                    time: new Date(),
+                                    time: stationEndTime,
                                     price: -0.50 // fix!
                                 },
                                 destination: {
                                     coords: destinationCoords,
                                     address: destinationAddress
                                 },
-                                arrivalTime: new Date(),
+                                arrivalTime: arrivalTime,
                                 status: Trip_1.TripStatus.PROPOSED
                             };
                             return tripData;

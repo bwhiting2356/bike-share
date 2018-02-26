@@ -9,18 +9,16 @@ import { SearchResultPage } from '../search-result/search-result';
 // shared
 
 import { LatLng } from '../../../shared/LatLng';
+import { dateToISOStringLocal } from '../../../shared/dateToISOStringLocal';
 
 // rxjs
 
-// import 'rxjs/add/operator/startWith';
-// import 'rxjs/add/observable/forkJoin';
 import { Observable } from 'rxjs/Observable';
 
 // services
 
 import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
-
 
 const CURRENT_LOCATION = "Current Location";
 
@@ -51,7 +49,7 @@ export class SearchPage {
     public navCtrl: NavController,
     public navParams: NavParams
   ) {
-    this.datetime = new Date().toISOString();
+    this.datetime = dateToISOStringLocal(new Date());
     this.userLocation$ = this.geolocationService.userLocation$;
     this.stationList = this.firebaseService.stationList;
 

@@ -7,6 +7,10 @@ import { DistanceMatixQuery } from './shared/DistanceMatrixQuery';
 import { DirectionsQuery } from './shared/DirectionsQuery';
 import { TripData, TripStatus } from './shared/Trip';
 
+import { addSeconds } from './shared/addSeconds';
+import { subtractSeconds } from './shared/subtractSeconds';
+import { TimeTarget } from './shared/timeTarget';
+
 const TravelMode = {
   WALKING: 'walking',
   BICYCLING: 'bicycling'
@@ -127,17 +131,36 @@ export const userDataUpdated = functions.firestore
             nearestStartStationPromise,
             nearestEndStationPromise,
           ]).then(allDirections => {
-            console.log("promise.all resolved")
             const walking1Travel = allDirections[0].data;
             const walking2Travel = allDirections[1].data;
             const bicyclingTravel = allDirections[2].data;
+
+            let departureTime,
+              stationStartTime,
+              stationEndTime,
+              arrivalTime
+
+            if (userData.searchParams.timeTarget === TimeTarget.DEPART_AT) {
+
+              departureTime = userData.searchParams.datetime
+              stationStartTime = addSeconds(departureTime, walking1Travel.seconds);
+              stationEndTime = addSeconds(stationStartTime, bicyclingTravel.seconds);
+              arrivalTime = addSeconds(stationEndTime, walking2Travel.seconds);
+
+            } else if (userData.searchParams.timeTarget === TimeTarget.ARRIVE_BY) {
+
+              arrivalTime = userData.searchParams.datetime
+              stationEndTime = subtractSeconds(arrivalTime, walking2Travel.seconds);
+              stationStartTime = subtractSeconds(stationEndTime, bicyclingTravel.seconds);
+              departureTime = subtractSeconds(stationStartTime, walking1Travel.seconds);
+            }
 
             const tripData: TripData = {
               origin: {
                 coords: originCoords,
                 address: originAddress
               },
-              departureTime: userData.searchParams.datetime,
+              departureTime: departureTime,
               walking1Travel: {
                 feet: walking1Travel.feet,
                 seconds: walking1Travel.seconds,
@@ -146,7 +169,7 @@ export const userDataUpdated = functions.firestore
               stationStart: {
                 coords: stationStartCoords,
                 address: stationStartAddress,
-                time: new Date(), // fix!
+                time: stationStartTime,
                 price: 0.50 // fix!
               },
               bicyclingTravel: {
@@ -163,14 +186,14 @@ export const userDataUpdated = functions.firestore
               stationEnd: {
                 coords: stationEndCoords,
                 address: stationEndAddress,
-                time: new Date(), // fix!
+                time: stationEndTime,
                 price: -0.50 // fix!
               },
               destination: {
                 coords: destinationCoords,
                 address: destinationAddress
               },
-              arrivalTime: new Date(),
+              arrivalTime: arrivalTime,
               status: TripStatus.PROPOSED
             };
 
