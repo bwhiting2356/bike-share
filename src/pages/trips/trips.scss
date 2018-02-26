@@ -1,16 +1,13 @@
 page-trips {
-  //trip-card {
-  //  max-width: 300px
-  //}
-  .trips {
+
+  ion-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-  }
+    justify-content: space-evenly;
 
-  .trip-container {
-    max-width: 380px;
-    flex-grow: 1;
-  }
+    trip-card {
+      width: 350px;
+    }
 
+  }
 }

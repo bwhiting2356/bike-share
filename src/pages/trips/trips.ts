@@ -4,13 +4,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TripDetailPage } from '../trip-detail/trip-detail';
 import { fakeTrips, Trip, TripStatus } from '../../../shared/Trip';
 
-/**
- * Generated class for the HistoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-trips',

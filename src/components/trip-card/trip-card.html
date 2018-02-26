@@ -1,26 +1,28 @@
-<ion-card>
-  <div class="map">
-    <google-map
-      [zoomControl]="false"
-      [gestureHandling]="'none'"
-      [origin]="trip.origin.coords"
-      [destination]="trip.destination.coords"
-      [stationStart]="trip.stationStart.coords"
-      [stationEnd]="trip.stationEnd.coords"
-      [walking1Points]="trip.walking1Travel.points"
-      [walking2Points]="trip.walking2Travel.points"
-      [bicyclingPoints]="trip.bicyclingTravel.points">
-    </google-map>
-  </div>
-  <ion-card-content>
-    <h4 class="clearfix">
-      <span class="title">{{ trip.status }} Trip</span>
-      <span class="miles-minutes">{{ trip.totalFeet | distance }} <span class="middot">&#8226;</span> {{ trip.totalSeconds | time }}</span>
-    </h4>
-    <p class="clearfix">
-      <span class="date">{{ trip.departureTime | date:'M/yy'}}</span>
-      <span class="time">{{ trip.departureTime | date:'h:mm a'}} - {{ trip.arrivalTime | date:'h:mm a'}}</span>
-      <span class="price">{{ trip.totalPrice | currency:'USD':true }}</span>
-    </p>
-  </ion-card-content>
-</ion-card>
+<div class="card-container">
+  <ion-card>
+    <div class="map">
+      <google-map
+        [zoomControl]="false"
+        [gestureHandling]="'none'"
+        [origin]="trip.origin.coords"
+        [destination]="trip.destination.coords"
+        [stationStart]="trip.stationStart.coords"
+        [stationEnd]="trip.stationEnd.coords"
+        [walking1Points]="trip.walking1Travel.points"
+        [walking2Points]="trip.walking2Travel.points"
+        [bicyclingPoints]="trip.bicyclingTravel.points">
+      </google-map>
+    </div>
+    <ion-card-content>
+      <h4 class="clearfix">
+        <span class="title">{{ trip.status }} Trip</span>
+        <span class="miles-minutes">{{ trip.totalFeet | distance }} <span class="middot">&#8226;</span> {{ trip.totalSeconds | time }}</span>
+      </h4>
+      <p class="clearfix">
+        <span class="date">{{ trip.departureTime | date:'M/yy'}}</span>
+        <span class="time">{{ trip.departureTime | date:'h:mm a'}} - {{ trip.arrivalTime | date:'h:mm a'}}</span>
+        <span class="price">{{ trip.totalPrice | currency:'USD':true }}</span>
+      </p>
+    </ion-card-content>
+  </ion-card>
+</div>

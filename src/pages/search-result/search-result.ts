@@ -3,6 +3,7 @@ import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-an
 import { Trip } from '../../../shared/Trip';
 import { FirebaseService } from '../../services/firebase-service';
 import { LatLng } from '../../../shared/LatLng';
+import { TempPage } from '../temp/temp';
 
 @IonicPage()
 @Component({
@@ -97,6 +98,10 @@ export class SearchResultPage {
 
   ionViewWillLeave() {
     this.subscription.unsubscribe();
+  }
+
+  submitSearch() {
+    this.navCtrl.push(TempPage);
   }
 
 }

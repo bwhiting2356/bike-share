@@ -40,6 +40,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Keyboard } from '@ionic-native/keyboard';
 
 import { environment } from "../environments/environment";
+import { TempPage } from '../pages/temp/temp';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { environment } from "../environments/environment";
     AddressModalPage,
     SearchResultPage,
     TripsPage,
-    TripDetailPage
+    TripDetailPage,
+    TempPage
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ import { environment } from "../environments/environment";
     AddressModalPage,
     SearchResultPage,
     TripsPage,
-    TripDetailPage
+    TripDetailPage,
+    TempPage
   ],
   providers: [
     StatusBar,
