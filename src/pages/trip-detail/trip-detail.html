@@ -1,9 +1,3 @@
-<!--
-  Generated template for the TripDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -11,9 +5,34 @@
   </ion-navbar>
 
 </ion-header>
-
-
-<ion-content padding>
-  {{ trip | json }}
-
+<ion-content>
+  <div class="result">
+    <div class="flex-container">
+      <div class="search" padding>
+        <ion-list>
+          <div class="trip">
+            <trip-info [trip]="trip" ></trip-info>
+            <button
+              ion-button
+              block
+              [disabled]="disableButton"
+              (click)="backToSearch()">
+              Book this trip again
+            </button>
+          </div>
+          <div class="error" *ngIf="error"></div>
+        </ion-list>
+      </div>
+      <div class="map">
+        <google-map [origin]="trip.origin.coords"
+                    [destination]="trip.destination.coords"
+                    [stationStart]="trip.stationStart.coords"
+                    [stationEnd]="trip.stationEnd.coords"
+                    [walking1Points]="trip.walking1Travel.points"
+                    [bicyclingPoints]="trip.bicyclingTravel.points"
+                    [walking2Points]="trip.walking2Travel.points">
+        </google-map>
+      </div>
+    </div>
+  </div>
 </ion-content>

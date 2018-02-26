@@ -37,6 +37,10 @@ page-search-result {
         ion-list {
           margin: 0 auto;
           max-width: 350px;
+
+          .trip {
+            margin-bottom: 50px;
+          }
         }
       }
 
