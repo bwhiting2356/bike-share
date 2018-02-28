@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
-import { Trip } from '../../../shared/Trip';
+import { Trip, TripData } from '../../../shared/Trip';
 import { FirebaseService } from '../../services/firebase-service';
 import { LatLng } from '../../../shared/LatLng';
 import { TempPage } from '../temp/temp';
@@ -14,60 +14,19 @@ export class SearchResultPage {
   origin: LatLng;
   destination: LatLng;
   trip: Trip;
+  tripData: TripData;
   error: string;
   fetching: boolean;
   bicyclePolylineMainColor;
   bicyclePolylineBorderColor;
   subscription;
 
-  // get priceMessage() {
-  //   this.trip.take(1).subscribe(t => {
-  //     if (t) {
-  //       if (t.totalPrice > 0) {
-  //         return 'Total earnings';
-  //       } else {
-  //         return 'Total cost';
-  //       }
-  //     } else {
-  //       return null;
-  //     }
-  //   })
-  // }
-
-  // get priceAbsValue() {
-  //   return Math.abs(this.trip.totalPrice);
-  // }
-
   constructor(
     private firebaseService: FirebaseService,
     private loadingCtrl: LoadingController,
     public navCtrl: NavController, public navParams: NavParams
   ) {
-    //
-    // this.origin = this.navParams.get('origin');
-    // this.destination = this.navParams.get('destination');
-    //
-    // this.fetching = true;
-    //
-    // this.firebaseService.searchResult.subscribe((response) => {
-    //   if (response) {
-    //     console.log('response: ', response);
-    //     if (response.error) {
-    //       this.trip = null;
-    //       this.error = response.error;
-    //       this.fetching = false;
-    //     } else {
-    //       this.trip = new Trip(response);
-    //       this.error = null;
-    //       this.fetching = false;
-    //     }
-    //   } else {
-    //     this.trip = null;
-    //   }
-    // });
-    //
-    // this.bicyclePolylineMainColor = bicyclePolylineMainColor;
-    // this.bicyclePolylineBorderColor = bicyclePolylineBorderColor;
+
   }
 
   ionViewWillEnter() {
@@ -79,28 +38,34 @@ export class SearchResultPage {
 
     this.subscription = this.firebaseService.searchResult.subscribe((response) => {
       if (response) {
-        console.log('response: ', response);
         if (response.error) {
           this.trip = null;
+          this.tripData = null;
           this.error = response.error;
           this.fetching = false;
         } else {
-          this.trip = new Trip(response);
-          console.log("this.trip: ", this.trip);
+          this.trip = new Trip(response.tripData);
+          this.tripData = response.tripData;
           this.error = null;
           this.fetching = false;
         }
       } else {
         this.trip = null;
+        this.tripData = null;
       }
     });
   }
 
   ionViewWillLeave() {
+    console.log("ion will leave called");
     this.subscription.unsubscribe();
+    this.error = null;
+    this.trip = null;
+    this.tripData = null;
   }
 
-  submitSearch() {
+  bookReservation() {
+    this.firebaseService.bookReservation(this.tripData);
     this.navCtrl.push(TempPage);
   }
 

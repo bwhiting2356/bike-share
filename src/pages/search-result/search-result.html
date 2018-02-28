@@ -17,11 +17,11 @@
               ion-button
               block
               [disabled]="disableButton"
-              (click)="submitSearch()">
+              (click)="bookReservation()">
               Book this trip
             </button>
           </div>
-          <div class="error" *ngIf="error"></div>
+          <div class="error" *ngIf="error">{{ error }}</div>
         </ion-list>
       </div>
       <div class="map">

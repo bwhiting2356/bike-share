@@ -130,7 +130,7 @@ export class SearchPage {
     this.firebaseService.updateDatetime(this.datetime);
   }
 
-  submitSearch() {
+  seeResults() {
     this.navCtrl.push(SearchResultPage, {origin: this.originCoords, destination: this.destinationCoords });
   }
 }

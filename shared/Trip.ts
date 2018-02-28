@@ -12,6 +12,7 @@ export interface TripData {
     points: LatLng[];
   },
   stationStart: {
+    id: string;
     coords: LatLng;
     address: string;
     price: number;
@@ -24,6 +25,7 @@ export interface TripData {
     price: number;
   },
   stationEnd: {
+    id: string;
     coords: LatLng;
     address: string;
     price: number;
@@ -119,6 +121,7 @@ const data: TripData = {
     ],
   },
   stationStart: {
+    id: "123",
     coords: {lat: 37.422827, lng:  -122.081668 },
     address: '432 Millbrae Location',
     time: new Date(),
@@ -151,6 +154,7 @@ const data: TripData = {
     price: 1.50,
   },
   stationEnd: {
+    id: "123",
     coords: { lat: 37.451868, lng: -122.129644 },
     address: '432 Millbrae Location',
     time: new Date(),

@@ -7,4 +7,3 @@ var bookTrip_1 = require("./bookTrip");
 admin.initializeApp(functions.config().firebase);
 exports.userDataUpdated = userDataUpdated_1.userDataUpdated;
 exports.bookTrip = bookTrip_1.bookTrip;
-//# sourceMappingURL=index.js.map

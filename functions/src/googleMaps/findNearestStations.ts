@@ -1,14 +1,10 @@
-import * as functions from 'firebase-functions';
-import * as GeoFire from 'geofire';
 const admin = require('firebase-admin');
-// import { googleMapsClient } from './googleMapsClient';
 import { serverMapGeoPointToLatLng } from './serverMapGeoPointToLatLng';
 import { memoize } from '../memoize';
 import { LatLng } from '../shared/LatLng';
 import { distanceCrowFlies } from '../distanceCrowFlies';
 import { DistanceMatixQuery } from "../shared/DistanceMatrixQuery";
 import { googleMapsClient } from "./googleMapsClient";
-// import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
 
 const mergeDataWithIds = (response, stationsData) => {
   const newData = [];

@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TripStatus = {
     COMPLETED: 'Completed',
@@ -8,25 +16,41 @@ exports.TripStatus = {
 };
 var Trip = (function () {
     function Trip(data) {
-        this.data = data;
+        this.origin = data.origin;
+        this.departureTime = new Date(data.departureTime);
+        this.walking1Travel = data.walking1Travel;
+        this.stationStart = __assign({}, data.stationStart, { time: new Date(data.stationStart.time) });
+        this.bicyclingTravel = data.bicyclingTravel;
+        this.stationEnd = __assign({}, data.stationEnd, { time: new Date(data.stationEnd.time) });
+        this.walking2Travel = data.walking2Travel;
+        this.arrivalTime = new Date(data.arrivalTime);
+        this.destination = data.destination;
+        this.status = data.status;
     }
-    Object.defineProperty(Trip.prototype, "totalTime", {
+    Object.defineProperty(Trip.prototype, "totalSeconds", {
         get: function () {
-            return Math.abs(this.data.arrivalTime.getTime() - this.data.departureTime.getTime());
+            return this.walking1Travel.seconds + this.walking2Travel.seconds + this.bicyclingTravel.seconds;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Trip.prototype, "totalDistance", {
+    Object.defineProperty(Trip.prototype, "totalFeet", {
         get: function () {
-            return this.data.walking1Travel.distance + this.data.bicyclingTravel.distance + this.data.walking2Travel.distance;
+            return this.walking1Travel.feet + this.bicyclingTravel.feet + this.walking2Travel.feet;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Trip.prototype, "totalPrice", {
         get: function () {
-            return this.data.stationStart.price + this.data.bicyclingTravel.price + this.data.stationEnd.price;
+            return this.stationStart.price + this.bicyclingTravel.price + this.stationEnd.price;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Trip.prototype, "priceMessage", {
+        get: function () {
+            return this.totalPrice > 0 ? 'Total earnings' : 'Total cost';
         },
         enumerable: true,
         configurable: true
@@ -41,8 +65,8 @@ var data = {
     },
     departureTime: new Date(),
     walking1Travel: {
-        distance: 3650,
-        minutes: 58,
+        feet: 3650,
+        seconds: 58,
         points: [
             { lat: 37.426015, lng: -122.0723955 },
             { lat: 37.4261534, lng: -122.0719905 },
@@ -62,14 +86,15 @@ var data = {
         ],
     },
     stationStart: {
+        id: "123",
         coords: { lat: 37.422827, lng: -122.081668 },
         address: '432 Millbrae Location',
         time: new Date(),
         price: 0.50,
     },
     bicyclingTravel: {
-        distance: 4,
-        minutes: 15,
+        feet: 4,
+        seconds: 15,
         points: [
             { lat: 37.4227605, lng: -122.0815514 },
             { lat: 37.4224445, lng: -122.082257 },
@@ -94,14 +119,15 @@ var data = {
         price: 1.50,
     },
     stationEnd: {
+        id: "123",
         coords: { lat: 37.451868, lng: -122.129644 },
         address: '432 Millbrae Location',
         time: new Date(),
         price: -0.50,
     },
     walking2Travel: {
-        distance: 134,
-        minutes: 5,
+        feet: 134,
+        seconds: 5,
         points: [{ lat: 37.4519147, lng: -122.1295495 },
             { lat: 37.4526442, lng: -122.1303591 },
             { lat: 37.4487815, lng: -122.1324926 },
@@ -116,7 +142,7 @@ var data = {
     arrivalTime: new Date(),
     status: exports.TripStatus.COMPLETED
 };
-var tripA = new Trip(data);
+exports.tripA = new Trip(data);
 var tripB = new Trip(data);
 var tripC = new Trip(data);
-exports.fakeTrips = [tripA, tripB, tripC];
+exports.fakeTrips = [exports.tripA, tripB, tripC];

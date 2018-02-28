@@ -12,6 +12,7 @@ export interface TripData {
     points: LatLng[];
   },
   stationStart: {
+    id: string;
     coords: LatLng;
     address: string;
     price: number;
@@ -24,6 +25,7 @@ export interface TripData {
     price: number;
   },
   stationEnd: {
+    id: string;
     coords: LatLng;
     address: string;
     price: number;

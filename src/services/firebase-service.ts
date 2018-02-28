@@ -12,6 +12,7 @@ import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
 
 import 'rxjs/add/operator/take';
 import { HttpClient } from '@angular/common/http';
+import { TripData } from '../../shared/Trip';
 
 
 @Injectable()
@@ -22,6 +23,7 @@ export class FirebaseService {
   userDataRef;
 
   constructor(
+    private http: HttpClient,
     public afAuth: AngularFireAuth,
     private dbFirestore: AngularFirestore) {
 
@@ -62,6 +64,16 @@ export class FirebaseService {
     const datetime = new Date(date);
     this.userDataRef
       .set({ searchParams: { datetime }}, { merge: true });
+  }
+
+  bookReservation(tripData: TripData) {
+    console.log("trip data: ", tripData);
+
+    this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/bookTrip  ',
+      { userId: this.userId, tripData })
+      .subscribe(result => console.log(result));
+    // TODO: book reservation
+
   }
 }
 

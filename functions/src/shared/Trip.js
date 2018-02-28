@@ -6,7 +6,7 @@ exports.TripStatus = {
     PROPOSED: 'Proposed',
     SCHEDULED: 'Scheduled'
 };
-var Trip = /** @class */ (function () {
+var Trip = (function () {
     function Trip(data) {
         this.data = data;
     }
@@ -30,4 +30,3 @@ var Trip = /** @class */ (function () {
     return Trip;
 }());
 exports.Trip = Trip;
-//# sourceMappingURL=Trip.js.map

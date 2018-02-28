@@ -14,12 +14,13 @@ export const memoize = (func: (params) => Promise<any>): (params) => Promise<any
         }
         return func(params)
           .then(response => {
+            console.log("does this happen?")
             return admin.firestore()
               .collection(func.name)
               .doc(stringParams)
               .set({data: response })
               .then(() => ({ data: response }));
-          })
+          });
       })
   }
 };

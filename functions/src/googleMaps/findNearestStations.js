@@ -58,4 +58,3 @@ var funcFindNearestStations = function (loc) {
     });
 };
 exports.findNearestStations = memoize_1.memoize(funcFindNearestStations);
-//# sourceMappingURL=findNearestStations.js.map

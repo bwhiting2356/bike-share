@@ -14,7 +14,6 @@ exports.memoize = function (func) {
             }
             return func(params)
                 .then(function (response) {
-                console.log("does this happen?");
                 return admin.firestore()
                     .collection(func.name)
                     .doc(stringParams)
@@ -24,4 +23,3 @@ exports.memoize = function (func) {
         });
     };
 };
-//# sourceMappingURL=memoize.js.map
