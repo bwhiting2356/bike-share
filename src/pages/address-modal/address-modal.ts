@@ -2,10 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Searchbar } from 'ionic-angular';
 import { AutocompleteService } from '../../services/autocomplete-service';
 import { GeolocationService } from '../../services/geolocation-service';
+
 import 'rxjs/add/observable/of';
-
-import { Keyboard } from '@ionic-native/keyboard';
-
 import 'rxjs/add/observable/fromPromise';
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/first";
@@ -13,6 +11,7 @@ import "rxjs/add/operator/first";
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LatLng } from '../../../shared/LatLng';
+import { Keyboard } from '@ionic-native/keyboard';
 
 /**
  * Generated class for the AddressModalPage page.
@@ -25,7 +24,6 @@ import { LatLng } from '../../../shared/LatLng';
 @Component({
   selector: 'page-address-modal',
   templateUrl: 'address-modal.html',
-  providers: [Keyboard]
 })
 export class AddressModalPage {
   @ViewChild('searchbar') searchbar: Searchbar;
@@ -71,10 +69,14 @@ export class AddressModalPage {
   }
 
   ionViewDidEnter() {
+    console.log("Address modal loaded");
     setTimeout(() => {
-      this.searchbar.setFocus();
       this.keyboard.show();
-    }, 150) // TODO: focus input after animation (mobile)
+      this.searchbar.setFocus()
+      this.keyboard.onKeyboardShow().subscribe(() => {
+        this.searchbar.setFocus();
+      })
+    }, 2000)
   }
 
   dismiss() {
