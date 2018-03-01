@@ -31,10 +31,10 @@ export class SearchPage {
   userLocation$: Observable<LatLng>;
 
   center;
-  origin: string;
+  originAddress: string;
 
   originCoords: LatLng;
-  destination: string;
+  destinationAddress: string;
   destinationCoords: LatLng;
   stationList: Observable<LatLng[]>;
   timeTarget: string = 'Depart at';
@@ -52,6 +52,10 @@ export class SearchPage {
     this.datetime = dateToISOStringLocal(new Date());
     this.userLocation$ = this.geolocationService.userLocation$;
     this.stationList = this.firebaseService.stationList;
+    this.originCoords = this.navParams.get('origin').coords;
+    this.originAddress = this.navParams.get('origin').address;
+    this.destinationCoords = this.navParams.get('destination').coords;
+    this.destinationAddress = this.navParams.get('destination').address;
 
   }
 
@@ -71,14 +75,14 @@ export class SearchPage {
       if (address) {
         this.fetching = true;
         if (address === CURRENT_LOCATION) {
-          this.origin = CURRENT_LOCATION;
+          this.originAddress = CURRENT_LOCATION;
           this.userLocation$.take(1).subscribe(latlng => {
             this.fetching = false;
             this.originCoords = latlng;
             this.firebaseService.updateSearchOrigin(latlng, CURRENT_LOCATION);
           })
         } else {
-          this.origin = address;
+          this.originAddress = address;
           this.geolocationService.geocode(address).then(latlng => {
             this.fetching = false;
             this.originCoords = latlng;
@@ -98,14 +102,14 @@ export class SearchPage {
       if (address) {
         this.fetching = true;
         if (address === CURRENT_LOCATION) {
-          this.destination = CURRENT_LOCATION;
+          this.destinationAddress = CURRENT_LOCATION;
           this.userLocation$.take(1).subscribe(latlng => {
             this.fetching = false;
             this.destinationCoords = latlng;
             this.firebaseService.updateSearchDestination(latlng, CURRENT_LOCATION);
           })
         } else {
-          this.destination = address;
+          this.destinationAddress = address;
           this.geolocationService.geocode(address).then(latlng => {
             this.fetching = false;
             this.destinationCoords = latlng;
@@ -119,7 +123,7 @@ export class SearchPage {
   // TODO: on dismiss, add spinner to map while we're waiting for the results of the geocoding
 
   get disableButton() {
-    return !this.origin || !this.destination;
+    return !this.originAddress || !this.destinationAddress;
   }
 
   timeTargetChange() {

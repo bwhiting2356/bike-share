@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Trip } from '../../../shared/Trip';
 import { TempPage } from '../temp/temp';
+import { SearchPage } from '../search/search';
 
 
 @IonicPage()
@@ -18,7 +19,7 @@ export class TripDetailPage {
   }
 
   backToSearch() {
-    this.navCtrl.push(TempPage);
+    this.navCtrl.setRoot(SearchPage, { origin: this.trip.origin, destination: this.trip.destination });
   }
 
 }
