@@ -45,6 +45,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { environment } from "../environments/environment";
 import { AuthService } from '../services/auth-service';
 import { FirestoreService } from '../services/firestore-service';
+import { LoginModalPage } from '../pages/login-modal/login-modal';
 
 
 
@@ -58,6 +59,7 @@ import { FirestoreService } from '../services/firestore-service';
     TripDetailPage,
     TempPage,
     LoginPage,
+    LoginModalPage
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,8 @@ import { FirestoreService } from '../services/firestore-service';
     TripsPage,
     TripDetailPage,
     TempPage,
-    LoginPage
+    LoginPage,
+    LoginModalPage
   ],
   providers: [
     GooglePlus,

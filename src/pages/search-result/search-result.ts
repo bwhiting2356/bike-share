@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';
+import {
+  IonicPage, LoadingController, ModalController, NavController, NavParams,
+  ToastController
+} from 'ionic-angular';
 import { Trip, TripData } from '../../../shared/Trip';
-import { FirebaseService } from '../../services/firebase-service';
 import { LatLng } from '../../../shared/LatLng';
 import { TempPage } from '../temp/temp';
+import { FirestoreService } from '../../services/firestore-service';
+import { AuthService } from '../../services/auth-service';
+import { LoginModalPage } from '../login-modal/login-modal';
 
 @IonicPage()
 @Component({
@@ -22,21 +27,21 @@ export class SearchResultPage {
   subscription;
 
   constructor(
-    private firebaseService: FirebaseService,
+    private authService: AuthService,
+    private firestoreService: FirestoreService,
     private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController,
     public navCtrl: NavController, public navParams: NavParams
-  ) {
-
-  }
+  ) { }
 
   ionViewWillEnter() {
-    console.log("Ion view will enter");
     this.origin = this.navParams.get('origin');
     this.destination = this.navParams.get('destination');
 
     this.fetching = true;
 
-    this.subscription = this.firebaseService.searchResult.subscribe((response) => {
+    this.subscription = this.firestoreService.searchResult.subscribe((response) => {
       if (response) {
         if (response.error) {
           this.trip = null;
@@ -57,7 +62,6 @@ export class SearchResultPage {
   }
 
   ionViewWillLeave() {
-    console.log("ion will leave called");
     this.subscription.unsubscribe();
     this.error = null;
     this.trip = null;
@@ -65,8 +69,25 @@ export class SearchResultPage {
   }
 
   bookReservation() {
-    this.firebaseService.bookReservation(this.tripData);
-    this.navCtrl.push(TempPage);
+    this.authService.isAnonymous().take(1).subscribe(anon => {
+      if (anon) {
+        const loginModal = this.modalCtrl.create(LoginModalPage);
+        loginModal.present();
+        loginModal.onDidDismiss(() => {
+          this.toastCtrl.create({
+            message: "Logged in successfully",
+            duration: 3000,
+            position: 'bottom'
+          }).present();
+        })
+
+      } else {
+        this.firestoreService.bookReservation(this.tripData);
+        this.navCtrl.push(TempPage);
+      }
+    })
+
+
   }
 
 }

@@ -24,6 +24,7 @@ export class FirestoreService {
   stationList: Observable<LatLng[]>;
   userId: string;
   userDataRef: AngularFirestoreDocument<DocumentData>;
+  searchResult;
 
   constructor(
     private http: HttpClient,
@@ -37,6 +38,7 @@ export class FirestoreService {
       if (userId) {
         this.userId = userId;
         this.userDataRef = this.dbFirestore.collection('/users').doc(userId);
+        this.searchResult = this.userDataRef.valueChanges().map(data => data.searchResult);
       }
     });
   }

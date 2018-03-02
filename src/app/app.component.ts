@@ -22,7 +22,7 @@ export class MyApp {
   isAnonymous;
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = TripsPage;
+  rootPage: any = SearchPage;
 
   pages: Array<Page>;
   loginPage: Page;
