@@ -5,14 +5,17 @@ import { PipesModule } from '../pipes/pipes.module';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { TripInfoComponent } from './trip-info/trip-info';
+import { AuthOptionsComponent } from './auth-options/auth-options';
 
 @NgModule({
 	declarations: [GoogleMapComponent,
     TripCardComponent,
-    TripInfoComponent],
+    TripInfoComponent,
+    AuthOptionsComponent],
 	imports: [CommonModule, PipesModule, IonicModule.forRoot(TripCardComponent)],
 	exports: [GoogleMapComponent,
     TripCardComponent,
-    TripInfoComponent]
+    TripInfoComponent,
+    AuthOptionsComponent]
 })
 export class ComponentsModule {}

@@ -69,14 +69,13 @@ export class AddressModalPage {
   }
 
   ionViewDidEnter() {
-    console.log("Address modal loaded");
     setTimeout(() => {
-      this.keyboard.show();
+      this.keyboard.show(); // TODO: get cordova plugin working for native google login
       this.searchbar.setFocus()
       this.keyboard.onKeyboardShow().subscribe(() => {
         this.searchbar.setFocus();
       })
-    }, 2000)
+    }, 150)
   }
 
   dismiss() {

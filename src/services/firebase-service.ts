@@ -3,9 +3,11 @@ import { Observable } from "rxjs/Observable";
 
 // firebase
 
+import * as firebase from 'firebase/app';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+
 
 import { LatLng } from '../../shared/LatLng';
 import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
@@ -13,6 +15,10 @@ import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
 import 'rxjs/add/operator/take';
 import { HttpClient } from '@angular/common/http';
 import { TripData } from '../../shared/Trip';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { Platform } from 'ionic-angular';
+import { environment } from '../environments/environment';
+import { AuthService } from "./auth-service";
 
 
 @Injectable()
@@ -20,26 +26,76 @@ export class FirebaseService {
   stationList: Observable<LatLng[]>;
   searchResult: Observable<any>;
   userId: string;
-  userDataRef;
+  user: Observable<firebase.User>;
+  isAnonymous: Observable<boolean>;
 
   constructor(
+    private gplus: GooglePlus,
+    private platform: Platform,
     private http: HttpClient,
     public afAuth: AngularFireAuth,
+    private authService: AuthService,
     private dbFirestore: AngularFirestore) {
 
-    this.signInAnonymously().then(result => {
-      this.userId = result.uid;
-      this.userDataRef = this.dbFirestore.collection('/users').doc(this.userId);
-      this.searchResult = this.userDataRef.valueChanges().map(data => data.searchResult);
-    });
+    this.user = this.afAuth.authState;
 
     this.stationList = this.dbFirestore.collection('/stations').valueChanges()
       .map(stationList => stationList.map(station => clientMapGeoPointToLatLng(station["coords"])));
   }
 
+  // auth
+
+  get userDataRef() {
+    return this.dbFirestore.collection('/users').doc(this.userId);
+  }
+
   signInAnonymously() {
     return this.afAuth.auth.signInAnonymously();
   }
+
+  // googleLogin() {
+  //   if (this.platform.is('cordova')) {
+  //     this.nativeGoogleLogin();;
+  //   } else {
+  //     this.webGoogleLogin();
+  //   }
+  // }
+  //
+  // async nativeGoogleLogin(): Promise<void> {
+  //   try {
+  //     const gplusUser = await this.gplus.login({
+  //       'webClientId': environment.googleWebClientID,
+  //       'offline': true,
+  //       'scopes': 'profile email'
+  //     });
+  //
+  //     return await this.afAuth.auth.signInWithCredential(
+  //       firebase.auth.GoogleAuthProvider.credential(gplusUser.token)
+  //     )
+  //
+  //
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  //
+  // async webGoogleLogin(): Promise<void> {
+  //   try {
+  //     const provider = new firebase.auth.GoogleAuthProvider();
+  //     const credential = await this.afAuth.auth.signInWithPopup(provider);
+  //
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //
+  // }
+  //
+  // signOut() {
+  //   this.afAuth.auth.signOut();
+  //   if (this.platform.is('cordova')) {
+  //     this.gplus.logout();
+  //   }
+  // }
 
   // search methods
 

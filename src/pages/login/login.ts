@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AuthService } from '../../services/auth-service';
+
+import { SearchPage } from "../search/search";
 
 /**
  * Generated class for the LoginPage page.
@@ -15,11 +18,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private authService: AuthService,
+    public navCtrl: NavController,
+    public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  googleLogin() {
+    this.authService.googleLogin().then(() => {
+      this.navCtrl.setRoot(SearchPage, { toast: "Logged in successfully" });
+    })
   }
 
 }

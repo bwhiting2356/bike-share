@@ -1,45 +1,75 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SearchPage } from '../pages/search/search';
 import { TripsPage } from '../pages/trips/trips';
 import { SearchResultPage } from '../pages/search-result/search-result';
+import { LoginPage } from '../pages/login/login';
+import { AuthService } from '../services/auth-service';
+
+interface Page {
+  title: string;
+  component: any;
+  icon: string;
+}
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  isAnonymous;
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = TripsPage;
 
-  pages: Array<{title: string, component: any, icon: string}>;
+  pages: Array<Page>;
+  loginPage: Page;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(private authService: AuthService,
+              public platform: Platform,
+              public statusBar: StatusBar,
+              public splashScreen: SplashScreen,
+              private toastCtrl: ToastController) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Search', icon: 'search', component: SearchPage },
-      { title: 'Trips', icon: 'bicycle', component: TripsPage }
+      { title: 'Trips', icon: 'bicycle', component: TripsPage },
     ];
+    this.loginPage = { title: 'Log in', icon: 'person', component: LoginPage };
+    this.isAnonymous = this.authService.isAnonymous();
 
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  signOut() {
+    this.authService.signOut()
+      .then(() => {
+        this.toastCtrl.create({
+          message: 'Signed out successfully',
+          duration: 3000,
+          position: 'bottom'
+        }).present();
+      })
+      .catch(err => {
+        this.toastCtrl.create({
+          message: `Error: ${err}`,
+          duration: 3000,
+          position: 'bottom'
+        }).present();
+      })
   }
 }

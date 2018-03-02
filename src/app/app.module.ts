@@ -14,6 +14,8 @@ import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { TripsPage } from '../pages/trips/trips';
 import { TripDetailPage } from '../pages/trip-detail/trip-detail';
 import { SearchResultPage } from '../pages/search-result/search-result';
+import { LoginPage } from '../pages/login/login';
+import { TempPage } from '../pages/temp/temp'; // TODO: remove temp page
 
 // services
 
@@ -38,9 +40,13 @@ import { AngularFireAuth } from "angularfire2/auth";
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { Keyboard } from '@ionic-native/keyboard';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 import { environment } from "../environments/environment";
-import { TempPage } from '../pages/temp/temp';
+import { AuthService } from '../services/auth-service';
+import { FirestoreService } from '../services/firestore-service';
+
+
 
 @NgModule({
   declarations: [
@@ -50,7 +56,8 @@ import { TempPage } from '../pages/temp/temp';
     SearchResultPage,
     TripsPage,
     TripDetailPage,
-    TempPage
+    TempPage,
+    LoginPage,
   ],
   imports: [
     BrowserModule,
@@ -69,19 +76,23 @@ import { TempPage } from '../pages/temp/temp';
     SearchResultPage,
     TripsPage,
     TripDetailPage,
-    TempPage
+    TempPage,
+    LoginPage
   ],
   providers: [
+    GooglePlus,
     StatusBar,
     SplashScreen,
     GeolocationService,
     AutocompleteService,
-    FirebaseService,
+    // FirebaseService,
+    FirestoreService,
     Geolocation,
     Keyboard,
     AngularFirestore,
     AngularFireDatabase,
     AngularFireAuth,
+    AuthService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -7,9 +7,17 @@
 
   <ion-content>
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button large menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon item-left [name]="p.icon"></ion-icon>
         {{p.title}}
+      </button>
+      <button *ngIf="(isAnonymous | async)" large menuClose ion-item (click)="openPage(loginPage)">
+        <ion-icon item-left name='person'></ion-icon>
+        Sign in
+      </button>
+      <button *ngIf="!(isAnonymous | async)" large ion-item (click)="signOut()">
+        <ion-icon item-left name='person'></ion-icon>
+        Sign out
       </button>
     </ion-list>
   </ion-content>
