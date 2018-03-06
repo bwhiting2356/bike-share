@@ -11,14 +11,17 @@
   <div class="flex-container">
     <div class="search">
       <ion-list>
-
         <search-autocomplete
+          [showAutocomplete]="showAutocomplete === 'origin'"
+          (inputFocused)="originFocused()"
           [showCurrentLocation]="showCurrentLocation | async"
           [address]="originAddress"
           (addressChange)="originAddressChange($event)"
           label='Origin'>
         </search-autocomplete>
         <search-autocomplete
+          [showAutocomplete]="showAutocomplete == 'destination'"
+          (inputFocused)="destinationFocused()"
           [showCurrentLocation]="showCurrentLocation | async"
           [address]="destinationAddress"
           (addressChange)="destinationAddressChange($event)"

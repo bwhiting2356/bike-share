@@ -14,7 +14,8 @@ export class SearchAutocompleteComponent {
   @Input() label;
   @Input() address;
   @Output() addressChange = new EventEmitter<string>();
-  showAutocomplete: boolean;
+  @Output() inputFocused = new EventEmitter<boolean>();
+  @Input() showAutocomplete: boolean;
   autocompleteResults = [];
 
   text: string;
@@ -25,6 +26,7 @@ export class SearchAutocompleteComponent {
 
   focus() {
     this.showAutocomplete = true;
+    this.inputFocused.emit(true);
   }
 
   blur() {
@@ -48,10 +50,15 @@ export class SearchAutocompleteComponent {
   chooseAutocompleteItem(result) {
     const part1 = result.structured_formatting.main_text || '';
     const part2 = result.structured_formatting.secondary_text || '';
+
     let address = part1;
     if (part2) {
       address += `, ${part2}`
     }
+    address = address
+      .replace(", USA", "")
+      .replace(", United States", "");
+
     this.address = address;
     this.addressChange.emit(address);
     this.showAutocomplete = false;

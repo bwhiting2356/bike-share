@@ -5,13 +5,13 @@
   </ion-navbar>
 
 </ion-header>
+
 <ion-content>
-  <div class="result">
     <div class="flex-container">
-      <div class="search" padding-top>
+      <div class="trip">
         <ion-list>
-          <div class="trip">
-            <trip-info [trip]="trip" ></trip-info>
+          <div>
+            <trip-info [trip]="trip"></trip-info>
             <button
               ion-button
               block
@@ -20,7 +20,6 @@
               Book this trip again
             </button>
           </div>
-          <div class="error" *ngIf="error"></div>
         </ion-list>
       </div>
       <div class="map">
@@ -34,5 +33,4 @@
         </google-map>
       </div>
     </div>
-  </div>
 </ion-content>

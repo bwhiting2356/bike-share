@@ -53,50 +53,6 @@ export class FirebaseService {
     return this.afAuth.auth.signInAnonymously();
   }
 
-  // googleLogin() {
-  //   if (this.platform.is('cordova')) {
-  //     this.nativeGoogleLogin();;
-  //   } else {
-  //     this.webGoogleLogin();
-  //   }
-  // }
-  //
-  // async nativeGoogleLogin(): Promise<void> {
-  //   try {
-  //     const gplusUser = await this.gplus.login({
-  //       'webClientId': environment.googleWebClientID,
-  //       'offline': true,
-  //       'scopes': 'profile email'
-  //     });
-  //
-  //     return await this.afAuth.auth.signInWithCredential(
-  //       firebase.auth.GoogleAuthProvider.credential(gplusUser.token)
-  //     )
-  //
-  //
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-  //
-  // async webGoogleLogin(): Promise<void> {
-  //   try {
-  //     const provider = new firebase.auth.GoogleAuthProvider();
-  //     const credential = await this.afAuth.auth.signInWithPopup(provider);
-  //
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //
-  // }
-  //
-  // signOut() {
-  //   this.afAuth.auth.signOut();
-  //   if (this.platform.is('cordova')) {
-  //     this.gplus.logout();
-  //   }
-  // }
-
   // search methods
 
   updateSearchOrigin(coords: LatLng, address: string) {

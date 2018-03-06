@@ -10,18 +10,18 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { MyApp } from './app.component';
 import { SearchPage } from '../pages/search/search';
-import { AddressModalPage } from '../pages/address-modal/address-modal';
 import { TripsPage } from '../pages/trips/trips';
 import { TripDetailPage } from '../pages/trip-detail/trip-detail';
 import { SearchResultPage } from '../pages/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
-import { TempPage } from '../pages/temp/temp'; // TODO: remove temp page
+import { LoginModalPage } from '../pages/login-modal/login-modal';
 
 // services
 
 import { GeolocationService } from '../services/geolocation-service';
-import { FirebaseService } from '../services/firebase-service';
 import { AutocompleteService } from '../services/autocomplete-service';
+import { AuthService } from '../services/auth-service';
+import { FirestoreService } from '../services/firestore-service';
 
 // module imports
 
@@ -39,13 +39,9 @@ import { AngularFireAuth } from "angularfire2/auth";
 // providers
 
 import { Geolocation } from '@ionic-native/geolocation';
-import { Keyboard } from '@ionic-native/keyboard';
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import { environment } from "../environments/environment";
-import { AuthService } from '../services/auth-service';
-import { FirestoreService } from '../services/firestore-service';
-import { LoginModalPage } from '../pages/login-modal/login-modal';
 
 
 
@@ -53,11 +49,9 @@ import { LoginModalPage } from '../pages/login-modal/login-modal';
   declarations: [
     MyApp,
     SearchPage,
-    AddressModalPage,
     SearchResultPage,
     TripsPage,
     TripDetailPage,
-    TempPage,
     LoginPage,
     LoginModalPage
   ],
@@ -74,11 +68,9 @@ import { LoginModalPage } from '../pages/login-modal/login-modal';
   entryComponents: [
     MyApp,
     SearchPage,
-    AddressModalPage,
     SearchResultPage,
     TripsPage,
     TripDetailPage,
-    TempPage,
     LoginPage,
     LoginModalPage
   ],
@@ -88,10 +80,8 @@ import { LoginModalPage } from '../pages/login-modal/login-modal';
     SplashScreen,
     GeolocationService,
     AutocompleteService,
-    // FirebaseService,
     FirestoreService,
     Geolocation,
-    Keyboard,
     AngularFirestore,
     AngularFireDatabase,
     AngularFireAuth,

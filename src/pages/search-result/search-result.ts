@@ -9,6 +9,7 @@ import { TempPage } from '../temp/temp';
 import { FirestoreService } from '../../services/firestore-service';
 import { AuthService } from '../../services/auth-service';
 import { LoginModalPage } from '../login-modal/login-modal';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @IonicPage()
 @Component({
@@ -18,10 +19,10 @@ import { LoginModalPage } from '../login-modal/login-modal';
 export class SearchResultPage {
   origin: LatLng;
   destination: LatLng;
-  trip: Trip;
-  tripData: TripData;
-  error: string;
-  fetching: boolean;
+  result: BehaviorSubject<Trip>;
+  // tripData: TripData;
+  error: BehaviorSubject<string>;
+  fetching: BehaviorSubject<boolean>;
   bicyclePolylineMainColor;
   bicyclePolylineBorderColor;
   subscription;
@@ -33,39 +34,15 @@ export class SearchResultPage {
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     public navCtrl: NavController, public navParams: NavParams
-  ) { }
+  ) {
+    this.fetching = this.firestoreService.searchFetching;
+    this.result = this.firestoreService.searchResultTrip;
+    this.error = this.firestoreService.searchError;
+  }
 
   ionViewWillEnter() {
     this.origin = this.navParams.get('origin');
     this.destination = this.navParams.get('destination');
-
-    this.fetching = true;
-
-    this.subscription = this.firestoreService.searchResult.subscribe((response) => {
-      if (response) {
-        if (response.error) {
-          this.trip = null;
-          this.tripData = null;
-          this.error = response.error;
-          this.fetching = false;
-        } else {
-          this.trip = new Trip(response.tripData);
-          this.tripData = response.tripData;
-          this.error = null;
-          this.fetching = false;
-        }
-      } else {
-        this.trip = null;
-        this.tripData = null;
-      }
-    });
-  }
-
-  ionViewWillLeave() {
-    this.subscription.unsubscribe();
-    this.error = null;
-    this.trip = null;
-    this.tripData = null;
   }
 
   bookReservation() {
@@ -80,14 +57,10 @@ export class SearchResultPage {
             position: 'bottom'
           }).present();
         })
-
       } else {
-        this.firestoreService.bookReservation(this.tripData);
+        // this.firestoreService.bookReservation();
         this.navCtrl.push(TempPage);
       }
     })
-
-
   }
-
 }

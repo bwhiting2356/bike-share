@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, ModalController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 // pages
 
-import { AddressModalPage } from '../address-modal/address-modal';
 import { SearchResultPage } from '../search-result/search-result';
 
 // shared
@@ -17,11 +16,9 @@ import { Observable } from 'rxjs/Observable';
 
 // services
 
-import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
 import { AuthService } from '../../services/auth-service';
 import { FirestoreService } from '../../services/firestore-service';
-import { AutocompleteService } from '../../services/autocomplete-service';
 
 const CURRENT_LOCATION = "Current Location";
 
@@ -42,10 +39,7 @@ export class SearchPage {
   destinationCoords: LatLng;
 
   showCurrentLocation;
-  showOriginAutocomplete: boolean;
-  showDestinationAutocomplete: boolean;
-  originAutocompleteResults = [];
-  destinationAutocompleteResults = [];
+  showAutocomplete: string;
 
   timeTarget: string = 'Depart at';
   datetime: string;
@@ -54,13 +48,11 @@ export class SearchPage {
 
   constructor(
     private geolocationService: GeolocationService,
-    private autocompleteService: AutocompleteService,
     private authService: AuthService,
     private firestoreService: FirestoreService,
     private toastCtrl: ToastController,
-    private modalCtrl: ModalController,
-    public navCtrl: NavController,
-    public navParams: NavParams
+    private navCtrl: NavController,
+    private navParams: NavParams
   ) {
     this.datetime = dateToISOStringLocal(new Date());
     this.userLocation$ = this.geolocationService.userLocation$;
@@ -94,6 +86,13 @@ export class SearchPage {
 
   } // TODO: this might break something later if they sign in for real and it changes their search params
 
+  originFocused() {
+    this.showAutocomplete = 'origin';
+  }
+
+  destinationFocused() {
+    this.showAutocomplete = 'destination';
+  }
 
   originAddressChange(address: string) {
     this.originAddress = address;

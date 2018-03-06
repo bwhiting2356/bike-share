@@ -18,6 +18,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   @Input() scrollWheel: boolean = true;
   @Input() streetViewControl: boolean = false;
   @Input() gestureHandling: string = 'greedy';
+  @Input() fullscreenControl: boolean = true;
   @Input() center: LatLng;
   @Input() origin: LatLng;
   @Input() destination: LatLng;
@@ -49,6 +50,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
       zoomControl: this.zoomControl,
       streetViewControl: this.streetViewControl,
       gestureHandling: this.gestureHandling,
+      fullscreenControl: this.fullscreenControl,
       styles: [
         {
           featureType: 'poi',

@@ -10,13 +10,14 @@ import { DocumentData } from "@firebase/firestore-types";
 // shared
 
 import { LatLng } from '../../shared/LatLng';
-import { TripData } from '../../shared/Trip';
+import { Trip, TripData } from '../../shared/Trip';
 import { mapLatLngToGeoPoint } from '../../shared/mapLatLngToGeoPoint';
 
 
 import 'rxjs/add/operator/take';
 
 import { AuthService } from "./auth-service";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 @Injectable()
@@ -24,12 +25,18 @@ export class FirestoreService {
   stationList: Observable<LatLng[]>;
   userId: string;
   userDataRef: AngularFirestoreDocument<DocumentData>;
-  searchResult;
+  searchResultTrip: BehaviorSubject<Trip>;
+  searchError: BehaviorSubject<string>;
+  searchFetching: BehaviorSubject<boolean>;
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private dbFirestore: AngularFirestore) {
+
+    this.searchResultTrip = new BehaviorSubject<Trip>(null);
+    this.searchError = new BehaviorSubject<string>(null);
+    this.searchFetching = new BehaviorSubject<boolean>(true);
 
     this.stationList = this.dbFirestore.collection('/stations').valueChanges()
       .map(stationList => stationList.map(station => clientMapGeoPointToLatLng(station["coords"])));
@@ -38,7 +45,20 @@ export class FirestoreService {
       if (userId) {
         this.userId = userId;
         this.userDataRef = this.dbFirestore.collection('/users').doc(userId);
-        this.searchResult = this.userDataRef.valueChanges().map(data => data.searchResult);
+        this.userDataRef.valueChanges().subscribe(data => {
+          if (data.searchResult && data.searchResult.tripData) {
+            console.log("result", data.searchResult.tripData);
+            this.searchResultTrip.next(new Trip(data.searchResult.tripData));
+            this.searchError.next(null);
+            this.searchFetching.next(false);
+          }
+          if (data.searchResult && data.searchResult.error) {
+            console.log("error", data.searchResult.error);
+            this.searchError.next(data.searchResult.error);
+            this.searchResultTrip.next(null);
+            this.searchFetching.next(false);
+          }
+        });
       }
     });
   }
@@ -46,23 +66,27 @@ export class FirestoreService {
   // search methods
 
   updateSearchOrigin(coords: LatLng, address: string) {
+    this.updateSearchParams();
     const originCoords = mapLatLngToGeoPoint(coords);
     this.userDataRef
       .set({ searchParams: { origin: { coords: originCoords, address } }}, { merge: true });
   }
 
   updateSearchDestination(coords: LatLng, address: string) {
+    this.updateSearchParams();
     const destinationCoords = mapLatLngToGeoPoint(coords);
     this.userDataRef
       .set({ searchParams: { destination: { coords: destinationCoords, address } }}, { merge: true });
   }
 
   updateTimeTarget(timeTarget: string) {
+    this.updateSearchParams();
     this.userDataRef
       .set({ searchParams: { timeTarget }}, { merge: true });
   }
 
   updateDatetime(date: string) {
+    this.updateSearchParams();
     const datetime = new Date(date);
     this.userDataRef
       .set({ searchParams: { datetime }}, { merge: true });
@@ -75,8 +99,17 @@ export class FirestoreService {
       { userId: this.userId, tripData })
       .subscribe(result => console.log(result));
     // TODO: book reservation
-
   }
+
+  // search results
+  updateSearchParams() {
+    // reset fields while a new search is starting
+    this.searchFetching.next(true);
+    this.searchResultTrip.next(null);
+    this.searchError.next(null);
+  }
+
+
 }
 
 export const clientMapGeoPointToLatLng = (geopoint): LatLng => { // TODO: save for when geoqueries come to firestore

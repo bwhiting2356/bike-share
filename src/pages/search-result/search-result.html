@@ -6,13 +6,28 @@
 
 </ion-header>
 <ion-content>
-  <div class="result">
-    <div class="flex-container">
-      <div class="search" padding>
-        <ion-spinner *ngIf="fetching"></ion-spinner>
-        <ion-list *ngIf="!fetching">
-          <div class="trip" *ngIf="trip">
-            <trip-info [trip]="trip" ></trip-info>
+
+  <ion-card class="fetching" *ngIf="fetching | async">
+    <ion-card-content>
+      <ion-spinner></ion-spinner>
+      Searching database...
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="!(fetching | async)" class="middle-container">
+
+    <ion-card class="error" *ngIf="error | async">
+      <ion-card-content>
+        <ion-card-title>Error</ion-card-title>
+        <p>{{ error | async }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="flex-container" *ngIf="!(error | async)">
+      <div class="result">
+        <ion-list>
+          <div *ngIf="(result | async) as trip">
+            <trip-info [trip]="trip"></trip-info>
             <button
               ion-button
               block
@@ -21,7 +36,6 @@
               Book this trip
             </button>
           </div>
-          <div class="error" *ngIf="error">{{ error }}</div>
         </ion-list>
       </div>
       <div class="map">
