@@ -42,7 +42,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { Geolocation } from '@ionic-native/geolocation';
 import { GooglePlus } from '@ionic-native/google-plus';
 
-import { environment } from "../environments/environment";
+import { environment } from "../../environments/environment";
 
 
 @NgModule({

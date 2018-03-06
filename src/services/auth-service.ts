@@ -11,7 +11,7 @@ import 'rxjs/add/operator/take';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Platform } from 'ionic-angular';
 
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
