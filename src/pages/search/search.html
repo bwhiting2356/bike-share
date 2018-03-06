@@ -1,36 +1,29 @@
 <ion-header>
-
-
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Search</ion-title>
   </ion-navbar>
-
-
 </ion-header>
 
 <ion-content>
   <div class="flex-container">
-    <div class="search" padding>
+    <div class="search">
       <ion-list>
-        <ion-item>
-          <ion-label floating>Origin</ion-label>
-          <ion-input
-            (click)="openOriginModal()"
-            disabled
-            [value]="originAddress"
-            type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Destination</ion-label>
-          <ion-input
-            (click)="openDestinationModal()"
-            disabled
-            [value]="destinationAddress"
-            type="text"></ion-input>
-        </ion-item>
+
+        <search-autocomplete
+          [showCurrentLocation]="showCurrentLocation | async"
+          [address]="originAddress"
+          (addressChange)="originAddressChange($event)"
+          label='Origin'>
+        </search-autocomplete>
+        <search-autocomplete
+          [showCurrentLocation]="showCurrentLocation | async"
+          [address]="destinationAddress"
+          (addressChange)="destinationAddressChange($event)"
+          [label]="'Destination'">
+        </search-autocomplete>
 
         <div ion-item class="time-container">
           <ion-select

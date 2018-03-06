@@ -32,7 +32,6 @@ page-search {
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
       flex-wrap: nowrap;
 
       @media (min-width: 800px) {
@@ -55,7 +54,7 @@ page-search {
 
         ion-list {
           margin: 0 auto;
-          max-width: 350px;
+          max-width: 380px;
         }
       }
 

@@ -1,0 +1,36 @@
+search-autocomplete {
+
+  .autocomplete {
+    position: relative;
+    pointer-events: all;
+
+    ion-list {
+      position: absolute;
+      pointer-events: all;
+      top: 0;
+      background-color: white;
+      width: 100%;
+      z-index: 5;
+    }
+
+    .small-divider {
+      height: 10px;
+      width: 100%;
+      background-color: lightgrey;
+    }
+
+    .no-results {
+      font-weight: lighter;
+      font-style: italic;
+      font-size: 0.9em;
+      padding-bottom: 400px;
+      background-color: white;
+
+      ion-item {
+        color: lightgrey;
+      }
+    }
+  }
+}
+
+

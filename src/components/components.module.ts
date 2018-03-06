@@ -6,16 +6,22 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
 import { TripInfoComponent } from './trip-info/trip-info';
 import { AuthOptionsComponent } from './auth-options/auth-options';
+import { SearchbarComponent } from './searchbar/searchbar';
+import { SearchAutocompleteComponent } from './search-autocomplete/search-autocomplete';
 
 @NgModule({
 	declarations: [GoogleMapComponent,
     TripCardComponent,
     TripInfoComponent,
-    AuthOptionsComponent],
+    AuthOptionsComponent,
+    SearchbarComponent,
+    SearchAutocompleteComponent],
 	imports: [CommonModule, PipesModule, IonicModule.forRoot(TripCardComponent)],
 	exports: [GoogleMapComponent,
     TripCardComponent,
     TripInfoComponent,
-    AuthOptionsComponent]
+    AuthOptionsComponent,
+    SearchbarComponent,
+    SearchAutocompleteComponent]
 })
 export class ComponentsModule {}

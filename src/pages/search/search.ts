@@ -21,6 +21,7 @@ import { FirebaseService } from '../../services/firebase-service';
 import { GeolocationService } from '../../services/geolocation-service';
 import { AuthService } from '../../services/auth-service';
 import { FirestoreService } from '../../services/firestore-service';
+import { AutocompleteService } from '../../services/autocomplete-service';
 
 const CURRENT_LOCATION = "Current Location";
 
@@ -40,6 +41,12 @@ export class SearchPage {
   destinationAddress: string;
   destinationCoords: LatLng;
 
+  showCurrentLocation;
+  showOriginAutocomplete: boolean;
+  showDestinationAutocomplete: boolean;
+  originAutocompleteResults = [];
+  destinationAutocompleteResults = [];
+
   timeTarget: string = 'Depart at';
   datetime: string;
 
@@ -47,6 +54,7 @@ export class SearchPage {
 
   constructor(
     private geolocationService: GeolocationService,
+    private autocompleteService: AutocompleteService,
     private authService: AuthService,
     private firestoreService: FirestoreService,
     private toastCtrl: ToastController,
@@ -67,6 +75,8 @@ export class SearchPage {
       }).present();
     }
 
+    this.showCurrentLocation = this.geolocationService.foundPosition;
+
     // get origin and destination from nav params, if they're there
     this.originCoords = this.navParams.get('origin') ? this.navParams.get('origin').coords : null;
     this.originAddress = this.navParams.get('origin') ? this.navParams.get('origin').address : null;
@@ -84,59 +94,37 @@ export class SearchPage {
 
   } // TODO: this might break something later if they sign in for real and it changes their search params
 
-  openOriginModal() {
-    const modal = this.modalCtrl.create(AddressModalPage, {title: "Origin" });
-    modal.present();
-    modal.onDidDismiss((address) => {
-      if (address) {
-        this.fetching = true;
-        if (address === CURRENT_LOCATION) {
-          this.originAddress = CURRENT_LOCATION;
-          this.userLocation$.take(1).subscribe(latlng => {
-            this.fetching = false;
-            this.originCoords = latlng;
-            this.firestoreService.updateSearchOrigin(latlng, CURRENT_LOCATION);
-          })
-        } else {
-          this.originAddress = address;
-          this.geolocationService.geocode(address).then(latlng => {
-            this.fetching = false;
-            this.originCoords = latlng;
-            this.firestoreService.updateSearchOrigin(latlng, address);
-          });
-        }
-      }
 
-      // TODO; maybe add a spinner while we're waiting for the geolocation to come back from the server
-    });
+  originAddressChange(address: string) {
+    this.originAddress = address;
+    if (address === CURRENT_LOCATION) {
+      this.geolocationService.userLocation$.take(1).subscribe((latlng: LatLng) => {
+        this.originCoords = latlng;
+        this.firestoreService.updateSearchOrigin(latlng, address);
+      });
+    } else {
+      this.geolocationService.geocode(address).then(latlng => {
+        this.originCoords = latlng;
+        this.firestoreService.updateSearchOrigin(latlng, address);
+      });
+    }
   }
 
-  openDestinationModal() {
-    const modal = this.modalCtrl.create(AddressModalPage, {title: "Destination"});
-    modal.present();
-    modal.onDidDismiss((address) => {
-      if (address) {
-        this.fetching = true;
-        if (address === CURRENT_LOCATION) {
-          this.destinationAddress = CURRENT_LOCATION;
-          this.userLocation$.take(1).subscribe(latlng => {
-            this.fetching = false;
-            this.destinationCoords = latlng;
-            this.firestoreService.updateSearchDestination(latlng, CURRENT_LOCATION);
-          })
-        } else {
-          this.destinationAddress = address;
-          this.geolocationService.geocode(address).then(latlng => {
-            this.fetching = false;
-            this.destinationCoords = latlng;
-            this.firestoreService.updateSearchDestination(latlng, address);
-          });
-        }
-      }
-    });
-  }
+  destinationAddressChange(address: string) {
+    this.destinationAddress = address;
 
-  // TODO: on dismiss, add spinner to map while we're waiting for the results of the geocoding
+    if (address === CURRENT_LOCATION) {
+      this.geolocationService.userLocation$.take(1).subscribe((latlng: LatLng) => {
+        this.destinationCoords = latlng;
+        this.firestoreService.updateSearchDestination(latlng, address);
+      });
+    } else {
+      this.geolocationService.geocode(address).then(latlng => {
+        this.destinationCoords = latlng;
+        this.firestoreService.updateSearchDestination(latlng, address);
+      });
+    }
+  }
 
   get disableButton() {
     return !this.originAddress || !this.destinationAddress;

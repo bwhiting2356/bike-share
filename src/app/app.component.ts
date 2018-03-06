@@ -8,6 +8,7 @@ import { TripsPage } from '../pages/trips/trips';
 import { SearchResultPage } from '../pages/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
 import { AuthService } from '../services/auth-service';
+import { TempPage } from '../pages/temp/temp';
 
 interface Page {
   title: string;
