@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GeolocationService } from '../../services/geolocation-service';
 import { AutocompleteService } from '../../services/autocomplete-service';
-import { LatLng } from '../../../shared/LatLng';
 
 const CURRENT_LOCATION = 'Current Location';
 
@@ -63,7 +61,5 @@ export class SearchAutocompleteComponent {
     this.addressChange.emit(address);
     this.showAutocomplete = false;
     this.autocompleteResults = [];
-
-    // TODO: leave off 'USA'? (looking ahead to presentation in the trip data)
   }
 }

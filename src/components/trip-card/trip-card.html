@@ -1,5 +1,6 @@
 <div class="card-container">
   <ion-card>
+
     <div class="map">
       <google-map
         [zoomControl]="false"
@@ -14,6 +15,7 @@
         [bicyclingPoints]="trip.bicyclingTravel.points">
       </google-map>
     </div>
+
     <ion-card-content>
       <h4 class="clearfix">
         <span class="title">{{ trip.status }} Trip</span>
@@ -25,5 +27,6 @@
         <span class="price">{{ trip.totalPrice | currency:'USD':true }}</span>
       </p>
     </ion-card-content>
+
   </ion-card>
 </div>

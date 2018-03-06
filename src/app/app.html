@@ -7,7 +7,11 @@
 
   <ion-content>
     <ion-list>
-      <button large menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button large menuClose ion-item *ngFor="let p of initialPages" (click)="openPage(p)">
+        <ion-icon item-left [name]="p.icon"></ion-icon>
+        {{p.title}}
+      </button>
+      <button large menuClose ion-item *ngFor="let p of userPages" (click)="openPage(p)">
         <ion-icon item-left [name]="p.icon"></ion-icon>
         {{p.title}}
       </button>

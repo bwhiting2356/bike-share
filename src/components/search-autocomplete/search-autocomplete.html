@@ -2,19 +2,16 @@
   <ion-label floating>{{ label }}</ion-label>
   <ion-input
     type="text"
-    clearInput
     [value]="address"
     (ionFocus)="focus()"
     (input)="inputChange($event)">
-    <!--(ionFocus)="originFocus($event)"-->
-    <!--(ionBlur)="originBlur($event)"-->
-    <!--(input)="originInputChange($event)"-->
-    <!--[value]="originAddress"-->
   </ion-input>
 </ion-item>
 <div class="autocomplete">
   <ion-list *ngIf="showAutocomplete">
+
     <div class="small-divider"></div>
+
     <div *ngIf="showCurrentLocation">
       <ion-item no-lines (click)="chooseCurrentLocation()">
         <ion-icon
@@ -25,6 +22,7 @@
       </ion-item>
       <div class="small-divider"></div>
     </div>
+
     <ion-item
       (click)="chooseAutocompleteItem(result)"
       *ngFor="let result of autocompleteResults">
@@ -32,11 +30,12 @@
       {{ result.structured_formatting.main_text }}
       <p>{{ result.structured_formatting.secondary_text }}</p>
     </ion-item>
+
     <div class="no-results" *ngIf="autocompleteResults.length === 0">
       <ion-item no-lines>No results to show</ion-item>
     </div>
-  </ion-list>
 
+  </ion-list>
 </div>
 
 

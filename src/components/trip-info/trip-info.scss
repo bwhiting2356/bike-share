@@ -10,7 +10,7 @@ trip-info {
 
   .container {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
   }
 
   .trip-details {
@@ -58,24 +58,24 @@ trip-info {
 
 
     .price {
-      font-weight: 500;
       display: flex;
+      font-weight: 500;
       align-items: center;
       justify-content: flex-end;
     }
 
     .time {
-      font-weight: 500;
       display: flex;
+      font-weight: 500;
       align-items: left;
       justify-content: left;
     }
 
     .icon {
-      align-items: center;
-      justify-content: space-around;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
     }
 
     .address,

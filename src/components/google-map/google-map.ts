@@ -97,6 +97,8 @@ export class GoogleMapComponent implements OnChanges, OnInit {
 
   addMarker(position, station = false) {
     const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg'
+    // TODO: show/hide stations when zoom level changes?
+
     let markerOptions = {
       position: position,
       map: this.map,
@@ -104,8 +106,6 @@ export class GoogleMapComponent implements OnChanges, OnInit {
         url: url
       }
     };
-
-    // TODO: z-index lower?
 
     new google.maps.Marker(markerOptions);
   }
@@ -180,7 +180,6 @@ export class GoogleMapComponent implements OnChanges, OnInit {
 
     return new google.maps.Polyline({
       path: points,
-      // geodesic: true,
       strokeColor: 'black',
       strokeOpacity: 0,
       strokeWeight: 5,

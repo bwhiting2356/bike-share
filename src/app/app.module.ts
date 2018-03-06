@@ -15,6 +15,7 @@ import { TripDetailPage } from '../pages/trip-detail/trip-detail';
 import { SearchResultPage } from '../pages/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
 import { LoginModalPage } from '../pages/login-modal/login-modal';
+import { PaymentsPage } from '../pages/payments/payments';
 
 // services
 
@@ -44,7 +45,6 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { environment } from "../environments/environment";
 
 
-
 @NgModule({
   declarations: [
     MyApp,
@@ -53,7 +53,8 @@ import { environment } from "../environments/environment";
     TripsPage,
     TripDetailPage,
     LoginPage,
-    LoginModalPage
+    LoginModalPage,
+    PaymentsPage
   ],
   imports: [
     BrowserModule,
@@ -72,7 +73,8 @@ import { environment } from "../environments/environment";
     TripsPage,
     TripDetailPage,
     LoginPage,
-    LoginModalPage
+    LoginModalPage,
+    PaymentsPage,
   ],
   providers: [
     GooglePlus,

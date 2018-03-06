@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   IonicPage, LoadingController, ModalController, NavController, NavParams,
   ToastController
@@ -16,33 +16,38 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   selector: 'page-search-result',
   templateUrl: 'search-result.html',
 })
-export class SearchResultPage {
+export class SearchResultPage implements OnDestroy {
   origin: LatLng;
   destination: LatLng;
-  result: BehaviorSubject<Trip>;
-  // tripData: TripData;
+  result: Trip;
   error: BehaviorSubject<string>;
   fetching: BehaviorSubject<boolean>;
   bicyclePolylineMainColor;
   bicyclePolylineBorderColor;
-  subscription;
+  tripSubscription;
 
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
-    public navCtrl: NavController, public navParams: NavParams
+    private navCtrl: NavController, public navParams: NavParams
   ) {
     this.fetching = this.firestoreService.searchFetching;
-    this.result = this.firestoreService.searchResultTrip;
     this.error = this.firestoreService.searchError;
+
+    this.tripSubscription = this.firestoreService.searchResultTrip.subscribe(result => {
+      this.result = result;
+    })
   }
 
   ionViewWillEnter() {
     this.origin = this.navParams.get('origin');
     this.destination = this.navParams.get('destination');
+  }
+
+  ngOnDestroy() {
+    this.tripSubscription.unsubscribe();
   }
 
   bookReservation() {
@@ -59,7 +64,7 @@ export class SearchResultPage {
         })
       } else {
         // this.firestoreService.bookReservation();
-        this.navCtrl.push(TempPage);
+        // this.navCtrl.push(TempPage);
       }
     })
   }

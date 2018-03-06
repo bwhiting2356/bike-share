@@ -26,8 +26,8 @@
     <div class="flex-container" *ngIf="!(error | async)">
       <div class="result">
         <ion-list>
-          <div *ngIf="(result | async) as trip">
-            <trip-info [trip]="trip"></trip-info>
+          <div *ngIf="result">
+            <trip-info [trip]="result"></trip-info>
             <button
               ion-button
               block
@@ -38,16 +38,18 @@
           </div>
         </ion-list>
       </div>
+
       <div class="map">
         <google-map [origin]="origin"
                     [destination]="destination"
-                    [stationStart]="trip ? trip.stationStart.coords : null"
-                    [stationEnd]="trip ? trip.stationEnd.coords : null"
-                    [walking1Points]="trip ? trip.walking1Travel.points : null"
-                    [bicyclingPoints]="trip ? trip.bicyclingTravel.points : null"
-                    [walking2Points]="trip ? trip.walking2Travel.points : null">
+                    [stationStart]="result.stationStart.coords || null"
+                    [stationEnd]="result ? result.stationEnd.coords : null"
+                    [walking1Points]="result ? result.walking1Travel.points : null"
+                    [bicyclingPoints]="result ? result.bicyclingTravel.points : null"
+                    [walking2Points]="result ? result.walking2Travel.points : null">
         </google-map>
       </div>
+
     </div>
   </div>
 </ion-content>

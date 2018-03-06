@@ -5,10 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SearchPage } from '../pages/search/search';
 import { TripsPage } from '../pages/trips/trips';
-import { SearchResultPage } from '../pages/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
 import { AuthService } from '../services/auth-service';
-import { TempPage } from '../pages/temp/temp';
+import { PaymentsPage } from '../pages/payments/payments';
 
 interface Page {
   title: string;
@@ -25,7 +24,8 @@ export class MyApp {
 
   rootPage: any = SearchPage;
 
-  pages: Array<Page>;
+  initialPages: Array<Page>;
+  userPages: Array<Page>;
   loginPage: Page;
 
   constructor(private authService: AuthService,
@@ -35,12 +35,16 @@ export class MyApp {
               private toastCtrl: ToastController) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
+    this.initialPages = [
       { title: 'Search', icon: 'search', component: SearchPage },
-      { title: 'Trips', icon: 'bicycle', component: TripsPage },
     ];
-    this.loginPage = { title: 'Log in', icon: 'person', component: LoginPage };
+    this.loginPage = { title: 'Log in', icon: 'person', component: LoginPage }; // keep separate so I can remove it when signed in
+
+    this.userPages = [
+      { title: 'Trips', icon: 'bicycle', component: TripsPage }, // TODO: auth guard, lazy load these pages
+      { title: 'Payments', icon: 'card', component: PaymentsPage }
+    ];
+
     this.isAnonymous = this.authService.isAnonymous();
 
   }

@@ -45,7 +45,7 @@ export class TripsPage {
       return trip.status === TripStatus.COMPLETED  // order
     });
     this.upcomingTrips = this.trips.filter(trip => {
-      return trip.status === TripStatus.COMPLETED // change this to SCHEDULED, also order
+      return trip.status === TripStatus.COMPLETED // TODO: change this to SCHEDULED, also order
     });
   }
 
