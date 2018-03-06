@@ -5,6 +5,7 @@
     clearInput
     [value]="address"
     (ionFocus)="focus()"
+    (ionBlur)="blur()"
     (input)="inputChange($event)">
     <!--(ionFocus)="originFocus($event)"-->
     <!--(ionBlur)="originBlur($event)"-->
@@ -33,7 +34,7 @@
       <p>{{ result.structured_formatting.secondary_text }}</p>
     </ion-item>
     <div class="no-results" *ngIf="autocompleteResults.length === 0">
-      <ion-item>No results to show</ion-item>
+      <ion-item no-lines>No results to show</ion-item>
     </div>
   </ion-list>
 

@@ -27,6 +27,10 @@ export class SearchAutocompleteComponent {
     this.showAutocomplete = true;
   }
 
+  blur() {
+    this.showAutocomplete = false;
+  }
+
   inputChange(e) {
     const term = e.target.value;
     this.autocompleteService.getPlacePredictions(term).then((results: any[]) => {
