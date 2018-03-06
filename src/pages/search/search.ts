@@ -60,7 +60,7 @@ export class SearchPage {
 
     // display toast if there is one
     if (this.navParams.get("toast")) {
-      toastCtrl.create({
+      this.toastCtrl.create({
         message: this.navParams.get("toast"),
         duration: 3000,
         position: 'bottom'

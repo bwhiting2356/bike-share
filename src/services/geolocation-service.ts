@@ -1,13 +1,12 @@
-import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';;
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 
 import 'rxjs/add/operator/mergeMap';
 
-import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation';
 import { LatLng } from '../../shared/LatLng';
 
 declare var google;
@@ -19,7 +18,6 @@ export class GeolocationService {
   geocoder;
 
   constructor(
-    private zone: NgZone,
     private geolocation: Geolocation) {
     this.foundPosition = new BehaviorSubject(false);
     this.userLocation$ = new BehaviorSubject(null)

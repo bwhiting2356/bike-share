@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
 declare var google;
@@ -7,8 +7,7 @@ declare var google;
 export class AutocompleteService {
   googleAutocompleteService;
 
-  constructor(
-    private zone: NgZone) {
+  constructor() {
     this.googleAutocompleteService = new google.maps.places.AutocompleteService();
   }
 

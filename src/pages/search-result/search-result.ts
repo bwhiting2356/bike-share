@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import {
-  IonicPage, LoadingController, ModalController, NavController, NavParams,
+  IonicPage, ModalController, NavController, NavParams,
   ToastController
 } from 'ionic-angular';
-import { Trip, TripData } from '../../../shared/Trip';
+import { Trip } from '../../../shared/Trip';
 import { LatLng } from '../../../shared/LatLng';
 import { TempPage } from '../temp/temp';
 import { FirestoreService } from '../../services/firestore-service';

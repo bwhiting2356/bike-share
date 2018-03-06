@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Trip } from '../../../shared/Trip';
-import { TempPage } from '../temp/temp';
 import { SearchPage } from '../search/search';
 
 
