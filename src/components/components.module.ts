@@ -12,13 +12,15 @@ import { GoogleMapComponent } from './google-map/google-map';
 import { TripCardComponent } from './trip-card/trip-card';
 import { TripInfoComponent } from './trip-info/trip-info';
 import { SearchAutocompleteComponent } from './search-autocomplete/search-autocomplete';
+import { CollapseIconComponent } from './collapse-icon/collapse-icon';
 
 @NgModule({
 	declarations: [
 	  GoogleMapComponent,
     TripCardComponent,
     TripInfoComponent,
-    SearchAutocompleteComponent
+    SearchAutocompleteComponent,
+    CollapseIconComponent
   ],
 	imports: [
 	  CommonModule,
@@ -29,7 +31,8 @@ import { SearchAutocompleteComponent } from './search-autocomplete/search-autoco
 	  GoogleMapComponent,
     TripCardComponent,
     TripInfoComponent,
-    SearchAutocompleteComponent
+    SearchAutocompleteComponent,
+    CollapseIconComponent
   ]
 })
 export class ComponentsModule {}

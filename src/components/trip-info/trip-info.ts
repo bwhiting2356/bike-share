@@ -7,4 +7,10 @@ import { Trip } from '../../../shared/Trip';
 })
 export class TripInfoComponent {
   @Input() trip: Trip;
+  collapsed = false;
+
+  collapseToggle() {
+    this.collapsed = !this.collapsed;
+    console.log("this.collapsed", this.collapsed);
+  }
 }
