@@ -89,6 +89,9 @@ trip-info {
 
     collapse-icon {
       top: 15px;
+      @media (min-width: $desktop-breakpoint) { // don't show the collapse icon for desktop
+        display: none;
+      }
     }
   }
 
@@ -111,7 +114,7 @@ trip-info {
   .time {
     display: flex;
     font-weight: 500;
-    align-items: left;
+    align-items: center;
     justify-content: left;
   }
 
@@ -185,7 +188,7 @@ trip-info {
 
     collapse-icon {
       position: absolute;
-      right: 8px;
+      right: 6px;
     }
   }
 }

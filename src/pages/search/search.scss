@@ -17,7 +17,7 @@ page-trip-detail {
       flex-direction: column;
       flex-wrap: nowrap;
 
-      @media (min-width: 800px) {
+      @media (min-width: $desktop-breakpoint) {
         flex-direction: row;
       }
 
