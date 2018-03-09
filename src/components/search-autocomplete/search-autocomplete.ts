@@ -17,6 +17,8 @@ export class SearchAutocompleteComponent {
   autocompleteResults = [];
 
   text: string;
+  fetching: boolean = false;
+  pristine: boolean = true;
 
   constructor(
     private autocompleteService: AutocompleteService) {
@@ -33,8 +35,11 @@ export class SearchAutocompleteComponent {
 
   inputChange(e) {
     const term = e.target.value;
+    this.fetching = true;
+    this.pristine = false;
     this.autocompleteService.getPlacePredictions(term).then((results: any[]) => {
       this.autocompleteResults = results || [];
+      this.fetching = false;
     })
   }
 

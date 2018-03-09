@@ -23,16 +23,31 @@
       <div class="small-divider"></div>
     </div>
 
-    <ion-item
-      (click)="chooseAutocompleteItem(result)"
-      *ngFor="let result of autocompleteResults">
-      <ion-icon name="pin" item-start></ion-icon>
-      {{ result.structured_formatting.main_text }}
-      <p>{{ result.structured_formatting.secondary_text }}</p>
-    </ion-item>
+    <div class="results" *ngIf="!fetching">
+      <ion-item
+        (click)="chooseAutocompleteItem(result)"
+        *ngFor="let result of autocompleteResults">
+        <ion-icon name="pin" item-start></ion-icon>
+        {{ result.structured_formatting.main_text }}
+        <p>{{ result.structured_formatting.secondary_text }}</p>
+      </ion-item>
+    </div>
 
-    <div class="no-results" *ngIf="autocompleteResults.length === 0">
-      <ion-item no-lines>No results to show</ion-item>
+
+    <div class="no-results" *ngIf="autocompleteResults.length === 0 && !fetching">
+      <ion-item no-lines *ngIf="pristine">
+        <ion-icon name="information-circle" item-start></ion-icon>
+        Enter address or place name
+      </ion-item>
+
+      <ion-item no-lines *ngIf="!pristine">
+        <ion-icon name="alert" item-start></ion-icon>
+        No addresses found for this search
+      </ion-item>
+    </div>
+
+    <div class="fetching" *ngIf="fetching">
+      <ion-item no-lines><ion-spinner item-start></ion-spinner>Fetching results...</ion-item>
     </div>
 
   </ion-list>

@@ -19,7 +19,8 @@ search-autocomplete {
       background-color: lightgrey;
     }
 
-    .no-results {
+    .no-results,
+    .fetching {
       font-weight: lighter;
       font-style: italic;
       font-size: 0.9em;
