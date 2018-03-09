@@ -23,12 +23,15 @@ import { GeolocationService } from '../services/geolocation-service';
 import { AutocompleteService } from '../services/autocomplete-service';
 import { AuthService } from '../services/auth-service';
 import { FirestoreService } from '../services/firestore-service';
+import { WindowService } from '../services/window-service';
+
 
 // module imports
 
 import { PipesModule } from '../pipes/pipes.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentsModule } from "../components/components.module";
+import { TextMaskModule } from 'angular2-text-mask';
 
 // firebase
 
@@ -43,6 +46,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import { environment } from "../../environments/environment";
+import { TempPage } from '../pages/temp/temp';
+
 
 
 @NgModule({
@@ -54,7 +59,8 @@ import { environment } from "../../environments/environment";
     TripDetailPage,
     LoginPage,
     LoginModalPage,
-    PaymentsPage
+    PaymentsPage,
+    TempPage
   ],
   imports: [
     BrowserModule,
@@ -62,6 +68,7 @@ import { environment } from "../../environments/environment";
     ComponentsModule,
     HttpClientModule,
     PipesModule,
+    TextMaskModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     IonicModule.forRoot(MyApp),
   ],
@@ -75,6 +82,7 @@ import { environment } from "../../environments/environment";
     LoginPage,
     LoginModalPage,
     PaymentsPage,
+    TempPage
   ],
   providers: [
     GooglePlus,
@@ -88,6 +96,7 @@ import { environment } from "../../environments/environment";
     AngularFireDatabase,
     AngularFireAuth,
     AuthService,
+    WindowService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

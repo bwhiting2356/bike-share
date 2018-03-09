@@ -5,17 +5,61 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Login</ion-title>
+    <ion-title>Login with SMS</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <button ion-button
-          (tap)="googleLogin()">
-    Login with Google
-  </button>
+  <ion-card text-center>
+    <ion-card-content>
+      <div id="recaptcha-container"></div>
+
+      <ion-item>
+        <ion-icon name="phone-portrait" item-start></ion-icon>
+        <ion-input
+          placeholderChar="X"
+          [textMask]="{mask: phoneNumberMask}"
+          type="tel"
+          [(ngModel)]="phoneNumber"
+          placeholder="(555) 555-5555"></ion-input>
+      </ion-item>
+
+      <!--<ion-item color="danger">Enter a valid phone number</ion-item>-->
+
+      <button
+        (click)="sendLoginCode()"
+        ion-button
+        full>Send Code</button>
+
+      <div *ngIf="windowRef.confirmationResult">
+
+        <ion-item>
+          <ion-icon name="cog" item-start></ion-icon>
+          <ion-input
+            type="tel"
+            [(ngModel)]="verificationCode"
+            placeholder="Enter code"></ion-input>
+        </ion-item>
+
+        <button
+          (click)="verifyLoginCode()"
+          ion-button
+          full
+          [disabled]="verificationCode.length === 0">
+          Verify Code
+        </button>
+      </div>
+
+
+      <!--<ion-item color="danger">Enter a six digit number</ion-item>-->
+
+
+    </ion-card-content>
+  </ion-card>
+
+
 
   <!-- TODO: center button, also in modal version -->
   <!-- TODO: add other logins - phone login? -->

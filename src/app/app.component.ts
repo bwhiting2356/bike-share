@@ -8,6 +8,7 @@ import { TripsPage } from '../pages/trips/trips';
 import { LoginPage } from '../pages/login/login';
 import { AuthService } from '../services/auth-service';
 import { PaymentsPage } from '../pages/payments/payments';
+import { TempPage } from '../pages/temp/temp';
 
 interface Page {
   title: string;
@@ -22,7 +23,7 @@ export class MyApp {
   isAnonymous;
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SearchPage;
+  rootPage: any = LoginPage;
 
   initialPages: Array<Page>;
   userPages: Array<Page>;

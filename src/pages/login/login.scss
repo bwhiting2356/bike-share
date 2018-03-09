@@ -1,3 +1,11 @@
 page-login {
 
+  ion-card {
+    max-width: 400px;
+
+    #recaptcha-container {
+      width: 100%;
+    }
+  }
+
 }
