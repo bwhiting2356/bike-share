@@ -18,7 +18,10 @@ export class TripDetailPage {
   }
 
   backToSearch() {
-    this.navCtrl.setRoot(SearchPage, { origin: this.trip.origin, destination: this.trip.destination });
+    this.navCtrl.setRoot(SearchPage,
+      { origin: this.trip.origin, destination: this.trip.destination },
+      { animate: true }
+      );
   }
 
 }
