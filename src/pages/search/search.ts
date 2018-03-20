@@ -19,6 +19,7 @@ import { Observable } from 'rxjs/Observable';
 import { GeolocationService } from '../../services/geolocation-service';
 import { AuthService } from '../../services/auth-service';
 import { FirestoreService } from '../../services/firestore-service';
+import { GeolocationProvider } from '../../providers/geolocation/geolocation';
 
 const CURRENT_LOCATION = "Current Location";
 
@@ -47,7 +48,7 @@ export class SearchPage {
   fetching: boolean;
 
   constructor(
-    private geolocationService: GeolocationService,
+    private geolocationService: GeolocationProvider,
     private authService: AuthService,
     private firestoreService: FirestoreService,
     private toastCtrl: ToastController,

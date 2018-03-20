@@ -47,6 +47,9 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { environment } from "../../environments/environment";
 import { TempPage } from '../pages/temp/temp';
 
+import { AuthProvider } from '../providers/auth/auth';
+import { GeolocationProvider } from '../providers/geolocation/geolocation';
+
 
 
 @NgModule({
@@ -83,19 +86,22 @@ import { TempPage } from '../pages/temp/temp';
     TempPage
   ],
   providers: [
+    Geolocation,
     GooglePlus,
     StatusBar,
     SplashScreen,
     GeolocationService,
     AutocompleteService,
     FirestoreService,
-    Geolocation,
+    GeolocationProvider,
     AngularFirestore,
     AngularFireDatabase,
     AngularFireAuth,
     AuthService,
     WindowService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider,
+    GeolocationProvider
   ]
 })
 export class AppModule {}
