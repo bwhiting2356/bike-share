@@ -31,7 +31,6 @@ import { WindowService } from '../services/window-service';
 import { PipesModule } from '../pipes/pipes.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentsModule } from "../components/components.module";
-import { TextMaskModule } from 'angular2-text-mask';
 
 // firebase
 
@@ -68,7 +67,6 @@ import { TempPage } from '../pages/temp/temp';
     ComponentsModule,
     HttpClientModule,
     PipesModule,
-    TextMaskModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     IonicModule.forRoot(MyApp),
   ],

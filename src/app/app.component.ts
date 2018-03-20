@@ -23,7 +23,7 @@ export class MyApp {
   isAnonymous;
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = SearchPage;
 
   initialPages: Array<Page>;
   userPages: Array<Page>;
