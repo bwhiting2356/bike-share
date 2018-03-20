@@ -19,7 +19,6 @@ import { PaymentsPage } from '../pages/payments/payments';
 
 // services
 
-import { GeolocationService } from '../services/geolocation-service';
 import { AutocompleteService } from '../services/autocomplete-service';
 import { AuthService } from '../services/auth-service';
 import { FirestoreService } from '../services/firestore-service';

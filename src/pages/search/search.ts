@@ -14,9 +14,8 @@ import { dateToISOStringLocal } from '../../../shared/dateToISOStringLocal';
 
 import { Observable } from 'rxjs/Observable';
 
-// services
+// providers
 
-import { GeolocationService } from '../../services/geolocation-service';
 import { AuthService } from '../../services/auth-service';
 import { FirestoreService } from '../../services/firestore-service';
 import { GeolocationProvider } from '../../providers/geolocation/geolocation';
