@@ -15,7 +15,7 @@
         <search-autocomplete
           [showAutocomplete]="showAutocomplete === 'origin'"
           (inputFocused)="originFocused()"
-          [showCurrentLocation]="showCurrentLocation | async"
+          [showCurrentLocation]="userLocation$ | async"
           [address]="originAddress"
           (addressChange)="originAddressChange($event)"
           label='Origin'>
@@ -24,7 +24,7 @@
         <search-autocomplete
           [showAutocomplete]="showAutocomplete == 'destination'"
           (inputFocused)="destinationFocused()"
-          [showCurrentLocation]="showCurrentLocation | async"
+          [showCurrentLocation]="userLocation$ | async"
           [address]="destinationAddress"
           (addressChange)="destinationAddressChange($event)"
           [label]="'Destination'">

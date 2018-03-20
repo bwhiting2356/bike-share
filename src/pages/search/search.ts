@@ -38,7 +38,6 @@ export class SearchPage {
   destinationAddress: string;
   destinationCoords: LatLng;
 
-  showCurrentLocation;
   showAutocomplete: string;
 
   timeTarget: string = 'Depart at';
@@ -66,10 +65,6 @@ export class SearchPage {
         position: 'bottom'
       }).present();
     }
-
-    this.showCurrentLocation = this.geolocationService.foundPosition;
-    // this.geolocationService.foundPosition.subscribe(val => console.log(val));
-    // this.geolocationService.userLocation$.subscribe(val => console.log(val));
 
     // get origin and destination from nav params, if they're there
     this.originCoords = this.navParams.get('origin') ? this.navParams.get('origin').coords : null;

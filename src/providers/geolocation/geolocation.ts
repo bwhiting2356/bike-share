@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';;
 import { Geolocation } from '@ionic-native/geolocation';
 import { LatLng } from '../../../shared/LatLng';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 declare var google;
 
 @Injectable()
 export class GeolocationProvider {
   foundPosition: BehaviorSubject<boolean>;
-  userLocation$: BehaviorSubject<LatLng>;
+  userLocation$: Observable<LatLng>;
   geocoder;
 
   constructor(
@@ -16,13 +18,17 @@ export class GeolocationProvider {
     this.foundPosition = new BehaviorSubject(false);
     this.userLocation$ = new BehaviorSubject(null);
     this.geocoder = new google.maps.Geocoder;
-    this.geolocation.watchPosition().subscribe(geoposition => {
-      if (geoposition && geoposition.coords) {
-        this.foundPosition.next(true);
-        this.userLocation$.next({ lat: geoposition.coords.latitude, lng: geoposition.coords.longitude })
-      }
-    })
-  }  // TODO: is this bad design, to push a values into a subject inside of a subscribe function?
+    this.userLocation$ = this.geolocation.watchPosition()
+      .pipe(
+        map(geoposition => {
+          if (geoposition && geoposition.coords) {
+            return { lat: geoposition.coords.latitude, lng: geoposition.coords.longitude };
+          } else {
+            return null;
+          }
+        })
+      );
+  }
 
   geocode(address): Promise<LatLng> {
     return new Promise(resolve => {
