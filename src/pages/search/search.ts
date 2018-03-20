@@ -17,8 +17,8 @@ import { Observable } from 'rxjs/Observable';
 // providers
 
 import { AuthService } from '../../services/auth-service';
-import { FirestoreService } from '../../services/firestore-service';
 import { GeolocationProvider } from '../../providers/geolocation/geolocation';
+import { FirestoreProvider } from '../../providers/firestore/firestore';
 
 const CURRENT_LOCATION = "Current Location";
 
@@ -48,7 +48,7 @@ export class SearchPage {
   constructor(
     private geolocationService: GeolocationProvider,
     private authService: AuthService,
-    private firestoreService: FirestoreService,
+    private firestoreService: FirestoreProvider,
     private toastCtrl: ToastController,
     private navCtrl: NavController,
     private navParams: NavParams

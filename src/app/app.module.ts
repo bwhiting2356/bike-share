@@ -21,7 +21,6 @@ import { PaymentsPage } from '../pages/payments/payments';
 
 import { AutocompleteService } from '../services/autocomplete-service';
 import { AuthService } from '../services/auth-service';
-import { FirestoreService } from '../services/firestore-service';
 import { WindowService } from '../services/window-service';
 
 
@@ -91,8 +90,9 @@ import { FirestoreProvider } from '../providers/firestore/firestore';
     StatusBar,
     SplashScreen,
     AutocompleteService,
-    FirestoreService,
+    // FirestoreService,
     GeolocationProvider,
+    FirestoreProvider,
     AngularFirestore,
     AngularFireDatabase,
     AngularFireAuth,

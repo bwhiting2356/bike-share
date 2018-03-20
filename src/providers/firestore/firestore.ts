@@ -18,6 +18,8 @@ import 'rxjs/add/operator/take';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AuthService } from '../../services/auth-service';
+import { clientMapGeoPointToLatLng } from './clientMapGeoPointToLatLng';
+import { map, take } from 'rxjs/operators';
 
 
 @Injectable()
@@ -39,7 +41,10 @@ export class FirestoreProvider {
     this.searchFetching = new BehaviorSubject<boolean>(true);
 
     this.stationList = this.dbFirestore.collection('/stations').valueChanges()
-      .map(stationList => stationList.map(station => clientMapGeoPointToLatLng(station["coords"])));
+      .pipe(
+        take(1),
+        map(stationList => stationList.map(station => clientMapGeoPointToLatLng(station["coords"])))
+      );
 
     this.authService.currentUserIdObservable.subscribe(userId => {
       if (userId) {
@@ -47,13 +52,11 @@ export class FirestoreProvider {
         this.userDataRef = this.dbFirestore.collection('/users').doc(userId);
         this.userDataRef.valueChanges().subscribe(data => {
           if (data.searchResult && data.searchResult.tripData) {
-            console.log("result", data.searchResult.tripData);
             this.searchResultTrip.next(new Trip(data.searchResult.tripData));
             this.searchError.next(null);
             this.searchFetching.next(false);
           }
           if (data.searchResult && data.searchResult.error) {
-            console.log("error", data.searchResult.error);
             this.searchError.next(data.searchResult.error);
             this.searchResultTrip.next(null);
             this.searchFetching.next(false);
@@ -93,7 +96,6 @@ export class FirestoreProvider {
   }
 
   bookReservation(tripData: TripData) {
-    console.log("trip data: ", tripData);
 
     this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/bookTrip  ',
       { userId: this.userId, tripData })
@@ -108,11 +110,5 @@ export class FirestoreProvider {
     this.searchResultTrip.next(null);
     this.searchError.next(null);
   }
-
-
 }
-
-export const clientMapGeoPointToLatLng = (geopoint): LatLng => { // TODO: save for when geoqueries come to firestore
-  return { lat: geopoint.latitude, lng: geopoint.longitude };
-};
 

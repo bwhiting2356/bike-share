@@ -6,10 +6,10 @@ import {
 import { Trip } from '../../../shared/Trip';
 import { LatLng } from '../../../shared/LatLng';
 import { TempPage } from '../temp/temp';
-import { FirestoreService } from '../../services/firestore-service';
 import { AuthService } from '../../services/auth-service';
 import { LoginModalPage } from '../login-modal/login-modal';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { FirestoreProvider } from '../../providers/firestore/firestore';
 
 @IonicPage()
 @Component({
@@ -28,7 +28,7 @@ export class SearchResultPage implements OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private firestoreService: FirestoreService,
+    private firestoreService: FirestoreProvider,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private navCtrl: NavController, public navParams: NavParams
