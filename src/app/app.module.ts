@@ -48,6 +48,7 @@ import { TempPage } from '../pages/temp/temp';
 
 import { AuthProvider } from '../providers/auth/auth';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
+import { FirestoreProvider } from '../providers/firestore/firestore';
 
 
 
@@ -89,7 +90,6 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
     GooglePlus,
     StatusBar,
     SplashScreen,
-    GeolocationService,
     AutocompleteService,
     FirestoreService,
     GeolocationProvider,
@@ -100,7 +100,8 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
     WindowService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    GeolocationProvider
+    GeolocationProvider,
+    FirestoreProvider
   ]
 })
 export class AppModule {}

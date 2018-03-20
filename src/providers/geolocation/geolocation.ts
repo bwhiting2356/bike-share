@@ -32,7 +32,7 @@ export class GeolocationProvider {
 
   geocode(address): Promise<LatLng> {
     return new Promise(resolve => {
-      return this.geocoder.geocode({"address": address }, results => {
+      return this.geocoder.geocode({ address }, results => {
         const coords = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
         resolve(coords);
       })
