@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';;
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-
-import 'rxjs/add/operator/mergeMap';
-
 import { Geolocation } from '@ionic-native/geolocation';
 import { LatLng } from '../../../shared/LatLng';
 
@@ -20,7 +14,7 @@ export class GeolocationProvider {
   constructor(
     private geolocation: Geolocation) {
     this.foundPosition = new BehaviorSubject(false);
-    this.userLocation$ = new BehaviorSubject(null)
+    this.userLocation$ = new BehaviorSubject(null);
     this.geocoder = new google.maps.Geocoder;
     this.geolocation.watchPosition().subscribe(geoposition => {
       if (geoposition && geoposition.coords) {
