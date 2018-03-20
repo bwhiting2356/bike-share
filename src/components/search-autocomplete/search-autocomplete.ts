@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AutocompleteService } from '../../services/autocomplete-service';
+import { AutocompleteProvider } from '../../providers/autocomplete/autocomplete';
 
 const CURRENT_LOCATION = 'Current Location';
 
@@ -21,7 +21,7 @@ export class SearchAutocompleteComponent {
   pristine: boolean = true;
 
   constructor(
-    private autocompleteService: AutocompleteService) {
+    private autocompleteService: AutocompleteProvider) {
   }
 
   focus() {

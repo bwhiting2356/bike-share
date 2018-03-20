@@ -19,7 +19,6 @@ import { PaymentsPage } from '../pages/payments/payments';
 
 // services
 
-import { AutocompleteService } from '../services/autocomplete-service';
 import { AuthService } from '../services/auth-service';
 import { WindowService } from '../services/window-service';
 
@@ -48,6 +47,7 @@ import { TempPage } from '../pages/temp/temp';
 import { AuthProvider } from '../providers/auth/auth';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { FirestoreProvider } from '../providers/firestore/firestore';
+import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
 
 
 
@@ -89,8 +89,7 @@ import { FirestoreProvider } from '../providers/firestore/firestore';
     GooglePlus,
     StatusBar,
     SplashScreen,
-    AutocompleteService,
-    // FirestoreService,
+    AutocompleteProvider,
     GeolocationProvider,
     FirestoreProvider,
     AngularFirestore,
@@ -101,7 +100,8 @@ import { FirestoreProvider } from '../providers/firestore/firestore';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     GeolocationProvider,
-    FirestoreProvider
+    FirestoreProvider,
+    AutocompleteProvider
   ]
 })
 export class AppModule {}

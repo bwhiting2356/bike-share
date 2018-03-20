@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
 
 declare var google;
 
 @Injectable()
-export class AutocompleteService {
+export class AutocompleteProvider {
   googleAutocompleteService;
 
   constructor() {
