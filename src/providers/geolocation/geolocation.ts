@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { LatLng } from '../../../shared/LatLng';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
+import { MapsAPILoader } from '@agm/core';
 
 declare var google;
 
@@ -14,10 +15,15 @@ export class GeolocationProvider {
   geocoder;
 
   constructor(
+    private mapsAPILoader: MapsAPILoader,
     private geolocation: Geolocation) {
     this.foundPosition = new BehaviorSubject(false);
     this.userLocation$ = new BehaviorSubject(null);
-    this.geocoder = new google.maps.Geocoder;
+
+    this.mapsAPILoader.load().then(() => {
+      this.geocoder = new google.maps.Geocoder;
+    });
+
     this.userLocation$ = this.geolocation.watchPosition()
       .pipe(
         map(geoposition => {
@@ -32,10 +38,13 @@ export class GeolocationProvider {
 
   geocode(address): Promise<LatLng> {
     return new Promise(resolve => {
-      return this.geocoder.geocode({ address }, results => {
-        const coords = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
-        resolve(coords);
-      })
+      this.mapsAPILoader.load().then(() => {
+        this.geocoder.geocode({ address }, results => {
+          const coords = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
+          resolve(coords);
+        })
+      });
+
     })
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MapsAPILoader } from '@agm/core';
 
 declare var google;
 
@@ -6,16 +7,21 @@ declare var google;
 export class AutocompleteProvider {
   googleAutocompleteService;
 
-  constructor() {
-    this.googleAutocompleteService = new google.maps.places.AutocompleteService();
+  constructor(private mapsAPILoader: MapsAPILoader) {
+    this.mapsAPILoader.load().then(() => {
+      this.googleAutocompleteService = new google.maps.places.AutocompleteService();
+    })
+
   }
 
   getPlacePredictions(input) {
     if (input) {
       return new Promise(resolve => {
-        this.googleAutocompleteService.getPlacePredictions({input}, results => {
-          resolve(results);
-        });
+        this.mapsAPILoader.load().then(() => {
+          this.googleAutocompleteService.getPlacePredictions({input}, results => {
+            resolve(results);
+          });
+        })
       });
     } else {
       return Promise.resolve([]);

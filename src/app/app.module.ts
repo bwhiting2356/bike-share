@@ -48,6 +48,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { FirestoreProvider } from '../providers/firestore/firestore';
 import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
+import { AgmCoreModule } from '@agm/core';
 
 
 
@@ -71,6 +72,10 @@ import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
     PipesModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      libraries: ['places'],
+      apiKey: environment.googleMapsKey
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

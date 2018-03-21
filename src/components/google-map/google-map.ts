@@ -4,6 +4,7 @@ import { Component, ViewChild, Input, OnChanges, OnInit } from '@angular/core';
 
 import { LatLng } from '../../../shared/LatLng';
 import { bicyclePolylineBorderColor, bicyclePolylineMainColor } from '../../../shared/ThemeVariables';
+import { MapsAPILoader } from '@agm/core';
 
 declare var google;
 
@@ -30,7 +31,9 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   @Input() stationList: LatLng[];
   map: any;
 
-  constructor() { }
+  constructor(private mapsAPILoader: MapsAPILoader) {
+
+  }
 
   ngOnInit() {
     this.initMap();
@@ -42,39 +45,42 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   }
 
   initMap() {
-    this.map = new google.maps.Map(this.mapContainer.nativeElement, {
-      zoom: this.zoom,
-      maxZoom: 16,
-      center: this.center,
-      disableDefaultUI: true,
-      zoomControl: this.zoomControl,
-      streetViewControl: this.streetViewControl,
-      gestureHandling: this.gestureHandling,
-      fullscreenControl: this.fullscreenControl,
-      styles: [
-        {
-          featureType: 'poi',
-          stylers: [{visibility: '#off'}]
-        },
-      ]
-    });
-    this.map.setCenter(this.center);
+    this.mapsAPILoader.load().then(() => {
+      this.map = new google.maps.Map(this.mapContainer.nativeElement, {
+        zoom: this.zoom,
+        maxZoom: 16,
+        center: this.center,
+        disableDefaultUI: true,
+        zoomControl: this.zoomControl,
+        streetViewControl: this.streetViewControl,
+        gestureHandling: this.gestureHandling,
+        fullscreenControl: this.fullscreenControl,
+        styles: [
+          {
+            featureType: 'poi',
+            stylers: [{visibility: '#off'}]
+          },
+        ]
+      });
+      this.map.setCenter(this.center);
 
-    if (this.origin) this.addMarker(this.origin); // TODO: why is it not showing up with just one marker?
-    if (this.destination) this.addMarker(this.destination);
+      if (this.origin) this.addMarker(this.origin); // TODO: why is it not showing up with just one marker?
+      if (this.destination) this.addMarker(this.destination);
 
-    if (this.origin || this.destination) this.fitBounds();
+      if (this.origin || this.destination) this.fitBounds();
 
-    if (this.stationStart) this.addMarker(this.stationStart, true);
-    if (this.stationEnd) this.addMarker(this.stationEnd, true);
+      if (this.stationStart) this.addMarker(this.stationStart, true);
+      if (this.stationEnd) this.addMarker(this.stationEnd, true);
 
-    if (this.stationList && this.map.getZoom() >= 14) { // don't show stations if I'm too zoomed out, stations too dense
-      this.stationList.forEach(station => this.addMarker(station, true));
-    }
+      if (this.stationList && this.map.getZoom() >= 14) { // don't show stations if I'm too zoomed out, stations too dense
+        this.stationList.forEach(station => this.addMarker(station, true));
+      }
 
-    if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
-    if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
-    if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, GoogleMapComponent.BICYCLING);
+      if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
+      if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
+      if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, GoogleMapComponent.BICYCLING);
+
+    })
   }
 
   fitBounds() {
