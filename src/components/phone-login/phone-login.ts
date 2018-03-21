@@ -43,23 +43,27 @@ export class PhoneLoginComponent implements OnInit {
     this.windowRef.recaptchaVerifier.render();
   }
 
+  displayToast(message: string) {
+    this.toastCtrl.create({
+      message,
+      duration: 3000,
+      position: 'bottom'
+    }).present()
+
+  }
+
   sendLoginCode() {
     const appVerifier = this.windowRef.recaptchaVerifier;
     const num = this.phoneNumber.e164;
     firebase.auth().signInWithPhoneNumber(num, appVerifier)
       .then(result => {
         this.windowRef.confirmationResult = result;
+        this.displayToast(`Code sent to ${this.phoneNumber.number}`);
       })
       .catch(error => {
-        this.toastCtrl.create({
-          message: error,
-          duration: 3000,
-          position: 'bottom'
-        }).present()
+        this.displayToast(error);
       });
   }
-
-  // TODO: add toast when the code is sent
 
   verifyLoginCode() {
     this.windowRef.confirmationResult
@@ -69,11 +73,7 @@ export class PhoneLoginComponent implements OnInit {
         this.loginSuccess.emit();
       })
       .catch(error => {
-        this.toastCtrl.create({
-          message: error,
-          duration: 3000,
-          position: 'bottom'
-        }).present()
+        this.displayToast(error);
       });
   }
 }

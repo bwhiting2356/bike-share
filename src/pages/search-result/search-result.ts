@@ -31,7 +31,8 @@ export class SearchResultPage implements OnDestroy {
     private firestoreService: FirestoreProvider,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
-    private navCtrl: NavController, public navParams: NavParams
+    private navCtrl: NavController,
+    public navParams: NavParams
   ) {
     this.fetching = this.firestoreService.searchFetching;
     this.error = this.firestoreService.searchError;
@@ -53,7 +54,9 @@ export class SearchResultPage implements OnDestroy {
   bookReservation() {
     this.authService.isAnonymous().take(1).subscribe(anon => {
       if (anon) {
-        const loginModal = this.modalCtrl.create(LoginModalPage);
+        const loginModal = this.modalCtrl.create(LoginModalPage, {}, {
+
+        });
         loginModal.present();
         loginModal.onDidDismiss(toast => {
           if (toast) {

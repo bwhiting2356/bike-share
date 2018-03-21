@@ -17,4 +17,8 @@ export class LoginModalPage {
   loginSuccess() {
     this.viewCtrl.dismiss({toast: "Logged in successfully"})
   }
+
+  cancel() {
+    this.viewCtrl.dismiss();
+  }
 }

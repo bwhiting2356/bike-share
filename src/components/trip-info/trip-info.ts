@@ -11,6 +11,5 @@ export class TripInfoComponent {
 
   collapseToggle() {
     this.collapsed = !this.collapsed;
-    console.log("this.collapsed", this.collapsed);
   }
 }

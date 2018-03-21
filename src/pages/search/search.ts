@@ -13,12 +13,14 @@ import { dateToISOStringLocal } from '../../../shared/dateToISOStringLocal';
 // rxjs
 
 import { Observable } from 'rxjs/Observable';
+import { take } from 'rxjs/operators';
 
 // providers
 
 import { GeolocationProvider } from '../../providers/geolocation/geolocation';
 import { FirestoreProvider } from '../../providers/firestore/firestore';
 import { AuthProvider } from '../../providers/auth/auth';
+
 
 const CURRENT_LOCATION = "Current Location";
 
@@ -94,10 +96,22 @@ export class SearchPage {
   originAddressChange(address: string) {
     this.originAddress = address;
     if (address === CURRENT_LOCATION) {
-      this.geolocationService.userLocation$.take(1).subscribe((latlng: LatLng) => {
-        this.originCoords = latlng;
-        this.firestoreService.updateSearchOrigin(latlng, address);
-      });
+      this.geolocationService.userLocation$
+        .pipe(
+          take(1)
+        )
+        .subscribe((latlng: LatLng) => {
+          this.originCoords = latlng;
+          this.firestoreService.updateSearchOrigin(latlng, address);
+        });
+
+
+
+      // this.geolocationService.userLocation$.take(1).subscribe((latlng: LatLng) => {
+      //   console.log("latlng: ", latlng);
+      //   this.originCoords = latlng;
+      //   this.firestoreService.updateSearchOrigin(latlng, address);
+      // });
     } else {
       this.geolocationService.geocode(address).then(latlng => {
         this.originCoords = latlng;
