@@ -66,5 +66,6 @@ export class AuthProvider {
 
   phoneSignInSuccess(auth) {
     this.authState = auth;
+    // TODO: transfer search result params over to new user
   }
 }

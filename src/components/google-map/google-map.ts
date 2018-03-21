@@ -30,10 +30,9 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   @Input() bicyclingPoints: LatLng[];
   @Input() stationList: LatLng[];
   map: any;
+  stationMarkers = [];
 
-  constructor(private mapsAPILoader: MapsAPILoader) {
-
-  }
+  constructor(private mapsAPILoader: MapsAPILoader) { }
 
   ngOnInit() {
     this.initMap();
@@ -72,9 +71,11 @@ export class GoogleMapComponent implements OnChanges, OnInit {
       if (this.stationStart) this.addMarker(this.stationStart, true);
       if (this.stationEnd) this.addMarker(this.stationEnd, true);
 
-      if (this.stationList && this.map.getZoom() >= 14) { // don't show stations if I'm too zoomed out, stations too dense
-        this.stationList.forEach(station => this.addMarker(station, true));
-      }
+      this.addOrRemoveStationMarkers();
+
+      this.map.addListener('zoom_changed', () => {
+        this.addOrRemoveStationMarkers();
+      })
 
       if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
       if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
@@ -103,7 +104,6 @@ export class GoogleMapComponent implements OnChanges, OnInit {
 
   addMarker(position, station = false) {
     const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg'
-    // TODO: show/hide stations when zoom level changes?
 
     let markerOptions = {
       position: position,
@@ -113,7 +113,19 @@ export class GoogleMapComponent implements OnChanges, OnInit {
       }
     };
 
-    new google.maps.Marker(markerOptions);
+    return new google.maps.Marker(markerOptions);
+  }
+
+  addOrRemoveStationMarkers() {
+    if (this.stationList && this.map.getZoom() >= 14) {
+      this.stationList.forEach(station => {
+        this.stationMarkers.push(this.addMarker(station, true));
+      });
+    } else {
+      if (this.stationMarkers) {
+        this.stationMarkers.forEach(marker => marker.setMap(null))
+      }
+    }
   }
 
   addPolyline(points: LatLng[], mode: string) {
