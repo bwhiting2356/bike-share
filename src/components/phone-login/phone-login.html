@@ -1,0 +1,43 @@
+<ion-card text-center>
+  <ion-card-content>
+
+    <div id="recaptcha-container"></div>
+
+    <ion-item>
+      <ion-icon name="phone-portrait" item-start></ion-icon>
+      <ion-input
+        placeholderChar="X"
+        type="tel"
+        maxlength="10"
+        [(ngModel)]="phoneNumber.number"
+        placeholder="(555) 555-5555"></ion-input>
+    </ion-item>
+
+    <!--<ion-item color="danger">Enter a valid phone number</ion-item>-->
+
+    <button
+      (click)="sendLoginCode()"
+      ion-button
+      full>Send Code</button>
+  </ion-card-content>
+</ion-card>
+
+<ion-card text-center *ngIf="windowRef.confirmationResult">
+  <ion-card-content>
+    <ion-item>
+      <ion-icon name="cog" item-start></ion-icon>
+      <ion-input
+        type="tel"
+        [(ngModel)]="verificationCode"
+        placeholder="Enter code"></ion-input>
+    </ion-item>
+
+    <button
+      (click)="verifyLoginCode()"
+      ion-button
+      full
+      [disabled]="verificationCode.length === 0">
+      Verify Code
+    </button>
+  </ion-card-content>
+</ion-card>

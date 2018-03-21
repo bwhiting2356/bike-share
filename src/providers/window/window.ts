@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 
-
-// firebase
-
-
-
 @Injectable()
-export class WindowService {
+export class WindowProvider {
+
   get windowRef() {
     return window;
   }
-
 }

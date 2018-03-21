@@ -6,10 +6,10 @@ import {
 import { Trip } from '../../../shared/Trip';
 import { LatLng } from '../../../shared/LatLng';
 import { TempPage } from '../temp/temp';
-import { AuthService } from '../../services/auth-service';
 import { LoginModalPage } from '../login-modal/login-modal';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FirestoreProvider } from '../../providers/firestore/firestore';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -27,7 +27,7 @@ export class SearchResultPage implements OnDestroy {
   tripSubscription;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthProvider,
     private firestoreService: FirestoreProvider,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
@@ -55,12 +55,14 @@ export class SearchResultPage implements OnDestroy {
       if (anon) {
         const loginModal = this.modalCtrl.create(LoginModalPage);
         loginModal.present();
-        loginModal.onDidDismiss(() => {
-          this.toastCtrl.create({
-            message: "Logged in successfully",
-            duration: 3000,
-            position: 'bottom'
-          }).present();
+        loginModal.onDidDismiss(toast => {
+          if (toast) {
+            this.toastCtrl.create({
+              message: toast,
+              duration: 3000,
+              position: 'bottom'
+            }).present();
+          } // TODO: test to make sure this is working
         })
       } else {
         // this.firestoreService.bookReservation();

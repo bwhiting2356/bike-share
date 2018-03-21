@@ -6,9 +6,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { SearchPage } from '../pages/search/search';
 import { TripsPage } from '../pages/trips/trips';
 import { LoginPage } from '../pages/login/login';
-import { AuthService } from '../services/auth-service';
 import { PaymentsPage } from '../pages/payments/payments';
 import { TempPage } from '../pages/temp/temp';
+import { AuthProvider } from '../providers/auth/auth';
 
 interface Page {
   title: string;
@@ -29,7 +29,7 @@ export class MyApp {
   userPages: Array<Page>;
   loginPage: Page;
 
-  constructor(private authService: AuthService,
+  constructor(private authService: AuthProvider,
               public platform: Platform,
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,

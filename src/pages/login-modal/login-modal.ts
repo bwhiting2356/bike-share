@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { AuthService } from '../../services/auth-service';
-
-/**
- * Generated class for the LoginModalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -17,13 +10,11 @@ import { AuthService } from '../../services/auth-service';
 export class LoginModalPage {
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthProvider,
     private viewCtrl: ViewController) {
   }
 
-  googleLogin() {
-    this.authService.googleLogin().then(() => {
-      this.viewCtrl.dismiss();
-    })
+  loginSuccess() {
+    this.viewCtrl.dismiss({toast: "Logged in successfully"})
   }
 }

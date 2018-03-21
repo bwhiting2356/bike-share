@@ -3,8 +3,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+
+// ionic native
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+// TODO: what can I remove if it's PWA only?
+
+import { Geolocation } from '@ionic-native/geolocation';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 // pages
 
@@ -16,11 +23,7 @@ import { SearchResultPage } from '../pages/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
 import { LoginModalPage } from '../pages/login-modal/login-modal';
 import { PaymentsPage } from '../pages/payments/payments';
-
-// services
-
-import { AuthService } from '../services/auth-service';
-import { WindowService } from '../services/window-service';
+import { TempPage } from '../pages/temp/temp';
 
 
 // module imports
@@ -28,6 +31,7 @@ import { WindowService } from '../services/window-service';
 import { PipesModule } from '../pipes/pipes.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentsModule } from "../components/components.module";
+import { AgmCoreModule } from '@agm/core';
 
 // firebase
 
@@ -38,18 +42,14 @@ import { AngularFireAuth } from "angularfire2/auth";
 
 // providers
 
-import { Geolocation } from '@ionic-native/geolocation';
-import { GooglePlus } from '@ionic-native/google-plus';
-
-import { environment } from "../../environments/environment";
-import { TempPage } from '../pages/temp/temp';
-
 import { AuthProvider } from '../providers/auth/auth';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { FirestoreProvider } from '../providers/firestore/firestore';
 import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
-import { AgmCoreModule } from '@agm/core';
+import { WindowProvider } from '../providers/window/window';
 
+
+import { environment } from "../../environments/environment";
 
 
 @NgModule({
@@ -94,19 +94,17 @@ import { AgmCoreModule } from '@agm/core';
     GooglePlus,
     StatusBar,
     SplashScreen,
-    AutocompleteProvider,
-    GeolocationProvider,
-    FirestoreProvider,
+
     AngularFirestore,
     AngularFireDatabase,
     AngularFireAuth,
-    AuthService,
-    WindowService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AutocompleteProvider,
+    FirestoreProvider,
     AuthProvider,
     GeolocationProvider,
-    FirestoreProvider,
-    AutocompleteProvider
+    AutocompleteProvider,
+    WindowProvider
   ]
 })
 export class AppModule {}

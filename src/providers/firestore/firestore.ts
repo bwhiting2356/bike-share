@@ -17,9 +17,9 @@ import { mapLatLngToGeoPoint } from '../../../shared/mapLatLngToGeoPoint';
 import 'rxjs/add/operator/take';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AuthService } from '../../services/auth-service';
 import { clientMapGeoPointToLatLng } from './clientMapGeoPointToLatLng';
 import { map, take } from 'rxjs/operators';
+import { AuthProvider } from '../auth/auth';
 
 
 @Injectable()
@@ -33,7 +33,7 @@ export class FirestoreProvider {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
+    private authService: AuthProvider,
     private dbFirestore: AngularFirestore) {
 
     this.searchResultTrip = new BehaviorSubject<Trip>(null);
