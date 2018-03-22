@@ -11,7 +11,7 @@ declare var google;
 @Injectable()
 export class GeolocationProvider {
   foundPosition: BehaviorSubject<boolean>;
-  userLocation$: Observable<LatLng>;
+  userLocation$: BehaviorSubject<LatLng>;
   geocoder;
 
   constructor(
@@ -24,16 +24,12 @@ export class GeolocationProvider {
       this.geocoder = new google.maps.Geocoder;
     });
 
-    this.userLocation$ = this.geolocation.watchPosition()
-      .pipe(
-        map(geoposition => {
-          if (geoposition && geoposition.coords) {
-            return { lat: geoposition.coords.latitude, lng: geoposition.coords.longitude };
-          } else {
-            return null;
-          }
-        })
-      );
+    this.geolocation.watchPosition()
+      .subscribe(geoposition => {
+        if (geoposition && geoposition.coords) {
+          this.userLocation$.next({ lat: geoposition.coords.latitude, lng: geoposition.coords.longitude })
+        }
+      })
   }
 
   geocode(address): Promise<LatLng> {

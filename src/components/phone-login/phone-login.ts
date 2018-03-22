@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 
-
 import * as firebase from 'firebase/app';
+
 import { AuthProvider } from '../../providers/auth/auth';
 import { WindowProvider } from '../../providers/window/window';
 

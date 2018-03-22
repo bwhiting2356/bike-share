@@ -104,14 +104,6 @@ export class SearchPage {
           this.originCoords = latlng;
           this.firestoreService.updateSearchOrigin(latlng, address);
         });
-
-
-
-      // this.geolocationService.userLocation$.take(1).subscribe((latlng: LatLng) => {
-      //   console.log("latlng: ", latlng);
-      //   this.originCoords = latlng;
-      //   this.firestoreService.updateSearchOrigin(latlng, address);
-      // });
     } else {
       this.geolocationService.geocode(address).then(latlng => {
         this.originCoords = latlng;
