@@ -11,7 +11,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FirestoreProvider } from '../../providers/firestore/firestore';
 import { AuthProvider } from '../../providers/auth/auth';
 
-@IonicPage()
 @Component({
   selector: 'page-search-result',
   templateUrl: 'search-result.html',

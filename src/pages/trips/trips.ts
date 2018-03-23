@@ -58,7 +58,7 @@ export class TripsPage {
   // }
 
   onTripClicked(trip: Trip) {
-    this.navCtrl.push(TripDetailPage, { trip })
+    this.navCtrl.push("TripDetailPage", { trip })
   }
 
 }

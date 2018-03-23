@@ -3,13 +3,13 @@ import * as admin from 'firebase-admin';
 import { findNearestStations } from './googleMaps/findNearestStations';
 import { serverMapGeoPointToLatLng } from "./googleMaps/serverMapGeoPointToLatLng";
 import { getDirections } from './googleMaps/getDirections';
-import { DistanceMatixQuery } from './shared/DistanceMatrixQuery';
-import { DirectionsQuery } from './shared/DirectionsQuery';
-import { TripData, TripStatus } from './shared/Trip';
+import { DistanceMatixQuery } from '../shared/DistanceMatrixQuery';
+import { DirectionsQuery } from '../shared/DirectionsQuery';
+import { TripData, TripStatus } from '../shared/Trip';
 
-import { addSeconds } from './shared/addSeconds';
-import { subtractSeconds } from './shared/subtractSeconds';
-import { TimeTarget } from './shared/timeTarget';
+import { addSeconds } from '../shared/addSeconds';
+import { subtractSeconds } from '../shared/subtractSeconds';
+import { TimeTarget } from '../shared/timeTarget';
 
 const TravelMode = {
   WALKING: 'walking',

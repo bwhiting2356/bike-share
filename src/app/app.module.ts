@@ -17,13 +17,20 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 import { MyApp } from './app.component';
 import { SearchPage } from '../pages/search/search';
-import { TripsPage } from '../pages/trips/trips';
-import { TripDetailPage } from '../pages/trip-detail/trip-detail';
+
 import { SearchResultPage } from '../pages/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
 import { LoginModalPage } from '../pages/login-modal/login-modal';
-import { PaymentsPage } from '../pages/payments/payments';
+
 import { TempPage } from '../pages/temp/temp';
+
+// lazy loaded pages
+
+/*
+import { TripsPage } from '../pages/trips/trips';
+import { TripDetailPage } from '../pages/trip-detail/trip-detail';
+import { PaymentsPage } from '../pages/payments/payments';
+ */
 
 
 // module imports
@@ -57,11 +64,8 @@ import { environment } from "../../environments/environment";
     MyApp,
     SearchPage,
     SearchResultPage,
-    TripsPage,
-    TripDetailPage,
     LoginPage,
     LoginModalPage,
-    PaymentsPage,
     TempPage
   ],
   imports: [
@@ -71,7 +75,9 @@ import { environment } from "../../environments/environment";
     HttpClientModule,
     PipesModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      preloadModules: true
+    }),
     AgmCoreModule.forRoot({
       libraries: ['places'],
       apiKey: environment.googleMapsKey
@@ -82,11 +88,8 @@ import { environment } from "../../environments/environment";
     MyApp,
     SearchPage,
     SearchResultPage,
-    TripsPage,
-    TripDetailPage,
     LoginPage,
     LoginModalPage,
-    PaymentsPage,
     TempPage
   ],
   providers: [
@@ -94,7 +97,6 @@ import { environment } from "../../environments/environment";
     GooglePlus,
     StatusBar,
     SplashScreen,
-
     AngularFirestore,
     AngularFireDatabase,
     AngularFireAuth,

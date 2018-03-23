@@ -11,7 +11,6 @@ export class AutocompleteProvider {
     this.mapsAPILoader.load().then(() => {
       this.googleAutocompleteService = new google.maps.places.AutocompleteService();
     })
-
   }
 
   getPlacePredictions(input) {

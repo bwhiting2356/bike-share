@@ -24,7 +24,6 @@ import { AuthProvider } from '../../providers/auth/auth';
 
 const CURRENT_LOCATION = "Current Location";
 
-@IonicPage()
 @Component({
   selector: 'page-search',
   templateUrl: 'search.html'

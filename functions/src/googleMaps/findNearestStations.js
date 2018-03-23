@@ -1,10 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var admin = require('firebase-admin');
-var serverMapGeoPointToLatLng_1 = require("./serverMapGeoPointToLatLng");
-var memoize_1 = require("../memoize");
-var distanceCrowFlies_1 = require("../distanceCrowFlies");
-var googleMapsClient_1 = require("./googleMapsClient");
+import { serverMapGeoPointToLatLng } from './serverMapGeoPointToLatLng';
+import { memoize } from '../memoize';
+import { distanceCrowFlies } from '../distanceCrowFlies';
+import { googleMapsClient } from "./googleMapsClient";
 var mergeDataWithIds = function (response, stationsData) {
     var newData = [];
     for (var i = 0; i < response.length; i++) {
@@ -28,8 +26,8 @@ var funcFindNearestStations = function (loc) {
         snapshot.docs.forEach(function (doc) {
             stationsData.push({
                 id: doc.id,
-                coords: serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(doc.data().coords),
-                distanceFromLoc: distanceCrowFlies_1.distanceCrowFlies(loc, serverMapGeoPointToLatLng_1.serverMapGeoPointToLatLng(doc.data().coords)),
+                coords: serverMapGeoPointToLatLng(doc.data().coords),
+                distanceFromLoc: distanceCrowFlies(loc, serverMapGeoPointToLatLng(doc.data().coords)),
                 address: doc.data().address
             });
         });
@@ -47,7 +45,7 @@ var funcFindNearestStations = function (loc) {
             mode: 'walking'
         };
         return new Promise(function (resolve, reject) {
-            googleMapsClient_1.googleMapsClient.distanceMatrix(req, function (err, res) {
+            googleMapsClient.distanceMatrix(req, function (err, res) {
                 if (err)
                     reject(err);
                 var mergedData = mergeDataWithIds(res.json.rows[0].elements, stationsData);
@@ -57,4 +55,5 @@ var funcFindNearestStations = function (loc) {
         });
     });
 };
-exports.findNearestStations = memoize_1.memoize(funcFindNearestStations);
+export var findNearestStations = memoize(funcFindNearestStations);
+//# sourceMappingURL=findNearestStations.js.map

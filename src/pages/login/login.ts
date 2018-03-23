@@ -17,8 +17,6 @@ export class PhoneNumber {
   }
 }
 
-
-
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

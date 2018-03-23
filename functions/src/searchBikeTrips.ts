@@ -13,7 +13,7 @@ const TravelMode = {
 }
 
 
-import { LatLng } from './shared/LatLng';
+import { LatLng } from '../shared/LatLng';
 
 export const funcSearchBikeTrips = async (
   origin: {

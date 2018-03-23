@@ -1,9 +1,9 @@
 const admin = require('firebase-admin');
 import { serverMapGeoPointToLatLng } from './serverMapGeoPointToLatLng';
 import { memoize } from '../memoize';
-import { LatLng } from '../shared/LatLng';
-import { distanceCrowFlies } from '../distanceCrowFlies';
-import { DistanceMatixQuery } from "../shared/DistanceMatrixQuery";
+import { LatLng } from '../../shared/LatLng';
+import { distanceCrowFlies } from './distanceCrowFlies';
+import { DistanceMatixQuery } from "../../shared/DistanceMatrixQuery";
 import { googleMapsClient } from "./googleMapsClient";
 
 const mergeDataWithIds = (response, stationsData) => {

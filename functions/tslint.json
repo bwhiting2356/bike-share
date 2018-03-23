@@ -1,4 +1,7 @@
 {
+  "env": {
+    "mocha": true
+  },
   "rules": {
     // -- Strict errors --
     // These lint rules are likely always a good idea.
@@ -109,6 +112,10 @@
 
     // Warns if code has an import or variable that is unused.
     "no-unused-variable": {"severity": "warning"},
+//    "no-unused-vars": [
+//      "error",
+//      { "varsIgnorePattern": "should|expect" }
+//    ]
 
     // Prefer const for values that will not change. This better documents code.
     "prefer-const": {"severity": "warning"},

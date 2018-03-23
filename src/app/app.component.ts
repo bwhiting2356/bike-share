@@ -42,8 +42,8 @@ export class MyApp {
     this.loginPage = { title: 'Log in', icon: 'person', component: LoginPage }; // keep separate so I can remove it when signed in
 
     this.userPages = [
-      { title: 'Trips', icon: 'bicycle', component: TripsPage }, // TODO: auth guard, lazy load these pages
-      { title: 'Payments', icon: 'card', component: PaymentsPage }
+      { title: 'Trips', icon: 'bicycle', component: "TripsPage" }, // TODO: auth guard, lazy load these pages
+      { title: 'Payments', icon: 'card', component: "PaymentsPage" }
     ];
 
     this.isAnonymous = this.authService.isAnonymous();

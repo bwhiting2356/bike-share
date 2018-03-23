@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 
-@IonicPage()
 @Component({
   selector: 'page-login-modal',
   templateUrl: 'login-modal.html',

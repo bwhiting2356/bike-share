@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var admin = require("firebase-admin");
-exports.memoize = function (func) {
+import * as admin from 'firebase-admin';
+export var memoize = function (func) {
     return function (params) {
         var stringParams = JSON.stringify(params);
         return admin.firestore()
@@ -23,3 +21,4 @@ exports.memoize = function (func) {
         });
     };
 };
+//# sourceMappingURL=memoize.js.map

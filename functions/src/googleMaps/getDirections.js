@@ -1,10 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var googleMapsClient_1 = require("./googleMapsClient");
-var memoize_1 = require("../memoize");
+import { googleMapsClient } from './googleMapsClient';
+import { memoize } from '../memoize';
 var funcGetDirections = function (query) {
     return new Promise(function (resolve, reject) {
-        googleMapsClient_1.googleMapsClient.directions(query, function (err, res) {
+        googleMapsClient.directions(query, function (err, res) {
             if (err)
                 reject(err);
             var leg = res.json.routes[0].legs[0];
@@ -17,4 +15,5 @@ var funcGetDirections = function (query) {
         });
     });
 };
-exports.getDirections = memoize_1.memoize(funcGetDirections);
+export var getDirections = memoize(funcGetDirections);
+//# sourceMappingURL=getDirections.js.map
