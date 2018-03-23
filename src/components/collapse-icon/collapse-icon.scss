@@ -1,3 +1,7 @@
 collapse-icon {
   cursor: pointer;
+
+  :host {
+    border: 1px solid red;
+  }
 }

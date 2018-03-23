@@ -27,7 +27,7 @@ import { PhoneLoginComponent } from './phone-login/phone-login';
 	imports: [
 	  CommonModule,
     PipesModule,
-    IonicModule.forRoot(TripCardComponent)
+    IonicModule
   ],
 	exports: [
 	  GoogleMapComponent,
