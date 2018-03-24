@@ -6,6 +6,7 @@
       <ion-item>
         <ion-icon name="phone-portrait" item-start></ion-icon>
         <ion-input
+          [clearInput]="true"
           placeholderChar="X"
           type="tel"
           required
@@ -31,6 +32,7 @@
     <ion-item>
       <ion-icon name="cog" item-start></ion-icon>
       <ion-input
+        [clearInput]="true"
         type="tel"
         [(ngModel)]="verificationCode"
         placeholder="Enter code"></ion-input>

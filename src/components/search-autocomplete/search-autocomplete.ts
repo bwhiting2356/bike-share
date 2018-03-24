@@ -29,8 +29,10 @@ export class SearchAutocompleteComponent {
     this.inputFocused.emit(true);
   }
 
-  blur() {
-    this.showAutocomplete = false;
+  blur(event) {
+    if (!event.value) {
+      this.showAutocomplete = false;
+    }
   }
 
   inputChange(e) {

@@ -1,6 +1,9 @@
 <ion-item>
   <ion-label floating>{{ label }}</ion-label>
   <ion-input
+    #input
+    [clearInput]="true"
+    (ionBlur)="blur($event)"
     type="text"
     [value]="address"
     (ionFocus)="focus()"

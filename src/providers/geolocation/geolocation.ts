@@ -36,11 +36,14 @@ export class GeolocationProvider {
     return new Promise(resolve => {
       this.mapsAPILoader.load().then(() => {
         this.geocoder.geocode({ address }, results => {
-          const coords = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
-          resolve(coords);
+          if (results) {
+            const coords = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
+            resolve(coords);
+          } else {
+            resolve(null);
+          }
         })
       });
-
     })
   }
 }
