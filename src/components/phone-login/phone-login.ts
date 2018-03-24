@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import * as firebase from 'firebase/app';

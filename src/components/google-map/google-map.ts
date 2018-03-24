@@ -40,7 +40,6 @@ export class GoogleMapComponent implements OnChanges, OnInit {
 
   ngOnChanges() {
     this.initMap();
-
   }
 
   initMap() {
