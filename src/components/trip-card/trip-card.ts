@@ -9,5 +9,6 @@ export class TripCardComponent {
   @Input() trip: Trip;
 
   constructor() { }
-
 }
+
+
