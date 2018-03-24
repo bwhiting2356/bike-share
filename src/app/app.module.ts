@@ -57,6 +57,7 @@ import { WindowProvider } from '../providers/window/window';
 
 
 import { environment } from "../../environments/environment";
+import { InfoPage } from '../pages/info/info';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { environment } from "../../environments/environment";
     SearchResultPage,
     LoginPage,
     LoginModalPage,
-    TempPage
+    TempPage,
+    InfoPage
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ import { environment } from "../../environments/environment";
     SearchResultPage,
     LoginPage,
     LoginModalPage,
-    TempPage
+    TempPage,
+    InfoPage
   ],
   providers: [
     Geolocation,

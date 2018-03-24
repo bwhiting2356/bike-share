@@ -15,7 +15,7 @@ trip-info {
 
   .trip-details {
     display: grid;
-    grid-template-columns: 80px 20px 1fr 50px;
+    grid-template-columns: 90px 20px 1fr 50px;
 
   }
 
@@ -33,9 +33,8 @@ trip-info {
     grid-template-areas: "collapseIcon     .       .       .";
     .collapseIcon { grid-area: collapseIcon }
     collapse-icon {
-      top: -8px; // TODO: maybe make this more responsive instead of hard coded
+      top: -12px; // TODO: maybe make this more responsive instead of hard coded
     }
-
   }
 
   .trip-details.middle {
@@ -54,7 +53,7 @@ trip-info {
       "collapseIcon      bikeReservationLine  bikeTravelInfo      bikePrice"
       "reservation2Time  bikeReservationLine  reservation2Desc    reservation2Price"
       ".                 bikeReservationLine  reservation2Address ."
-      ".                 walkingDots2         walkingTravelInfo2  .";
+      ".                 walkingDots2         walkingTravelInfo2  infoIcon";
 
     #walkingDots1 { grid-area: walkingDots1 }
     #walkingTravelInfo1 { grid-area: walkingTravelInfo1 }
@@ -72,6 +71,8 @@ trip-info {
     #reservation2Address { grid-area: reservation2Address }
     #walkingDots2 { grid-area: walkingDots2 }
     #walkingTravelInfo2 { grid-area: walkingTravelInfo2 }
+    #infoIcon { grid-area: infoIcon }
+
 
     #bikeReservationLine {
       position: relative;
@@ -93,6 +94,12 @@ trip-info {
         display: none;
       }
     }
+
+    #infoIcon {
+      font-size: 1.2em;
+      justify-content: flex-end;
+
+    }
   }
 
   .trip-details.bottom {
@@ -102,9 +109,12 @@ trip-info {
     #destinationIcon {  grid-area: destinationIcon;  }
     #destinationAddress { grid-area: destinationAddress }
 
+
   }
 
-  .price {
+  .price,
+  #infoIcon {
+    cursor: pointer;
     display: flex;
     font-weight: 500;
     align-items: center;

@@ -22,7 +22,7 @@ import { PhoneLoginComponent } from './phone-login/phone-login';
     TripInfoComponent,
     SearchAutocompleteComponent,
     CollapseIconComponent,
-    PhoneLoginComponent
+    PhoneLoginComponent,
   ],
 	imports: [
 	  CommonModule,
@@ -35,7 +35,7 @@ import { PhoneLoginComponent } from './phone-login/phone-login';
     TripInfoComponent,
     SearchAutocompleteComponent,
     CollapseIconComponent,
-    PhoneLoginComponent
+    PhoneLoginComponent,
   ]
 })
 export class ComponentsModule {}

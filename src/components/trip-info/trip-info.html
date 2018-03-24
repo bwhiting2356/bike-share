@@ -96,6 +96,10 @@
       <ion-icon name="walk"></ion-icon>
       <span>Walk {{ trip.walking2Travel.seconds | time }} ({{ trip.walking2Travel.feet  | distance }})</span>
     </div>
+    <div id="infoIcon" (click)="openInfoPopover()">
+      <ion-icon name="ios-information-circle-outline">
+      </ion-icon>
+    </div>
   </div>
 
   <div class="trip-details bottom">
@@ -114,94 +118,3 @@
     </span>
   </div>
 </div>
-
-<!--<div class="container">-->
-
-  <!--<div class="trip-details">-->
-
-
-    <!--&lt;!&ndash; ROW &ndash;&gt;-->
-    <!--<div id="walkingDots1" class="icon">-->
-      <!--<img-->
-        <!--*ngFor="let i of [1, 2, 3]"-->
-        <!--src="assets/imgs/walk-dot.svg" alt="">-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash; ROW &ndash;&gt;-->
-    <!--<div id="walkingTravelInfo1" class="travel-info">-->
-      <!--<ion-icon name="walk"></ion-icon>-->
-      <!--<span>Walk {{ trip.walking1Travel.seconds | time }} ({{ trip.walking1Travel.feet | distance }})</span>-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash; ROW &ndash;&gt;-->
-    <!--<div id="reservation1Time" class="time">{{ trip.stationStart.time | date:"h:mm a" }}</div>-->
-    <!--<div id="bikeReservationLine" class="icon">-->
-      <!--<img id="station-1" src="assets/imgs/station.svg" alt="">-->
-      <!--<svg id="bike-line" width="10px" height="60px" viewBox="0 0 10 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">-->
-        <!--<defs>-->
-          <!--<rect id="path-1" x="183" y="81" width="10" height="60" rx="1"></rect>-->
-        <!--</defs>-->
-        <!--<g id="iPhone-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-183.000000, -81.000000)">-->
-          <!--<g id="Rectangle-26" class="bicyclingPolyline">-->
-            <!--<use [attr.fill]="bicyclePolylineMainColor" fill-rule="evenodd" xlink:href="#path-1"></use>-->
-            <!--<rect [attr.stroke]="bicyclePolylineBorderColor" stroke-width="1" x="183.5" y="81.5" width="9" height="59" rx="1"></rect>-->
-          <!--</g>-->
-        <!--</g>-->
-      <!--</svg>-->
-      <!--<img id="station-2" src="assets/imgs/station.svg" alt="">-->
-    <!--</div>-->
-    <!--<div id="reservation1Desc" class="reservation">Bike pickup reservation</div>-->
-    <!--<div id="reservation1Address" class="address">{{ trip.stationStart.address}}</div>-->
-    <!--<div-->
-      <!--id="reservation1Price"-->
-      <!--class="price"-->
-      <!--[ngClass]="{positive: trip.stationStart.price > 0}">-->
-      <!--{{ trip.stationStart.price | currency:'USD':true }}-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash; ROW &ndash;&gt;-->
-    <!--<div id="bikeTravelInfo" class="travel-info">-->
-      <!--<ion-icon name="bicycle"></ion-icon>-->
-      <!--<span>Ride {{ trip.bicyclingTravel.seconds | time }} ({{ trip.bicyclingTravel.feet | distance }})</span>-->
-    <!--</div>-->
-    <!--<div-->
-      <!--id="bikePrice"-->
-      <!--class="price"-->
-      <!--[ngClass]="{positive: trip.bicyclingTravel.price > 0}">-->
-      <!--{{ trip.bicyclingTravel.price | currency:'USD':true }}</div>-->
-
-    <!--&lt;!&ndash; ROW &ndash;&gt;-->
-    <!--<div id="reservation2Time" class="time">{{ trip.stationEnd.time | date:'h:mm a'}}</div>-->
-    <!--<div id="reservation2Desc" class="reservation">Bike dropoff reservation</div>-->
-    <!--<div id="reservation2Address" class="address">{{ trip.stationEnd.address }}</div>-->
-    <!--<div-->
-      <!--id="reservation2Price"-->
-      <!--class="price"-->
-      <!--[ngClass]="{positive: trip.stationEnd.price > 0}">-->
-      <!--{{ trip.stationEnd.price | currency:'USD':true }}-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash; ROW &ndash;&gt;-->
-    <!--<div id="walkingDots2" class="icon">-->
-      <!--<img-->
-        <!--*ngFor="let i of [1, 2, 3]"-->
-        <!--src="assets/imgs/walk-dot.svg" alt="">-->
-    <!--</div>-->
-    <!--<div id="walkingTravelInfo2" class="travel-info">-->
-      <!--<ion-icon name="walk"></ion-icon>-->
-      <!--<span>Walk {{ trip.walking2Travel.seconds | time }} ({{ trip.walking2Travel.feet  | distance }})</span>-->
-    <!--</div>-->
-
-    <!-- ROW -->
-
-
-
-  <!--<div class="summary">-->
-    <!--<span id="travel-time">{{ trip.totalSeconds | time }}</span>-->
-    <!--<span id="travel-distance">{{ trip.totalFeet | distance }}</span>-->
-    <!--<span id="total-cost">-->
-      <!--{{ trip.priceMessage }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ trip.totalPrice | currency:'USD':true }}</span>-->
-    <!--</span>-->
-  <!--</div>-->
-<!--</div>-->
-
