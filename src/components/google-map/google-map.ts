@@ -52,7 +52,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
         zoomControl: this.zoomControl,
         streetViewControl: this.streetViewControl,
         gestureHandling: this.gestureHandling,
-        fullscreenControl: this.fullscreenControl,
+        fullscreenControl: false,
         styles: [
           {
             featureType: 'poi',

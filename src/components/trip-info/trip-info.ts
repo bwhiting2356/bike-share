@@ -9,13 +9,9 @@ import { InfoPage } from '../../pages/info/info';
 })
 export class TripInfoComponent {
   @Input() trip: Trip;
-  collapsed = false;
+  @Input() collapsed;
 
   constructor(private popoverCtrl: PopoverController) {}
-
-  collapseToggle() {
-    this.collapsed = !this.collapsed;
-  }
 
   openInfoPopover() {
     this.popoverCtrl.create(InfoPage).present();

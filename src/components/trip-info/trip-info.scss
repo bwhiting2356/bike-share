@@ -28,15 +28,6 @@ trip-info {
 
   }
 
-  .trip-details.collapsed-row.collapsed {
-    height: 10px;
-    grid-template-areas: "collapseIcon     .       .       .";
-    .collapseIcon { grid-area: collapseIcon }
-    collapse-icon {
-      top: -12px; // TODO: maybe make this more responsive instead of hard coded
-    }
-  }
-
   .trip-details.middle {
 
     &.collapsed {
@@ -49,8 +40,8 @@ trip-info {
     grid-template-areas:
       ".                 walkingDots1         walkingTravelInfo1        ."
       "reservation1Time  bikeReservationLine  reservation1Desc    reservation1Price"
-      "collapseIcon      bikeReservationLine  reservation1Address ."
-      "collapseIcon      bikeReservationLine  bikeTravelInfo      bikePrice"
+      ".                 bikeReservationLine  reservation1Address ."
+      ".                 bikeReservationLine  bikeTravelInfo      bikePrice"
       "reservation2Time  bikeReservationLine  reservation2Desc    reservation2Price"
       ".                 bikeReservationLine  reservation2Address ."
       ".                 walkingDots2         walkingTravelInfo2  infoIcon";
@@ -85,13 +76,6 @@ trip-info {
       .bicyclingPolyline {
         fill: map_get($colors, 'bicyclingLine');
         stroke: map_get($colors, 'bicyclingBorder')
-      }
-    }
-
-    collapse-icon {
-      top: 15px;
-      @media (min-width: $desktop-breakpoint) { // don't show the collapse icon for desktop
-        display: none;
       }
     }
 
@@ -191,14 +175,5 @@ trip-info {
 
   .positive {
     color: green;
-  }
-
-  .collapseIcon {
-    position: relative;
-
-    collapse-icon {
-      position: absolute;
-      right: 2px;
-    }
   }
 }

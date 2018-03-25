@@ -1,4 +1,6 @@
 <div class="border">
-  <ion-icon [name]="topIcon"></ion-icon>
-  <ion-icon [name]="bottomIcon"></ion-icon>
+  <ion-icon *ngIf="!collapsed" name="expand"></ion-icon>
+  <ion-icon *ngIf="collapsed" name="contract"></ion-icon>
 </div>
+
+<!-- TODO: why is this the inverse of what you would expect? -->

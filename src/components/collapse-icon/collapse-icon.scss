@@ -1,9 +1,13 @@
 collapse-icon {
   cursor: pointer;
+  ion-icon {
+    font-size: 1.5em;
+    z-index: 99999;
+  }
 
   .border {
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid lightgrey;
+    border: 1px solid grey;
   }
 }

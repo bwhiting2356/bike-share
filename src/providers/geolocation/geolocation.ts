@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';;
 import { Geolocation } from '@ionic-native/geolocation';
 import { LatLng } from '../../../shared/LatLng';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
+
 import { MapsAPILoader } from '@agm/core';
 
 declare var google;

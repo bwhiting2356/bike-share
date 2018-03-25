@@ -12,6 +12,7 @@ import { SearchPage } from '../search/search';
 })
 export class TripDetailPage {
   trip: Trip;
+  collapsed: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.trip = this.navParams.get("trip");
@@ -22,6 +23,10 @@ export class TripDetailPage {
       { origin: this.trip.origin, destination: this.trip.destination },
       { animate: true }
       );
+  }
+
+  toggleCollapse() {
+    this.collapsed = !this.collapsed;
   }
 
 }

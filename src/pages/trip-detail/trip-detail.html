@@ -11,7 +11,7 @@
       <div class="trip">
         <ion-list>
           <div>
-            <trip-info [trip]="trip"></trip-info>
+            <trip-info [trip]="trip" [collapsed]="collapsed"></trip-info>
             <button
               ion-button
               block
@@ -23,6 +23,7 @@
         </ion-list>
       </div>
       <div class="map">
+        <collapse-icon (click)="toggleCollapse()" [collapsed]="collapsed"></collapse-icon>
         <google-map [origin]="trip.origin.coords"
                     [destination]="trip.destination.coords"
                     [stationStart]="trip.stationStart.coords"

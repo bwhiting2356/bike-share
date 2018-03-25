@@ -11,13 +11,6 @@
 
   </div>
 
-  <div class="trip-details collapsed-row" [class.collapsed]="collapsed">
-    <div class="collapseIcon">
-      <collapse-icon *ngIf="collapsed" (click)="collapseToggle()" [collapsed]="collapsed"></collapse-icon>
-    </div>
-  </div>
-
-
 
   <div class="trip-details middle" [class.collapsed]="collapsed">
 
@@ -58,10 +51,6 @@
       class="price"
       [ngClass]="{positive: trip.stationStart.price > 0}">
       {{ trip.stationStart.price | currency:'USD':true }}
-    </div>
-
-    <div class="collapseIcon">
-      <collapse-icon (click)="collapseToggle()" [collapsed]="collapsed"></collapse-icon>
     </div>
 
     <!-- ROW -->

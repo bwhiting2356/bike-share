@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 /**
  * Generated class for the CollapseIconComponent component.
@@ -12,15 +12,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CollapseIconComponent {
   @Input() collapsed: boolean;
-
-  get topIcon() {
-    return this.collapsed ? 'ios-arrow-up' : 'ios-arrow-down';
-  }
-
-  get bottomIcon() {
-    return this.collapsed ? 'ios-arrow-down' : 'ios-arrow-up';
-
-  }
 
   constructor() { }
 
