@@ -29,6 +29,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   @Input() walking2Points: LatLng[];
   @Input() bicyclingPoints: LatLng[];
   @Input() stationList: LatLng[];
+  @Input() collapsed: boolean; // this is only here to trigger change detection when the size changes
   map: any;
   stationMarkers = [];
 

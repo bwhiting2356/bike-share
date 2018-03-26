@@ -24,7 +24,8 @@
       </div>
       <div class="map">
         <collapse-icon (click)="toggleCollapse()" [collapsed]="collapsed"></collapse-icon>
-        <google-map [origin]="trip.origin.coords"
+        <google-map [collapsed]="collapsed"
+                    [origin]="trip.origin.coords"
                     [destination]="trip.destination.coords"
                     [stationStart]="trip.stationStart.coords"
                     [stationEnd]="trip.stationEnd.coords"

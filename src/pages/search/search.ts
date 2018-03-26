@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 // pages
 
@@ -94,6 +94,7 @@ export class SearchPage {
 
   originAddressChange(address: string) {
     this.originAddress = address;
+
     if (address === CURRENT_LOCATION) {
       this.geolocationService.userLocation$
         .pipe(
@@ -115,7 +116,11 @@ export class SearchPage {
     this.destinationAddress = address;
 
     if (address === CURRENT_LOCATION) {
-      this.geolocationService.userLocation$.take(1).subscribe((latlng: LatLng) => {
+      this.geolocationService.userLocation$
+        .pipe(
+          take(1)
+        )
+        .subscribe((latlng: LatLng) => {
         this.destinationCoords = latlng;
         this.firestoreService.updateSearchDestination(latlng, address);
       });

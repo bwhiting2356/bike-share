@@ -27,7 +27,7 @@
       <div class="result">
         <ion-list>
           <div *ngIf="result">
-            <trip-info [trip]="result"></trip-info>
+            <trip-info [collapsed]="collapsed" [trip]="result"></trip-info>
             <button
               ion-button
               block
@@ -40,7 +40,9 @@
       </div>
 
       <div class="map">
-        <google-map [origin]="origin"
+        <collapse-icon (click)="toggleCollapse()" [collapsed]="collapsed"></collapse-icon>
+        <google-map [collapsed]="collapsed"
+                    [origin]="origin"
                     [destination]="destination"
                     [stationStart]="result.stationStart.coords || null"
                     [stationEnd]="result ? result.stationEnd.coords : null"

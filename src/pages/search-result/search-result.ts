@@ -25,6 +25,8 @@ export class SearchResultPage implements OnDestroy {
   bicyclePolylineBorderColor;
   tripSubscription;
 
+  collapsed: boolean = false;
+
   constructor(
     private authService: AuthProvider,
     private firestoreService: FirestoreProvider,
@@ -48,6 +50,10 @@ export class SearchResultPage implements OnDestroy {
 
   ngOnDestroy() {
     this.tripSubscription.unsubscribe();
+  }
+
+  toggleCollapse() {
+    this.collapsed = !this.collapsed;
   }
 
   bookReservation() {
