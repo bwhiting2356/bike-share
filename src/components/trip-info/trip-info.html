@@ -50,7 +50,7 @@
       id="reservation1Price"
       class="price"
       [ngClass]="{positive: trip.stationStart.price > 0}">
-      {{ trip.stationStart.price | currency:'USD':true }}
+      {{ trip.stationStart.price | currency:'USD' }}
     </div>
 
     <!-- ROW -->
@@ -62,7 +62,7 @@
       id="bikePrice"
       class="price"
       [ngClass]="{positive: trip.bicyclingTravel.price > 0}">
-      {{ trip.bicyclingTravel.price | currency:'USD':true }}</div>
+      {{ trip.bicyclingTravel.price | currency:'USD' }}</div>
 
     <!-- ROW -->
     <div id="reservation2Time" class="time">{{ trip.stationEnd.time | date:'h:mm a'}}</div>
@@ -72,7 +72,7 @@
       id="reservation2Price"
       class="price"
       [ngClass]="{positive: trip.stationEnd.price > 0}">
-      {{ trip.stationEnd.price | currency:'USD':true }}
+      {{ trip.stationEnd.price | currency:'USD' }}
     </div>
 
     <!-- ROW -->
@@ -103,7 +103,7 @@
     <span id="travel-time">{{ trip.totalSeconds | time }}</span>
     <span id="travel-distance">{{ trip.totalFeet | distance }}</span>
     <span id="total-cost">
-      {{ trip.priceMessage }}: <span [ngClass]="{positive: trip.totalPrice > 0}">{{ trip.totalPrice | currency:'USD':true }}</span>
+      {{ trip.priceMessage }}: <span [ngClass]="{ positive: trip.totalPrice > 0}">{{ trip.totalPrice | currency:'USD' }}</span>
     </span>
   </div>
 </div>
