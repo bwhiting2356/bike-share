@@ -9,8 +9,7 @@
 
   <ion-card class="fetching" *ngIf="fetching | async">
     <ion-card-content>
-      <ion-spinner></ion-spinner>
-      Searching database...
+      <ion-item no-lines><ion-spinner item-start></ion-spinner>Searching database....</ion-item>
     </ion-card-content>
   </ion-card>
 

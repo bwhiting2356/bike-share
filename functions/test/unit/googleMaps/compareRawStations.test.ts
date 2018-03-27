@@ -28,4 +28,4 @@ describe("Compare Raw Stations", function() {
     compareStationsWithRawDistance(a, b)
       .should.equal(-1);
   })
-}
+});

@@ -42,7 +42,7 @@ export class MyApp {
     this.loginPage = { title: 'Log in', icon: 'person', component: LoginPage }; // keep separate so I can remove it when signed in
 
     this.userPages = [
-      { title: 'Trips', icon: 'bicycle', component: "TripsPage" }, // TODO: auth guard, lazy load these pages
+      { title: 'Trips', icon: 'bicycle', component: "TripsPage" }, // TODO: add auth guards, hide when not authenticated
       { title: 'Payments', icon: 'card', component: "PaymentsPage" }
     ];
 

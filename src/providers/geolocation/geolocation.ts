@@ -1,5 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';;
+import { Injectable } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LatLng } from '../../../shared/LatLng';
 
@@ -15,7 +14,6 @@ export class GeolocationProvider {
   geocoder;
 
   constructor(
-    private ngZone: NgZone,
     private mapsAPILoader: MapsAPILoader,
     private geolocation: Geolocation) {
 

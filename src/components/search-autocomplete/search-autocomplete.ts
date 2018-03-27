@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AutocompleteProvider } from '../../providers/autocomplete/autocomplete';
+import { ToastController } from 'ionic-angular';
 
 const CURRENT_LOCATION = 'Current Location';
 
@@ -15,12 +16,14 @@ export class SearchAutocompleteComponent {
   @Output() inputFocused = new EventEmitter<boolean>();
   @Input() showAutocomplete: boolean;
   autocompleteResults = [];
+  offlineToastShowing = false;
 
   text: string;
   fetching: boolean = false;
   pristine: boolean = true;
 
   constructor(
+    private toastCtrl: ToastController,
     private autocompleteService: AutocompleteProvider) {
   }
 
@@ -41,10 +44,26 @@ export class SearchAutocompleteComponent {
     const term = e.target.value;
     this.fetching = true;
     this.pristine = false;
-    this.autocompleteService.getPlacePredictions(term).then((results: any[]) => {
-      this.autocompleteResults = results || [];
-      this.fetching = false;
-    })
+    if (navigator.onLine) {
+      this.autocompleteService.getPlacePredictions(term).then((results: any[]) => {
+        this.autocompleteResults = results || [];
+        this.fetching = false;
+      })
+    } else {
+      if (!this.offlineToastShowing) {
+        const toast = this.toastCtrl.create({
+          message: "No network connection",
+          duration: 3000,
+          position: 'top'
+        });
+        toast.onDidDismiss(() => {
+          this.offlineToastShowing = false;
+        });
+        toast.present();
+        this.offlineToastShowing = true;
+        this.fetching = false; // TODO: it still seems to be displaying the spinner and fetching section...
+      }
+    }
   }
 
   chooseCurrentLocation() {

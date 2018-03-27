@@ -5,12 +5,12 @@ const should = chai.should();
 
 
 import { compareStationsWithRawDistance } from '../../../src/googleMaps/compareStationsWithRawDistance';
-import { LatLng } from '../../../shared/LatLng';
 import { distanceCrowFlies } from '../../../src/googleMaps/distanceCrowFlies';
 import { StationWithRawDistance } from '../../../shared/StationWithRawDistance';
-import DocumentSnapshot = FirebaseFirestore.DocumentSnapshot;
 import { buildStationWithRawDistance } from '../../../src/googleMaps/buildStationWithRawDistance';
-
+import * as admin from 'firebase-admin';
+import { DocumentSnapshot } from "@google-cloud/firestore";
+import { LatLng } from '../../../shared/LatLng';
 
 describe("Build Station With Raw Distance", function() {
 
