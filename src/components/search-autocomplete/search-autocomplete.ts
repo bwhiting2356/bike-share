@@ -30,13 +30,10 @@ export class SearchAutocompleteComponent {
   }
 
   blur(event) {
-    console.log("blurred");
-    console.log(event.value);
     if (!event.value) {
       setTimeout(() => {
         this.showAutocomplete = false;
-      }, 100)
-
+      }, 100) // TODO: I'm not sure why this is necessary
     }
   }
 
@@ -51,7 +48,6 @@ export class SearchAutocompleteComponent {
   }
 
   chooseCurrentLocation() {
-    console.log("choose current location");
     this.address = CURRENT_LOCATION;
     this.addressChange.emit(CURRENT_LOCATION);
     this.showAutocomplete = false;
