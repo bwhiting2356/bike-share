@@ -4,7 +4,7 @@ const cors = require('cors')({
 });
 import { findNearestStations } from './googleMaps/findNearestStations';
 import { getDirections } from "./googleMaps/getDirections";
-import { TripData, TripStatus } from './shared/Trip';
+// import { TripData, TripStatus } from './shared/Trip';
 import { serverMapGeoPointToLatLng } from "./googleMaps/serverMapGeoPointToLatLng";
 
 const TravelMode = {

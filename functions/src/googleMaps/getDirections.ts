@@ -1,7 +1,9 @@
 import { googleMapsClient } from './googleMapsClient';
 import { memoize } from '../memoize';
-import { DirectionsQuery } from '../shared/DirectionsQuery';
-import { DirectionsResponse } from '../shared/DirectionsResponse';
+import { DirectionsQuery } from '../../shared/DirectionsQuery';
+import { DirectionsResponse } from '../../shared/DirectionsResponse';
+// import { DirectionsQuery } from '../shared/DirectionsQuery';
+// import { DirectionsResponse } from '../shared/DirectionsResponse';
 
 const funcGetDirections = (query: DirectionsQuery): Promise<DirectionsResponse> => {
   return new Promise((resolve, reject) => {

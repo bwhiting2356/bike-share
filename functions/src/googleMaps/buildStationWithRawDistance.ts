@@ -2,7 +2,7 @@ import { StationWithRawDistance } from '../../shared/StationWithRawDistance';
 import { distanceCrowFlies } from './distanceCrowFlies';
 import { serverMapGeoPointToLatLng } from './serverMapGeoPointToLatLng';
 import { LatLng } from '../../shared/LatLng';
-import DocumentSnapshot = FirebaseFirestore.DocumentSnapshot;
+import { DocumentSnapshot } from "@google-cloud/firestore"
 
 
 

@@ -1,7 +1,6 @@
 import * as functions from 'firebase-functions';
 import { findNearestStations } from './googleMaps/findNearestStations';
 import { getDirections } from "./googleMaps/getDirections";
-import { TripData, TripStatus } from './shared/Trip';
 import { serverMapGeoPointToLatLng } from "./googleMaps/serverMapGeoPointToLatLng";
 import * as admin from 'firebase-admin';
 import { funcSearchBikeTrips } from './searchBikeTrips';

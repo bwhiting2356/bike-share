@@ -1,6 +1,4 @@
 import * as admin from 'firebase-admin';
-import { ReservationType } from './shared/ReservationType';
-
 
 
 export const stationInventoryAtTime = (stationId: string, time: Date, type: string) => {

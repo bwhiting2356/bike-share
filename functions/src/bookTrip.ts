@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { bookReservation } from './bookReservation';
-import { ReservationType } from './shared/ReservationType';
+import { ReservationType } from '../shared/ReservationType';
 
 const cors = require('cors')({
   origin: true,
