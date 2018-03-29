@@ -13,7 +13,7 @@ import { dateToISOStringLocal } from '../../../shared/dateToISOStringLocal';
 // rxjs
 
 import { Observable } from 'rxjs/Observable';
-import { take } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 
 // providers
 
@@ -30,6 +30,7 @@ const CURRENT_LOCATION = "Current Location";
 })
 export class SearchPage {
   userLocation$: Observable<LatLng>;
+  userLocationFound$: Observable<boolean>;
 
   center;
   stationList: Observable<LatLng[]>;
@@ -56,6 +57,11 @@ export class SearchPage {
   ) {
     this.datetime = dateToISOStringLocal(new Date());
     this.userLocation$ = this.geolocationService.userLocation$;
+    this.userLocationFound$ = this.geolocationService.userLocation$
+      .pipe(
+        map(location => location !== GeolocationProvider.DEFAULT_LOCATION)
+      ); // TODO: what if someone actually IS at that exact spot...?
+
     this.stationList = this.firestoreService.stationList;
 
     // display toast if there is one

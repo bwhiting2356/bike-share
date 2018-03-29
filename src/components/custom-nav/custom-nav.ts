@@ -9,16 +9,11 @@ import { LoginModalPage } from '../../pages/login-modal/login-modal';
 export class CustomNavComponent {
   @Input() title;
 
-  text: string;
-
   constructor(
     private toastCtrl: ToastController,
-    private modalCtrl: ModalController) {
-
-  }
+    private modalCtrl: ModalController) { }
 
   signIn() {
-    console.log('sign in');
     const loginModal = this.modalCtrl.create(LoginModalPage);
     loginModal.present();
     loginModal.onDidDismiss(toast => {
@@ -28,8 +23,7 @@ export class CustomNavComponent {
           duration: 3000,
           position: 'bottom'
         }).present();
-      } // TODO: test to make sure this is working
+      }
     })
   }
-
 }

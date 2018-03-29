@@ -8,10 +8,10 @@ import { map, startWith } from 'rxjs/operators';
 
 declare var google;
 
-const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
 
 @Injectable()
 export class GeolocationProvider {
+  static DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
   userLocation$: Observable<LatLng>;
   geocoder;
 
@@ -34,7 +34,7 @@ export class GeolocationProvider {
             return { lat: geoposition.coords.latitude, lng: geoposition.coords.longitude };
           }
         }),
-        startWith(DEFAULT_LOCATION)
+        startWith(GeolocationProvider.DEFAULT_LOCATION)
       );
   }
 
