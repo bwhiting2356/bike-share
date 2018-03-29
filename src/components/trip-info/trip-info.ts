@@ -14,6 +14,6 @@ export class TripInfoComponent {
   constructor(private popoverCtrl: PopoverController) {}
 
   openInfoPopover() {
-    this.popoverCtrl.create(InfoPage).present();
+      this.popoverCtrl.create(InfoPage, {}, {cssClass: 'price-info-popover'}).present();
   } // TODO: make wider, show backdrop
 }

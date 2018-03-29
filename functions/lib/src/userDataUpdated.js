@@ -97,7 +97,7 @@ exports.userDataUpdated = functions.firestore
                     return getDirections_1.getDirections(walking1Query);
                 });
             }
-            if (userData.searchParams.origin && userData.searchParams.destination && // both fields exist
+            if (userData.searchParams.origin && userData.searchParams.destination &&
                 (JSON.stringify(userData.searchParams) !== JSON.stringify(previousUserData.searchParams))) {
                 // deleteOperationPromise = admin.firestore()
                 //   .doc('/users/' + event.params.userId).set({searchResult: null}, {merge: true});

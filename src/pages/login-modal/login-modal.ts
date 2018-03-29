@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-import { AuthProvider } from '../../providers/auth/auth';
+import { ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'page-login-modal',
@@ -9,12 +8,11 @@ import { AuthProvider } from '../../providers/auth/auth';
 export class LoginModalPage {
 
   constructor(
-    private authService: AuthProvider,
     private viewCtrl: ViewController) {
   }
 
   loginSuccess() {
-    this.viewCtrl.dismiss({toast: "Logged in successfully"})
+    this.viewCtrl.dismiss({ toast: "Logged in successfully" })
   }
 
   cancel() {

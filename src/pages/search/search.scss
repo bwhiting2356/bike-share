@@ -32,7 +32,7 @@ page-trip-detail {
         background-color: map_get($colors, 'dark');
         box-sizing: border-box;
 
-        @media (min-width: 800px) {
+        @media (min-width: $desktop-breakpoint) {
           width: 350px;
           height: 100%;
         }

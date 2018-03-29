@@ -4,3 +4,16 @@ page-info {
 
   }
 }
+
+.price-info-popover .popover-content {
+  width: 100%;
+  margin-left: -12px;
+
+  // TODO: fix icon/image margins that are different
+  // TODO: or turn the image into a font so I can is it in ion-icon
+
+  @media (min-width: $desktop-breakpoint) {
+    width: 350px;
+    height: auto;
+  }
+}
