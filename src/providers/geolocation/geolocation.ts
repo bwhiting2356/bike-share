@@ -4,9 +4,11 @@ import { LatLng } from '../../../shared/LatLng';
 
 import { MapsAPILoader } from '@agm/core';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 declare var google;
+
+const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 }
 
 @Injectable()
 export class GeolocationProvider {
@@ -31,8 +33,10 @@ export class GeolocationProvider {
           if (geoposition && geoposition.coords) {
             return { lat: geoposition.coords.latitude, lng: geoposition.coords.longitude };
           }
-        })
+        }),
+        startWith(DEFAULT_LOCATION)
       )
+
 
   }
 
