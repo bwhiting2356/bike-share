@@ -8,7 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 
 declare var google;
 
-const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 }
+const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
 
 @Injectable()
 export class GeolocationProvider {
@@ -35,9 +35,7 @@ export class GeolocationProvider {
           }
         }),
         startWith(DEFAULT_LOCATION)
-      )
-
-
+      );
   }
 
   geocode(address): Promise<LatLng> {
@@ -52,6 +50,6 @@ export class GeolocationProvider {
           }
         })
       });
-    })
+    });
   }
 }

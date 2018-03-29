@@ -1,10 +1,7 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Search Result</ion-title>
-  </ion-navbar>
-
+  <custom-nav [title]="'Search Result'"></custom-nav>
 </ion-header>
+
 <ion-content>
 
   <ion-card class="fetching" *ngIf="fetching | async">

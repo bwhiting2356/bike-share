@@ -1,15 +1,6 @@
-
 <ion-header>
-
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Login with SMS</ion-title>
-  </ion-navbar>
-
+  <custom-nav [title]="'Login with SMS'"></custom-nav>
 </ion-header>
-
 
 <ion-content padding>
   <phone-login (loginSuccess)="loginSuccess()"></phone-login>

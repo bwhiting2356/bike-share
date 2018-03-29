@@ -1,11 +1,7 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Trips</ion-title>
-  </ion-navbar>
+  <custom-nav [title]="'Trips'"></custom-nav>
 </ion-header>
+
 
 <ion-content padding>
   <ion-segment [(ngModel)]="timeDirection">
