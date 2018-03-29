@@ -11,7 +11,6 @@ declare var google;
 
 @Injectable()
 export class GeolocationProvider {
-  static DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
   userLocation$: Observable<LatLng>;
   geocoder;
 
@@ -33,8 +32,7 @@ export class GeolocationProvider {
           if (geoposition && geoposition.coords) {
             return { lat: geoposition.coords.latitude, lng: geoposition.coords.longitude };
           }
-        }),
-        startWith(GeolocationProvider.DEFAULT_LOCATION)
+        })
       );
   }
 

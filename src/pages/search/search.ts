@@ -57,10 +57,6 @@ export class SearchPage {
   ) {
     this.datetime = dateToISOStringLocal(new Date());
     this.userLocation$ = this.geolocationService.userLocation$;
-    this.userLocationFound$ = this.geolocationService.userLocation$
-      .pipe(
-        map(location => location !== GeolocationProvider.DEFAULT_LOCATION)
-      ); // TODO: what if someone actually IS at that exact spot...?
 
     this.stationList = this.firestoreService.stationList;
 

@@ -20,7 +20,7 @@
         <search-autocomplete
           [showAutocomplete]="showAutocomplete == 'destination'"
           (inputFocused)="destinationFocused()"
-          [showCurrentLocation]="userLocationFound$ | async"
+          [showCurrentLocation]="userLocation$ | async"
           [address]="destinationAddress"
           (addressChange)="destinationAddressChange($event)"
           [label]="'Destination'">

@@ -6,6 +6,8 @@ import { LatLng } from '../../../shared/LatLng';
 import { bicyclePolylineBorderColor, bicyclePolylineMainColor } from '../../../shared/ThemeVariables';
 import { MapsAPILoader } from '@agm/core';
 
+
+const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
 declare var google;
 
 @Component({
@@ -33,14 +35,16 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   map: any;
   stationMarkers = [];
 
-  constructor(private mapsAPILoader: MapsAPILoader) { }
+  constructor(private mapsAPILoader: MapsAPILoader) {
+
+  }
 
   ngOnInit() {
     this.initMap();
   }
 
   ngOnChanges() {
-    this.initMap();
+    this.initMap(); // TODO: maybe just change the map instead of making a new one (and have smoother panning)
   }
 
   initMap() {
@@ -48,7 +52,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
       this.map = new google.maps.Map(this.mapContainer.nativeElement, {
         zoom: this.zoom,
         maxZoom: 16,
-        center: this.center,
+        center: this.center || DEFAULT_LOCATION,
         disableDefaultUI: true,
         zoomControl: this.zoomControl,
         streetViewControl: this.streetViewControl,
