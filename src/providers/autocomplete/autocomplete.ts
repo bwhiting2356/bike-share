@@ -10,20 +10,19 @@ export class AutocompleteProvider {
   constructor(private mapsAPILoader: MapsAPILoader) {
     this.mapsAPILoader.load().then(() => {
       this.googleAutocompleteService = new google.maps.places.AutocompleteService();
-    })
+    }) // TODO: can't use async await here because it's a constructor. Maybe factor out?
   }
 
-  getPlacePredictions(input) {
+  async getPlacePredictions(input): Promise<any[]> {
+    await this.mapsAPILoader.load();
     if (input) {
-      return new Promise(resolve => {
-        this.mapsAPILoader.load().then(() => {
-          this.googleAutocompleteService.getPlacePredictions({input}, results => {
-            resolve(results);
-          });
-        })
-      });
+      return new Promise<any[]>(resolve => {
+        this.googleAutocompleteService.getPlacePredictions({input}, results => {
+          resolve(results);
+        });
+      })
     } else {
-      return Promise.resolve([]);
+      return [];
     }
   }
 }

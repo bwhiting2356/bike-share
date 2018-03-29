@@ -50,32 +50,30 @@ export class MyApp {
 
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+  async initializeApp() {
+    await this.platform.ready();
+    this.statusBar.styleDefault();
+    this.splashScreen.hide();
   }
 
   openPage(page) {
     this.nav.setRoot(page.component);
   }
 
-  signOut() {
-    this.authService.signOut()
-      .then(() => {
-        this.toastCtrl.create({
-          message: 'Signed out successfully',
-          duration: 3000,
-          position: 'bottom'
-        }).present();
-      })
-      .catch(err => {
-        this.toastCtrl.create({
-          message: `Error: ${err}`,
-          duration: 3000,
-          position: 'bottom'
-        }).present();
-      })
+  async signOut() {
+    try {
+      await this.authService.signOut();
+      this.toastCtrl.create({
+        message: 'Signed out successfully',
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+    } catch(err) {
+      this.toastCtrl.create({
+        message: `Error: ${err}`,
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+    }
   }
 }

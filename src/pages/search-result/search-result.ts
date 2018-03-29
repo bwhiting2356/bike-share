@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import {
-  IonicPage, ModalController, NavController, NavParams,
+  ModalController, NavController, NavParams,
   ToastController
 } from 'ionic-angular';
 import { Trip } from '../../../shared/Trip';
@@ -68,7 +68,7 @@ export class SearchResultPage implements OnDestroy {
               duration: 3000,
               position: 'bottom'
             }).present();
-          } // TODO: test to make sure this is working
+          } // TODO: this breaks the search when they sign in because it clears search params
         })
       } else {
         // this.firestoreService.bookReservation();

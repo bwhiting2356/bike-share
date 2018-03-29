@@ -35,9 +35,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   map: any;
   stationMarkers = [];
 
-  constructor(private mapsAPILoader: MapsAPILoader) {
-
-  }
+  constructor(private mapsAPILoader: MapsAPILoader) { }
 
   ngOnInit() {
     this.initMap();
@@ -47,45 +45,44 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     this.initMap(); // TODO: maybe just change the map instead of making a new one (and have smoother panning)
   }
 
-  initMap() {
-    this.mapsAPILoader.load().then(() => {
-      this.map = new google.maps.Map(this.mapContainer.nativeElement, {
-        zoom: this.zoom,
-        maxZoom: 16,
-        center: this.center || DEFAULT_LOCATION,
-        disableDefaultUI: true,
-        zoomControl: this.zoomControl,
-        streetViewControl: this.streetViewControl,
-        gestureHandling: this.gestureHandling,
-        fullscreenControl: false,
-        styles: [
-          {
-            featureType: 'poi',
-            stylers: [{visibility: '#off'}]
-          },
-        ]
-      });
-      this.map.setCenter(this.center);
+  async initMap() {
+    await this.mapsAPILoader.load();
+    this.map = new google.maps.Map(this.mapContainer.nativeElement, {
+      zoom: this.zoom,
+      maxZoom: 16,
+      center: this.center || DEFAULT_LOCATION,
+      disableDefaultUI: true,
+      zoomControl: this.zoomControl,
+      streetViewControl: this.streetViewControl,
+      gestureHandling: this.gestureHandling,
+      fullscreenControl: false,
+      styles: [
+        {
+          featureType: 'poi',
+          stylers: [{visibility: '#off'}]
+        },
+      ]
+    });
+    this.map.setCenter(this.center);
 
-      if (this.origin) this.addMarker(this.origin); // TODO: why is it not showing up with just one marker?
-      if (this.destination) this.addMarker(this.destination);
+    if (this.origin) this.addMarker(this.origin);
+    if (this.destination) this.addMarker(this.destination);
 
-      if (this.origin || this.destination) this.fitBounds();
+    if (this.origin || this.destination) this.fitBounds();
 
-      if (this.stationStart) this.addMarker(this.stationStart, true);
-      if (this.stationEnd) this.addMarker(this.stationEnd, true);
+    if (this.stationStart) this.addMarker(this.stationStart, true);
+    if (this.stationEnd) this.addMarker(this.stationEnd, true);
 
+    this.addOrRemoveStationMarkers();
+
+    this.map.addListener('zoom_changed', () => {
       this.addOrRemoveStationMarkers();
+    });
 
-      this.map.addListener('zoom_changed', () => {
-        this.addOrRemoveStationMarkers();
-      })
+    if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
+    if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
+    if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, GoogleMapComponent.BICYCLING);
 
-      if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
-      if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
-      if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, GoogleMapComponent.BICYCLING);
-
-    })
   }
 
   fitBounds() {

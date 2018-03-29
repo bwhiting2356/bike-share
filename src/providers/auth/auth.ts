@@ -3,13 +3,9 @@ import { Observable } from "rxjs/Observable";
 
 // firebase
 
-import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import 'rxjs/add/operator/take';
-
-import { GooglePlus } from '@ionic-native/google-plus';
-import { Platform } from 'ionic-angular';
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -17,15 +13,13 @@ export class AuthProvider {
   authState: any = null;
 
   constructor(
-    private gplus: GooglePlus,
-    private platform: Platform,
     public afAuth: AngularFireAuth,
   ) {
     if (!this.currentUserId) this.anonymousLogin();
 
     this.afAuth.authState.subscribe((auth) => {
       this.authState = auth;
-    });
+    }); // TODO: why am I doing this? Is this redundant?
   }
 
   get authenticated(): boolean {
@@ -34,7 +28,7 @@ export class AuthProvider {
 
   get currentUser(): any {
     return this.authenticated ? this.authState : null;
-  }
+  } // TODO: why is this here if I'm not using it?
 
   get currentUserId(): string {
     return this.authenticated ? this.authState.uid : '';
@@ -45,19 +39,24 @@ export class AuthProvider {
   }
 
   isAnonymous(): Observable<boolean> {
-    return this.afAuth.authState.map(auth => {
-      if (auth) return auth.isAnonymous;
-      return true;
-    });
+    return this.afAuth.authState
+      .pipe(
+        map(auth => {
+          if (auth) {
+            return auth.isAnonymous;
+          } else {
+            return false;
+          }
+        })
+      );
   }
 
-  anonymousLogin() {
-    return this.afAuth.auth.signInAnonymously()
-      .then((user) => {
-        this.authState = user;
-        // this.updateUserData()
-      })
-      .catch(error => console.log(error));
+  async anonymousLogin() {
+    try {
+      this.authState = await this.afAuth.auth.signInAnonymously();
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   signOut(): Promise<void> {

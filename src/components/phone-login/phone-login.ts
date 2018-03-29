@@ -44,6 +44,7 @@ export class PhoneLoginComponent implements OnInit {
   }
 
   displayToast(message: string) {
+    console.log("message: ", message);
     this.toastCtrl.create({
       message,
       duration: 3000,
@@ -52,29 +53,28 @@ export class PhoneLoginComponent implements OnInit {
 
   }
 
-  sendLoginCode() {
+  async sendLoginCode() {
     const appVerifier = this.windowRef.recaptchaVerifier;
     const num = this.phoneNumber.e164;
-    firebase.auth().signInWithPhoneNumber(num, appVerifier)
-      .then(result => {
-        this.windowRef.confirmationResult = result;
-        this.displayToast(`Code sent to ${this.phoneNumber.number}`);
-      })
-      .catch(error => {
-        this.displayToast(error);
-      });
+    try {
+      this.windowRef.confirmationResult = await firebase.auth().signInWithPhoneNumber(num, appVerifier);
+      this.displayToast(`Code sent to ${this.phoneNumber.number}`);
+    } catch(err) {
+      console.log(err);
+      this.displayToast(err.message);
+    }
   }
 
-  verifyLoginCode() {
-    this.windowRef.confirmationResult
-      .confirm(this.verificationCode)
-      .then(result => {
-        this.authService.phoneSignInSuccess(result.user);
-        this.loginSuccess.emit();
-      })
-      .catch(error => {
-        this.displayToast(error);
-      });
+  async verifyLoginCode() {
+    try {
+      const result = await this.windowRef.confirmationResult
+        .confirm(this.verificationCode);
+      this.authService.phoneSignInSuccess(result.user);
+      this.loginSuccess.emit();
+    } catch (err) {
+      console.log(err);
+      this.displayToast(err.message);
+    }
   }
 }
 

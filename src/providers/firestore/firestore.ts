@@ -63,7 +63,7 @@ export class FirestoreProvider {
           }
         });
       }
-    });
+    }); // TODO: this is a gnarly mess
   }
 
   // search methods
