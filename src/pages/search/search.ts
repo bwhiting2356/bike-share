@@ -8,12 +8,13 @@ import { SearchResultPage } from '../search-result/search-result';
 // shared
 
 import { LatLng } from '../../../shared/LatLng';
+import { TimeTarget } from '../../../shared/TimeTarget';
 import { dateToISOStringLocal } from '../../../shared/dateToISOStringLocal';
 
 // rxjs
 
 import { Observable } from 'rxjs/Observable';
-import { filter, map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 // providers
 
@@ -42,7 +43,7 @@ export class SearchPage {
 
   showAutocomplete: string;
 
-  timeTarget: string = 'Depart at';
+  timeTarget: TimeTarget = 'Depart at';
   datetime: string;
 
   fetching: boolean;

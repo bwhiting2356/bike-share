@@ -10,6 +10,7 @@ import { LoginModalPage } from '../login-modal/login-modal';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FirestoreProvider } from '../../providers/firestore/firestore';
 import { AuthProvider } from '../../providers/auth/auth';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'page-search-result',
@@ -57,7 +58,11 @@ export class SearchResultPage implements OnDestroy {
   }
 
   bookReservation() {
-    this.authService.isAnonymous().take(1).subscribe(anon => {
+    this.authService.isAnonymous()
+      .pipe(
+        take(1)
+      )
+      .subscribe(anon => {
       if (anon) {
         const loginModal = this.modalCtrl.create(LoginModalPage);
         loginModal.present();

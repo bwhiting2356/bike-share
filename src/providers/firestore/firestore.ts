@@ -10,11 +10,9 @@ import { DocumentData } from "@firebase/firestore-types";
 // shared
 
 import { LatLng } from '../../../shared/LatLng';
+import { TimeTarget } from '../../../shared/TimeTarget';
 import { Trip, TripData } from '../../../shared/Trip';
 import { mapLatLngToGeoPoint } from '../../../shared/mapLatLngToGeoPoint';
-
-
-import 'rxjs/add/operator/take';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { clientMapGeoPointToLatLng } from './clientMapGeoPointToLatLng';
@@ -82,7 +80,7 @@ export class FirestoreProvider {
       .set({ searchParams: { destination: { coords: destinationCoords, address } }}, { merge: true });
   }
 
-  updateTimeTarget(timeTarget: string) {
+  updateTimeTarget(timeTarget: TimeTarget) {
     this.updateSearchParams();
     this.userDataRef
       .set({ searchParams: { timeTarget }}, { merge: true });
@@ -96,7 +94,6 @@ export class FirestoreProvider {
   }
 
   bookReservation(tripData: TripData) {
-
     this.http.post('https://us-central1-bike-share-1517478720061.cloudfunctions.net/bookTrip  ',
       { userId: this.userId, tripData })
       .subscribe(result => console.log(result));
