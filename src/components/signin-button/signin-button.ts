@@ -1,17 +1,22 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalController, ToastController } from 'ionic-angular';
 import { LoginModalPage } from '../../pages/login-modal/login-modal';
+import { AuthProvider } from '../../providers/auth/auth';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'custom-nav',
-  templateUrl: 'custom-nav.html'
+  selector: 'signin-button',
+  templateUrl: 'signin-button.html'
 })
-export class CustomNavComponent {
-  @Input() title;
+export class SigninButtonComponent {
+  isAnonymous: Observable<boolean>;
 
   constructor(
+    private authService: AuthProvider,
     private toastCtrl: ToastController,
-    private modalCtrl: ModalController) { }
+    private modalCtrl: ModalController) {
+    this.isAnonymous = this.authService.isAnonymous();
+  }
 
   signIn() {
     const loginModal = this.modalCtrl.create(LoginModalPage);
@@ -26,4 +31,5 @@ export class CustomNavComponent {
       }
     })
   }
+
 }

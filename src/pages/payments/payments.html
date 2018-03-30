@@ -1,7 +1,14 @@
 <ion-header>
-  <custom-nav [title]="'Payments'"></custom-nav>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Payments</ion-title>
+    <ion-buttons end>
+      <signin-button></signin-button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
-
 
 <ion-content padding>
   <p>Nothing to see here yet...</p>

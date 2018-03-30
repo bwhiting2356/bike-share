@@ -1,6 +1,15 @@
 <ion-header>
-  <custom-nav [title]="'Login with SMS'"></custom-nav>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Login with SMS</ion-title>
+    <ion-buttons end>
+      <signin-button></signin-button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
+<!-- TODO: remove this page, and just launch the modal from the side menu? -->
 
 <ion-content padding>
   <phone-login (loginSuccess)="loginSuccess()"></phone-login>

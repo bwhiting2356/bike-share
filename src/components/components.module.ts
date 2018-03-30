@@ -14,7 +14,7 @@ import { TripInfoComponent } from './trip-info/trip-info';
 import { SearchAutocompleteComponent } from './search-autocomplete/search-autocomplete';
 import { CollapseIconComponent } from './collapse-icon/collapse-icon';
 import { PhoneLoginComponent } from './phone-login/phone-login';
-import { CustomNavComponent } from './custom-nav/custom-nav';
+import { SigninButtonComponent } from './signin-button/signin-button';
 
 @NgModule({
 	declarations: [
@@ -24,7 +24,7 @@ import { CustomNavComponent } from './custom-nav/custom-nav';
     SearchAutocompleteComponent,
     CollapseIconComponent,
     PhoneLoginComponent,
-    CustomNavComponent,
+    SigninButtonComponent,
   ],
 	imports: [
 	  CommonModule,
@@ -38,7 +38,7 @@ import { CustomNavComponent } from './custom-nav/custom-nav';
     SearchAutocompleteComponent,
     CollapseIconComponent,
     PhoneLoginComponent,
-    CustomNavComponent,
+    SigninButtonComponent,
   ]
 })
 export class ComponentsModule {}

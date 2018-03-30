@@ -1,0 +1,6 @@
+signin-button {
+  display: none;
+  @media (min-width: $desktop-breakpoint) {
+    display: block;
+  }
+}
