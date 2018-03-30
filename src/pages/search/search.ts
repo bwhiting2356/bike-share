@@ -23,6 +23,7 @@ import { FirestoreProvider } from '../../providers/firestore/firestore';
 import { AuthProvider } from '../../providers/auth/auth';
 
 
+
 const CURRENT_LOCATION = "Current Location";
 
 @Component({
@@ -30,8 +31,7 @@ const CURRENT_LOCATION = "Current Location";
   templateUrl: 'search.html'
 })
 export class SearchPage {
-  userLocation$: Observable<LatLng>;
-  userLocationFound$: Observable<boolean>;
+  userLocation$: Observable<LatLng | undefined>;
 
   center;
   stationList: Observable<LatLng[]>;
@@ -46,7 +46,7 @@ export class SearchPage {
   timeTarget: TimeTarget = 'Depart at';
   datetime: string;
 
-  fetching: boolean;
+  // fetching: boolean;
 
   constructor(
     private geolocationService: GeolocationProvider,
@@ -95,43 +95,41 @@ export class SearchPage {
     this.showAutocomplete = 'destination';
   }
 
-  originAddressChange(address: string) {
+  async originAddressChange(address: string) {
     this.originAddress = address;
+    let latlng: LatLng | undefined | null; // TODO: fix
 
     if (address === CURRENT_LOCATION) {
-      this.geolocationService.userLocation$
+      latlng = await this.geolocationService.userLocation$
         .pipe(
-          take(1)
-        )
-        .subscribe((latlng: LatLng) => {
-          this.originCoords = latlng;
-          this.firestoreService.updateSearchOrigin(latlng, address);
-        });
+          take(1),
+        ).toPromise()
     } else {
-      this.geolocationService.geocode(address).then(latlng => {
-        this.originCoords = latlng;
-        this.firestoreService.updateSearchOrigin(latlng, address);
-      });
+      latlng = await this.geolocationService.geocode(address);
+    }
+
+    if (latlng) {
+      this.originCoords = latlng;
+      this.firestoreService.updateSearchOrigin(latlng, address);
     }
   }
 
-  destinationAddressChange(address: string) {
+  async destinationAddressChange(address: string) {
     this.destinationAddress = address;
+    let latlng: LatLng | undefined | null; // TODO: fix
 
     if (address === CURRENT_LOCATION) {
-      this.geolocationService.userLocation$
+      latlng = await this.geolocationService.userLocation$
         .pipe(
           take(1)
-        )
-        .subscribe((latlng: LatLng) => {
-        this.destinationCoords = latlng;
-        this.firestoreService.updateSearchDestination(latlng, address);
-      });
+        ).toPromise();
     } else {
-      this.geolocationService.geocode(address).then(latlng => {
-        this.destinationCoords = latlng;
-        this.firestoreService.updateSearchDestination(latlng, address);
-      });
+      latlng = await this.geolocationService.geocode(address)
+    }
+
+    if (latlng) {
+      this.destinationCoords = latlng;
+      this.firestoreService.updateSearchDestination(latlng, address);
     }
   }
 

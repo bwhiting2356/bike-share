@@ -33,7 +33,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   @Input() stationList: LatLng[];
   @Input() collapsed: boolean; // this is only here to trigger change detection when the size changes
   map: any;
-  stationMarkers = [];
+  stationMarkers: any[] = [];
 
   constructor(private mapsAPILoader: MapsAPILoader) { }
 
@@ -120,7 +120,8 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   addOrRemoveStationMarkers() {
     if (this.stationList && this.map.getZoom() >= 14) {
       this.stationList.forEach(station => {
-        this.stationMarkers.push(this.addMarker(station, true));
+        const marker = this.addMarker(station, true);
+        this.stationMarkers.push(marker);
       });
     } else {
       if (this.stationMarkers) {

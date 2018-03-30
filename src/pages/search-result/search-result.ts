@@ -19,8 +19,8 @@ import { take } from 'rxjs/operators';
 export class SearchResultPage implements OnDestroy {
   origin: LatLng;
   destination: LatLng;
-  result: Trip;
-  error: BehaviorSubject<string>;
+  result: Trip | null;
+  error: BehaviorSubject<string | null>;
   fetching: BehaviorSubject<boolean>;
   bicyclePolylineMainColor;
   bicyclePolylineBorderColor;

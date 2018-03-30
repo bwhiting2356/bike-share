@@ -15,7 +15,7 @@ export class SearchAutocompleteComponent {
   @Output() addressChange = new EventEmitter<string>();
   @Output() inputFocused = new EventEmitter<boolean>();
   @Input() showAutocomplete: boolean;
-  autocompleteResults = [];
+  autocompleteResults: any[] = [];
   offlineToastShowing = false;
 
   text: string;
@@ -40,15 +40,13 @@ export class SearchAutocompleteComponent {
     }
   }
 
-  inputChange(e) {
+  async inputChange(e) {
     const term = e.target.value;
     this.fetching = true;
     this.pristine = false;
     if (navigator.onLine) {
-      this.autocompleteService.getPlacePredictions(term).then((results: any[]) => {
-        this.autocompleteResults = results || [];
-        this.fetching = false;
-      })
+      this.autocompleteResults = await this.autocompleteService.getPlacePredictions(term) || [];
+      this.fetching = false;
     } else {
       if (!this.offlineToastShowing) {
         const toast = this.toastCtrl.create({

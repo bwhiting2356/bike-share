@@ -11,7 +11,7 @@ declare var google;
 
 @Injectable()
 export class GeolocationProvider {
-  userLocation$: Observable<LatLng>;
+  userLocation$: Observable<LatLng | undefined>;
   geocoder;
 
   constructor(
@@ -20,7 +20,7 @@ export class GeolocationProvider {
 
     this.mapsAPILoader.load().then(() => {
       this.geocoder = new google.maps.Geocoder;
-    });
+    }); // TODO: maybe factor this out since I can't make this async/await inside the constructor
 
     const options: PositionOptions = {
       maximumAge: Infinity
@@ -36,9 +36,10 @@ export class GeolocationProvider {
       )
   }
 
-  async geocode(address: string): Promise<LatLng> {
+
+  async geocode(address: string): Promise<LatLng | null> {
     await this.mapsAPILoader.load();
-    return new Promise<LatLng>(resolve => {
+    return new Promise<LatLng | null>(resolve => {
       this.geocoder.geocode({address}, results => {
         if (results) {
           resolve({

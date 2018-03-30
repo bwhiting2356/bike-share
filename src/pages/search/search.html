@@ -11,7 +11,6 @@
 </ion-header>
 
 
-
 <ion-content>
   <div class="flex-container">
     <div class="search">
@@ -20,7 +19,7 @@
         <search-autocomplete
           [showAutocomplete]="showAutocomplete === 'origin'"
           (inputFocused)="originFocused()"
-          [showCurrentLocation]="userLocationFound$ | async"
+          [showCurrentLocation]="userLocation$ | async"
           [address]="originAddress"
           (addressChange)="originAddressChange($event)"
           label='Origin'>

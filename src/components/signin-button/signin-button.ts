@@ -48,5 +48,4 @@ export class SigninButtonComponent {
       }).present();
     }
   }
-
 }

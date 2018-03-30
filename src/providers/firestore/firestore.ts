@@ -25,8 +25,8 @@ export class FirestoreProvider {
   stationList: Observable<LatLng[]>;
   userId: string;
   userDataRef: AngularFirestoreDocument<DocumentData>;
-  searchResultTrip: BehaviorSubject<Trip>;
-  searchError: BehaviorSubject<string>;
+  searchResultTrip: BehaviorSubject<Trip | null>;
+  searchError: BehaviorSubject<string | null>;
   searchFetching: BehaviorSubject<boolean>;
 
   constructor(
@@ -34,8 +34,8 @@ export class FirestoreProvider {
     private authService: AuthProvider,
     private dbFirestore: AngularFirestore) {
 
-    this.searchResultTrip = new BehaviorSubject<Trip>(null);
-    this.searchError = new BehaviorSubject<string>(null);
+    this.searchResultTrip = new BehaviorSubject<Trip | null>(null);
+    this.searchError = new BehaviorSubject<string | null>(null);
     this.searchFetching = new BehaviorSubject<boolean>(true);
 
     this.stationList = this.dbFirestore.collection('/stations').valueChanges()
@@ -49,16 +49,19 @@ export class FirestoreProvider {
         this.userId = userId;
         this.userDataRef = this.dbFirestore.collection('/users').doc(userId);
         this.userDataRef.valueChanges().subscribe(data => {
-          if (data.searchResult && data.searchResult.tripData) {
-            this.searchResultTrip.next(new Trip(data.searchResult.tripData));
-            this.searchError.next(null);
-            this.searchFetching.next(false);
+          if (data) {
+            if (data.searchResult && data.searchResult.tripData) {
+              this.searchResultTrip.next(new Trip(data.searchResult.tripData));
+              this.searchError.next(null);
+              this.searchFetching.next(false);
+            }
+            if (data.searchResult && data.searchResult.error) {
+              this.searchError.next(data.searchResult.error);
+              this.searchResultTrip.next(null);
+              this.searchFetching.next(false);
+            }
           }
-          if (data.searchResult && data.searchResult.error) {
-            this.searchError.next(data.searchResult.error);
-            this.searchResultTrip.next(null);
-            this.searchFetching.next(false);
-          }
+
         });
       }
     }); // TODO: this is a gnarly mess

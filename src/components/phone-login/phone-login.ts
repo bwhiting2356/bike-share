@@ -77,12 +77,3 @@ export class PhoneLoginComponent implements OnInit {
     }
   }
 }
-
-
-
-
-
-
-
-
-
