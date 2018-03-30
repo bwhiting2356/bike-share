@@ -32,4 +32,21 @@ export class SigninButtonComponent {
     })
   }
 
+  async signOut() {
+    try {
+      await this.authService.signOut();
+      this.toastCtrl.create({
+        message: 'Signed out successfully',
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+    } catch(err) {
+      this.toastCtrl.create({
+        message: `Error: ${err}`,
+        duration: 3000,
+        position: 'bottom'
+      }).present();
+    }
+  }
+
 }

@@ -7,7 +7,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { map } from 'rxjs/operators';
 
-
 @Injectable()
 export class AuthProvider {
   authState: any = null;
@@ -59,8 +58,11 @@ export class AuthProvider {
     }
   }
 
-  signOut(): Promise<void> {
-    return this.afAuth.auth.signOut()
+  async signOut(): Promise<void> {
+    console.log("before: ", this.afAuth.auth);
+    await this.afAuth.auth.signOut();
+    console.log("after: ", this.afAuth.auth);
+    // TODO: this is broken... why?
   }
 
   phoneSignInSuccess(auth) {
