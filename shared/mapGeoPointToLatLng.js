@@ -1,5 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mapGeoPointToLatLng = function (geopoint) {
-    return { lat: geopoint.coords._lat, lng: geopoint.coords._long };
+export var mapGeoPointToLatLng = function (geopoint) {
+    return { lat: geopoint.coords._latitude, lng: geopoint.coords._longitude };
 };
+//# sourceMappingURL=mapGeoPointToLatLng.js.map

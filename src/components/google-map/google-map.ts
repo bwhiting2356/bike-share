@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, ViewChild, Input, OnChanges, OnInit, ElementRef } from '@angular/core';
 
 // shared
 
@@ -8,14 +8,14 @@ import { MapsAPILoader } from '@agm/core';
 
 
 const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
-declare var google;
+declare var google: any;
 
 @Component({
   selector: 'google-map',
   templateUrl: 'google-map.html'
 })
 export class GoogleMapComponent implements OnChanges, OnInit {
-  @ViewChild('mapContainer') mapContainer;
+  @ViewChild('mapContainer') mapContainer: ElementRef;
   @Input() zoom: number = 14;
   @Input() zoomControl: boolean = false;
   @Input() scrollWheel: boolean = true;
@@ -103,8 +103,8 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     this.map.fitBounds(bounds, 20); // 20px padding
   }
 
-  addMarker(position, station = false) {
-    const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg'
+  addMarker(position: LatLng, station = false) {
+    const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg';
 
     let markerOptions = {
       position: position,
@@ -150,7 +150,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   static WALKING = 'WALKING';
   static BICYCLING = 'BICYCLING';
 
-  static createBicyclingPolyline(points) {
+  static createBicyclingPolyline(points: LatLng[]) {
     return new google.maps.Polyline({
       path: points,
       strokeColor: bicyclePolylineMainColor,
@@ -160,7 +160,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     });
   }
 
-  static createBicyclingPolylineBorder(points) {
+  static createBicyclingPolylineBorder(points: LatLng[]) {
     return new google.maps.Polyline({
       path: points,
       strokeColor: bicyclePolylineBorderColor,
@@ -170,7 +170,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     });
   }
 
-  static createWalkingPolyline(points) {
+  static createWalkingPolyline(points: LatLng[]) {
     const walkingLineSymbol = {
       path: google.maps.SymbolPath.CIRCLE,
       fillOpacity: 1,
@@ -191,7 +191,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     });
   }
 
-  static createWalkingPolylineBorder(points) {
+  static createWalkingPolylineBorder(points: LatLng[]) {
     const walkingLineSymbol = {
       path: google.maps.SymbolPath.CIRCLE,
       fillOpacity: 1,
@@ -212,5 +212,3 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     });
   }
 }
-
-

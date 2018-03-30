@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 
-declare var google;
+declare var google: any;
 
 @Injectable()
 export class AutocompleteProvider {
-  googleAutocompleteService;
+  googleAutocompleteService: any;
 
   constructor(private mapsAPILoader: MapsAPILoader) {
     this.mapsAPILoader.load().then(() => {
@@ -13,11 +13,11 @@ export class AutocompleteProvider {
     }) // TODO: can't use async await here because it's a constructor. Maybe factor out?
   }
 
-  async getPlacePredictions(input): Promise<any[]> {
+  async getPlacePredictions(input: string): Promise<any[]> {
     await this.mapsAPILoader.load();
     if (input) {
       return new Promise<any[]>(resolve => {
-        this.googleAutocompleteService.getPlacePredictions({input}, results => {
+        this.googleAutocompleteService.getPlacePredictions({input}, (results: any) => {
           resolve(results);
         });
       })

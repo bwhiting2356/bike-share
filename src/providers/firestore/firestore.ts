@@ -41,7 +41,7 @@ export class FirestoreProvider {
     this.stationList = this.dbFirestore.collection('/stations').valueChanges()
       .pipe(
         take(1),
-        map(stationList => stationList.map(station => clientMapGeoPointToLatLng(station["coords"])))
+        map(stationList => stationList.map((station: any) => clientMapGeoPointToLatLng(station["coords"])))
       );
 
     this.authService.currentUserIdObservable.subscribe(userId => {
@@ -61,7 +61,6 @@ export class FirestoreProvider {
               this.searchFetching.next(false);
             }
           }
-
         });
       }
     }); // TODO: this is a gnarly mess

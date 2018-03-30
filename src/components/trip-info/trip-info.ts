@@ -9,11 +9,13 @@ import { InfoPage } from '../../pages/info/info';
 })
 export class TripInfoComponent {
   @Input() trip: Trip;
-  @Input() collapsed;
+  @Input() collapsed: boolean;
 
   constructor(private popoverCtrl: PopoverController) {}
 
   openInfoPopover() {
-      this.popoverCtrl.create(InfoPage, {}, {cssClass: 'price-info-popover'}).present();
+      this.popoverCtrl
+        .create(InfoPage, {}, {cssClass: 'price-info-popover'})
+        .present();
   } // TODO: make wider, show backdrop
 }

@@ -9,9 +9,9 @@ const CURRENT_LOCATION = 'Current Location';
   templateUrl: 'search-autocomplete.html'
 })
 export class SearchAutocompleteComponent {
-  @Input() showCurrentLocation;
-  @Input() label;
-  @Input() address;
+  @Input() showCurrentLocation: boolean;
+  @Input() label: string;
+  @Input() address: string;
   @Output() addressChange = new EventEmitter<string>();
   @Output() inputFocused = new EventEmitter<boolean>();
   @Input() showAutocomplete: boolean;
@@ -32,7 +32,7 @@ export class SearchAutocompleteComponent {
     this.inputFocused.emit(true);
   }
 
-  blur(event) {
+  blur(event: any) { // TODO: what type is this? If it's FocusEvent, why am I accessing event.value?
     if (!event.value) {
       setTimeout(() => {
         this.showAutocomplete = false;
@@ -40,7 +40,7 @@ export class SearchAutocompleteComponent {
     }
   }
 
-  async inputChange(e) {
+  async inputChange(e: any) { // TODO: find actual event type
     const term = e.target.value;
     this.fetching = true;
     this.pristine = false;
@@ -71,7 +71,7 @@ export class SearchAutocompleteComponent {
     this.autocompleteResults = [];
   }
 
-  chooseAutocompleteItem(result) {
+  chooseAutocompleteItem(result: any) {
     const part1 = result.structured_formatting.main_text || '';
     const part2 = result.structured_formatting.secondary_text || '';
 

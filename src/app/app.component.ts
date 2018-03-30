@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { PaymentsPage } from '../pages/payments/payments';
 import { TempPage } from '../pages/temp/temp';
 import { AuthProvider } from '../providers/auth/auth';
+import { Observable } from 'rxjs/Observable';
 
 interface Page {
   title: string;
@@ -20,7 +21,7 @@ interface Page {
   templateUrl: 'app.html'
 })
 export class MyApp {
-  isAnonymous;
+  isAnonymous: Observable<boolean>;
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = SearchPage;
@@ -56,7 +57,7 @@ export class MyApp {
     this.splashScreen.hide();
   }
 
-  openPage(page) {
+  openPage(page: Page) {
     this.nav.setRoot(page.component);
   }
 

@@ -6,13 +6,13 @@ import { MapsAPILoader } from '@agm/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-declare var google;
+declare var google: any;
 
 
 @Injectable()
 export class GeolocationProvider {
   userLocation$: Observable<LatLng | undefined>;
-  geocoder;
+  geocoder: any;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -40,7 +40,7 @@ export class GeolocationProvider {
   async geocode(address: string): Promise<LatLng | null> {
     await this.mapsAPILoader.load();
     return new Promise<LatLng | null>(resolve => {
-      this.geocoder.geocode({address}, results => {
+      this.geocoder.geocode({address}, (results: any[]) => {
         if (results) {
           resolve({
             lat: results[0].geometry.location.lat(),

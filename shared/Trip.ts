@@ -52,16 +52,47 @@ export const TripStatus = {
 };
 
 export class Trip {
-  origin;
+  origin: {
+    coords: LatLng;
+    address: string;
+  };
   departureTime: Date;
-  walking1Travel;
-  stationStart;
-  bicyclingTravel;
-  stationEnd;
-  walking2Travel;
+  walking1Travel: {
+    feet: number;
+    seconds: number;
+    points: LatLng[];
+  };
+  stationStart: {
+    id: string;
+    coords: LatLng;
+    address: string;
+    price: number;
+    time: Date;
+  };
+  bicyclingTravel: {
+    feet: number;
+    seconds: number;
+    points: LatLng[];
+    price: number;
+  };
+  stationEnd: {
+    id: string;
+    coords: LatLng;
+    address: string;
+    price: number;
+    time: Date;
+  };
+  walking2Travel: {
+    feet: number;
+    seconds: number;
+    points: LatLng[];
+  };
   arrivalTime: Date;
-  destination;
-  status;
+  destination: {
+    coords: LatLng;
+    address: string;
+  };
+  status: string; // TODO: this can be a union type as well probably
 
   constructor(data: TripData) {  // parse date strings into date objects?
     this.origin = data.origin;

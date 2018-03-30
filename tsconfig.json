@@ -5,7 +5,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,
-//    "noImplicitAny": true,
+    "noImplicitAny": true,
     "lib": [
       "dom",
       "es2015"

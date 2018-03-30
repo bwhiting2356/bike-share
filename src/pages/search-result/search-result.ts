@@ -3,14 +3,21 @@ import {
   ModalController, NavController, NavParams,
   ToastController
 } from 'ionic-angular';
+
 import { Trip } from '../../../shared/Trip';
 import { LatLng } from '../../../shared/LatLng';
+
 import { TempPage } from '../temp/temp';
 import { LoginModalPage } from '../login-modal/login-modal';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+// providers
 import { FirestoreProvider } from '../../providers/firestore/firestore';
 import { AuthProvider } from '../../providers/auth/auth';
+
+// rxjs
 import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs/Subscription';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'page-search-result',
@@ -22,9 +29,9 @@ export class SearchResultPage implements OnDestroy {
   result: Trip | null;
   error: BehaviorSubject<string | null>;
   fetching: BehaviorSubject<boolean>;
-  bicyclePolylineMainColor;
-  bicyclePolylineBorderColor;
-  tripSubscription;
+  bicyclePolylineMainColor: string;
+  bicyclePolylineBorderColor: string;
+  tripSubscription: Subscription;
 
   collapsed: boolean = false;
 
@@ -61,7 +68,7 @@ export class SearchResultPage implements OnDestroy {
     this.authService.isAnonymous()
       .pipe(
         take(1)
-      )
+      ) // TODO: probably refactor with toPromise()
       .subscribe(anon => {
       if (anon) {
         const loginModal = this.modalCtrl.create(LoginModalPage);

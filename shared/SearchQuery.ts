@@ -1,4 +1,5 @@
 import { LatLng } from './LatLng';
+import { TimeTarget } from './TimeTarget';
 
 export interface SearchQuery {
   origin: {
@@ -9,6 +10,6 @@ export interface SearchQuery {
     coords: LatLng;
     address: string;
   },
-  timeTarget: string;
+  timeTarget: TimeTarget;
   datetime: Date;
 }

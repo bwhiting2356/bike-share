@@ -1,7 +1,7 @@
 export const dateToISOStringLocal = (date: Date): string => {
   const tzo = -date.getTimezoneOffset(),
     dif = tzo >= 0 ? '+' : '-',
-    pad = (num) => {
+    pad = (num: number) => {
       const norm = Math.floor(Math.abs(num));
       return (norm < 10 ? '0' : '') + norm;
     };

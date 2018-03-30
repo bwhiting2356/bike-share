@@ -54,7 +54,7 @@ export class AuthProvider {
     try {
       this.authState = await this.afAuth.auth.signInAnonymously();
     } catch(err) {
-      console.log(err)
+      console.log("error: ", err);
     }
   }
 
@@ -65,7 +65,7 @@ export class AuthProvider {
     // TODO: this is broken... why?
   }
 
-  phoneSignInSuccess(auth) {
+  phoneSignInSuccess(auth: any) { // TODO: find out the actual type
     this.authState = auth;
     // TODO: transfer search result params over to new user
   }

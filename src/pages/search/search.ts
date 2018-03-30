@@ -22,8 +22,6 @@ import { GeolocationProvider } from '../../providers/geolocation/geolocation';
 import { FirestoreProvider } from '../../providers/firestore/firestore';
 import { AuthProvider } from '../../providers/auth/auth';
 
-
-
 const CURRENT_LOCATION = "Current Location";
 
 @Component({
@@ -33,7 +31,7 @@ const CURRENT_LOCATION = "Current Location";
 export class SearchPage {
   userLocation$: Observable<LatLng | undefined>;
 
-  center;
+  center: LatLng;
   stationList: Observable<LatLng[]>;
 
   originAddress: string;
@@ -41,7 +39,7 @@ export class SearchPage {
   destinationAddress: string;
   destinationCoords: LatLng;
 
-  showAutocomplete: string;
+  showAutocomplete: 'origin' | 'destination';
 
   timeTarget: TimeTarget = 'Depart at';
   datetime: string;
