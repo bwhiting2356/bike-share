@@ -22,6 +22,9 @@ dist/
 node_modules/
 environments/
 
+functions/lib
+out-tsc/spec
+
 tmp/
 temp/
 hooks/
