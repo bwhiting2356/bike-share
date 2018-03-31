@@ -7,7 +7,9 @@ page-info {
 
 .price-info-popover .popover-content {
   width: 100%;
-  margin-left: -12px;
+  margin-left: -2px; // TODO: why is this necessary?
+  border-radius: 0;
+
 
   // TODO: fix icon/image margins that are different
   // TODO: or turn the image into a font so I can is it in ion-icon

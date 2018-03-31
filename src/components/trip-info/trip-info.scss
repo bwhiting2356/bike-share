@@ -16,11 +16,10 @@ trip-info {
   .trip-details {
     display: grid;
     grid-template-columns: 90px 20px 1fr 50px;
-
   }
 
   .trip-details.top {
-    grid-template-areas: "departureTime     originIcon           originAddress       originAddress";
+    grid-template-areas: "departureTime     originIcon           originAddress       .";
 
     #departureTime {  grid-area: departureTime;  }
     #originIcon {  grid-area: originIcon;  }
@@ -38,13 +37,13 @@ trip-info {
     padding-top: 5px;
     grid-template-rows: $travel-info-height auto auto $travel-info-height auto auto $travel-info-height;
     grid-template-areas:
-      ".                 walkingDots1         walkingTravelInfo1        ."
+      ".                 walkingDots1         walkingTravelInfo1  ."
       "reservation1Time  bikeReservationLine  reservation1Desc    reservation1Price"
       ".                 bikeReservationLine  reservation1Address ."
       ".                 bikeReservationLine  bikeTravelInfo      bikePrice"
       "reservation2Time  bikeReservationLine  reservation2Desc    reservation2Price"
       ".                 bikeReservationLine  reservation2Address ."
-      ".                 walkingDots2         walkingTravelInfo2  infoIcon";
+      ".                 walkingDots2         walkingTravelInfo2  .";
 
     #walkingDots1 { grid-area: walkingDots1 }
     #walkingTravelInfo1 { grid-area: walkingTravelInfo1 }
@@ -62,7 +61,6 @@ trip-info {
     #reservation2Address { grid-area: reservation2Address }
     #walkingDots2 { grid-area: walkingDots2 }
     #walkingTravelInfo2 { grid-area: walkingTravelInfo2 }
-    #infoIcon { grid-area: infoIcon }
 
 
     #bikeReservationLine {
@@ -78,21 +76,15 @@ trip-info {
         stroke: map_get($colors, 'bicyclingBorder')
       }
     }
-
-    #infoIcon {
-      font-size: 1.5em;
-      justify-content: flex-end;
-
-    }
   }
 
   .trip-details.bottom {
-    grid-template-areas: "arrivalTime       destinationIcon      destinationAddress  destinationAddress";
+    grid-template-areas: "arrivalTime       destinationIcon      destinationAddress  infoIcon";
 
     #arrivalTime {  grid-area: arrivalTime;  }
     #destinationIcon {  grid-area: destinationIcon;  }
     #destinationAddress { grid-area: destinationAddress }
-
+    #infoIcon { grid-area: infoIcon }
 
   }
 
@@ -102,6 +94,11 @@ trip-info {
     display: flex;
     font-weight: 500;
     align-items: center;
+    justify-content: flex-end;
+  }
+
+  #infoIcon {
+    font-size: 1.5em;
     justify-content: flex-end;
   }
 
@@ -138,7 +135,7 @@ trip-info {
     display: flex;
     align-items: center;
     font-style: italic;
-    color: #757575;
+    color: map_get($colors, 'travelInfoColor')
 
     ion-icon {
       font-size: 1.5em;

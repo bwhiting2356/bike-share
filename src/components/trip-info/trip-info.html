@@ -31,17 +31,19 @@
     <div id="reservation1Time" class="time">{{ trip.stationStart.time | date:"h:mm a" }}</div>
     <div id="bikeReservationLine" class="icon">
       <img id="station-1" src="assets/imgs/station.svg" alt="">
+      <!-- bicycline polyline svg -->
       <svg id="bike-line" width="10px" height="60px" viewBox="0 0 10 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
           <rect id="path-1" x="183" y="81" width="10" height="60" rx="1"></rect>
         </defs>
-        <g id="iPhone-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-183.000000, -81.000000)">
-          <g id="Rectangle-26" class="bicyclingPolyline">
-            <use [attr.fill]="bicyclePolylineMainColor" fill-rule="evenodd" xlink:href="#path-1"></use>
-            <rect [attr.stroke]="bicyclePolylineBorderColor" stroke-width="1" x="183.5" y="81.5" width="9" height="59" rx="1"></rect>
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-183.000000, -81.000000)">
+          <g class="bicyclingPolyline">
+            <use fill-rule="evenodd" xlink:href="#path-1"></use>
+            <rect stroke-width="1" x="183.5" y="81.5" width="9" height="59" rx="1"></rect>
           </g>
         </g>
       </svg>
+      <!-- /svg -->
       <img id="station-2" src="assets/imgs/station.svg" alt="">
     </div>
     <div id="reservation1Desc" class="reservation">Bike pickup reservation</div>
@@ -85,10 +87,6 @@
       <ion-icon name="walk"></ion-icon>
       <span>Walk {{ trip.walking2Travel.seconds | time }} ({{ trip.walking2Travel.feet  | distance }})</span>
     </div>
-    <div id="infoIcon" (click)="openInfoPopover()">
-      <ion-icon name="ios-information-circle-outline">
-      </ion-icon>
-    </div>
   </div>
 
   <div class="trip-details bottom">
@@ -97,6 +95,10 @@
       <img src="assets/imgs/pin.svg" alt="">
     </div>
     <div id="destinationAddress" class="address">{{ trip.destination.address }}</div>
+    <div id="infoIcon" (click)="openInfoPopover()">
+      <ion-icon name="ios-information-circle-outline">
+      </ion-icon>
+    </div>
   </div>
 
   <div class="summary">
