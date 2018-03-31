@@ -6,6 +6,7 @@
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
+//    "strict": true, // TODO: turn this back on when I've fixed the node_modules ionic problem
     "lib": [
       "dom",
       "es2015"

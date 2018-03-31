@@ -9,7 +9,7 @@ import { WindowProvider } from '../../providers/window/window';
 
 export class PhoneNumber {
   country: string = "+1";
-  number: string;
+  number: string = '';
 
   get e164() {
     const num = this.country + this.number;

@@ -24,13 +24,11 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
   templateUrl: 'search-result.html',
 })
 export class SearchResultPage implements OnDestroy {
-  origin: LatLng;
-  destination: LatLng;
-  result: Trip | null;
+  origin: LatLng | undefined;
+  destination: LatLng | undefined;
+  result: Trip | undefined | null;
   error: BehaviorSubject<string | null>;
   fetching: BehaviorSubject<boolean>;
-  bicyclePolylineMainColor: string;
-  bicyclePolylineBorderColor: string;
   tripSubscription: Subscription;
 
   collapsed: boolean = false;
@@ -40,7 +38,6 @@ export class SearchResultPage implements OnDestroy {
     private firestoreService: FirestoreProvider,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
-    private navCtrl: NavController,
     public navParams: NavParams
   ) {
     this.fetching = this.firestoreService.searchFetching;

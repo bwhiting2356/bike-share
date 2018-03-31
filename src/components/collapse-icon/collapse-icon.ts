@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: 'collapse-icon.html'
 })
 export class CollapseIconComponent {
-  @Input() collapsed: boolean;
+  @Input() collapsed: boolean = false;
 
   constructor() { }
 

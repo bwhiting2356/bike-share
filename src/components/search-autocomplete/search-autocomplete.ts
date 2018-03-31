@@ -9,16 +9,16 @@ const CURRENT_LOCATION = 'Current Location';
   templateUrl: 'search-autocomplete.html'
 })
 export class SearchAutocompleteComponent {
-  @Input() showCurrentLocation: boolean;
-  @Input() label: string;
-  @Input() address: string;
+  @Input() showCurrentLocation: boolean = false;
+  @Input() showAutocomplete: boolean = false;
+  @Input() label: string = '';
+  @Input() address: string = '';
   @Output() addressChange = new EventEmitter<string>();
   @Output() inputFocused = new EventEmitter<boolean>();
-  @Input() showAutocomplete: boolean;
+
   autocompleteResults: any[] = [];
   offlineToastShowing = false;
 
-  text: string;
   fetching: boolean = false;
   pristine: boolean = true;
 

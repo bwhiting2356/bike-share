@@ -8,8 +8,8 @@ import { InfoPage } from '../../pages/info/info';
   templateUrl: 'trip-info.html'
 })
 export class TripInfoComponent {
-  @Input() trip: Trip;
-  @Input() collapsed: boolean;
+  @Input() trip: Trip | undefined;
+  @Input() collapsed: boolean = false;
 
   constructor(private popoverCtrl: PopoverController) {}
 

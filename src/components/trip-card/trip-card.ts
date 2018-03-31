@@ -6,7 +6,7 @@ import { Trip } from '../../../shared/Trip';
   templateUrl: 'trip-card.html',
 })
 export class TripCardComponent {
-  @Input() trip: Trip;
+  @Input() trip: Trip | undefined;
 
   constructor() { }
 }

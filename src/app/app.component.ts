@@ -22,7 +22,7 @@ interface Page {
 })
 export class MyApp {
   isAnonymous: Observable<boolean>;
-  @ViewChild(Nav) nav: Nav;
+  @ViewChild(Nav) nav: Nav | undefined;
 
   rootPage: any = SearchPage;
 
@@ -58,7 +58,9 @@ export class MyApp {
   }
 
   openPage(page: Page) {
-    this.nav.setRoot(page.component);
+    if (this.nav) {
+      this.nav.setRoot(page.component);
+    }
   }
 
   async signOut() {

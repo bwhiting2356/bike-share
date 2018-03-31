@@ -23,8 +23,8 @@ import { AuthProvider } from '../auth/auth';
 @Injectable()
 export class FirestoreProvider {
   stationList: Observable<LatLng[]>;
-  userId: string;
-  userDataRef: AngularFirestoreDocument<DocumentData>;
+  userId: string | undefined;
+  userDataRef: AngularFirestoreDocument<DocumentData> | undefined;
   searchResultTrip: BehaviorSubject<Trip | null>;
   searchError: BehaviorSubject<string | null>;
   searchFetching: BehaviorSubject<boolean>;
@@ -71,28 +71,36 @@ export class FirestoreProvider {
   updateSearchOrigin(coords: LatLng, address: string) {
     this.updateSearchParams();
     const originCoords = mapLatLngToGeoPoint(coords);
-    this.userDataRef
-      .set({ searchParams: { origin: { coords: originCoords, address } }}, { merge: true });
+    if (this.userDataRef) {
+      this.userDataRef
+        .set({ searchParams: { origin: { coords: originCoords, address } }}, { merge: true });
+    }
   }
 
   updateSearchDestination(coords: LatLng, address: string) {
     this.updateSearchParams();
     const destinationCoords = mapLatLngToGeoPoint(coords);
-    this.userDataRef
-      .set({ searchParams: { destination: { coords: destinationCoords, address } }}, { merge: true });
+    if (this.userDataRef) {
+      this.userDataRef
+        .set({ searchParams: { destination: { coords: destinationCoords, address } }}, { merge: true });
+    }
   }
 
   updateTimeTarget(timeTarget: TimeTarget) {
     this.updateSearchParams();
-    this.userDataRef
-      .set({ searchParams: { timeTarget }}, { merge: true });
+    if (this.userDataRef) {
+      this.userDataRef
+        .set({ searchParams: { timeTarget }}, { merge: true });
+    }
   }
 
   updateDatetime(date: string) {
     this.updateSearchParams();
     const datetime = new Date(date);
-    this.userDataRef
-      .set({ searchParams: { datetime }}, { merge: true });
+    if (this.userDataRef) {
+      this.userDataRef
+        .set({ searchParams: { datetime }}, { merge: true });
+    }
   }
 
   bookReservation(tripData: TripData) {

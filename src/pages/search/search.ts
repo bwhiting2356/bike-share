@@ -31,7 +31,7 @@ const CURRENT_LOCATION = "Current Location";
 export class SearchPage {
   userLocation$: Observable<LatLng | undefined>;
 
-  center: LatLng;
+  // center: LatLng;
   stationList: Observable<LatLng[]>;
 
   originAddress: string;
@@ -39,7 +39,7 @@ export class SearchPage {
   destinationAddress: string;
   destinationCoords: LatLng;
 
-  showAutocomplete: 'origin' | 'destination';
+  showAutocomplete: 'origin' | 'destination' | undefined;
 
   timeTarget: TimeTarget = 'Depart at';
   datetime: string;

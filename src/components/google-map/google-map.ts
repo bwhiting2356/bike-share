@@ -15,23 +15,23 @@ declare var google: any;
   templateUrl: 'google-map.html'
 })
 export class GoogleMapComponent implements OnChanges, OnInit {
-  @ViewChild('mapContainer') mapContainer: ElementRef;
+  @ViewChild('mapContainer') mapContainer: ElementRef | undefined;
   @Input() zoom: number = 14;
   @Input() zoomControl: boolean = false;
   @Input() scrollWheel: boolean = true;
   @Input() streetViewControl: boolean = false;
   @Input() gestureHandling: string = 'greedy';
   @Input() fullscreenControl: boolean = true;
-  @Input() center: LatLng;
-  @Input() origin: LatLng;
-  @Input() destination: LatLng;
-  @Input() stationStart: LatLng;
-  @Input() stationEnd: LatLng;
-  @Input() walking1Points: LatLng[];
-  @Input() walking2Points: LatLng[];
-  @Input() bicyclingPoints: LatLng[];
-  @Input() stationList: LatLng[];
-  @Input() collapsed: boolean; // this is only here to trigger change detection when the size changes
+  @Input() center: LatLng | undefined;
+  @Input() origin: LatLng | undefined;
+  @Input() destination: LatLng | undefined;
+  @Input() stationStart: LatLng | undefined;
+  @Input() stationEnd: LatLng | undefined;
+  @Input() walking1Points: LatLng[] | undefined;
+  @Input() walking2Points: LatLng[] | undefined;
+  @Input() bicyclingPoints: LatLng[] | undefined;
+  @Input() stationList: LatLng[] | undefined;
+  @Input() collapsed: boolean = false; // this is only here to trigger change detection when the size changes
   map: any;
   stationMarkers: any[] = [];
 
@@ -47,42 +47,44 @@ export class GoogleMapComponent implements OnChanges, OnInit {
 
   async initMap() {
     await this.mapsAPILoader.load();
-    this.map = new google.maps.Map(this.mapContainer.nativeElement, {
-      zoom: this.zoom,
-      maxZoom: 16,
-      center: this.center || DEFAULT_LOCATION,
-      disableDefaultUI: true,
-      zoomControl: this.zoomControl,
-      streetViewControl: this.streetViewControl,
-      gestureHandling: this.gestureHandling,
-      fullscreenControl: false,
-      styles: [
-        {
-          featureType: 'poi',
-          stylers: [{visibility: '#off'}]
-        },
-      ]
-    });
-    this.map.setCenter(this.center);
 
-    if (this.origin) this.addMarker(this.origin);
-    if (this.destination) this.addMarker(this.destination);
+    if (this.mapContainer) {
+      this.map = new google.maps.Map(this.mapContainer.nativeElement, {
+        zoom: this.zoom,
+        maxZoom: 16,
+        center: this.center || DEFAULT_LOCATION,
+        disableDefaultUI: true,
+        zoomControl: this.zoomControl,
+        streetViewControl: this.streetViewControl,
+        gestureHandling: this.gestureHandling,
+        fullscreenControl: false,
+        styles: [
+          {
+            featureType: 'poi',
+            stylers: [{visibility: '#off'}]
+          },
+        ]
+      });
+      this.map.setCenter(this.center);
 
-    if (this.origin || this.destination) this.fitBounds();
+      if (this.origin) this.addMarker(this.origin);
+      if (this.destination) this.addMarker(this.destination);
 
-    if (this.stationStart) this.addMarker(this.stationStart, true);
-    if (this.stationEnd) this.addMarker(this.stationEnd, true);
+      if (this.origin || this.destination) this.fitBounds();
 
-    this.addOrRemoveStationMarkers();
+      if (this.stationStart) this.addMarker(this.stationStart, true);
+      if (this.stationEnd) this.addMarker(this.stationEnd, true);
 
-    this.map.addListener('zoom_changed', () => {
       this.addOrRemoveStationMarkers();
-    });
 
-    if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
-    if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
-    if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, GoogleMapComponent.BICYCLING);
+      this.map.addListener('zoom_changed', () => {
+        this.addOrRemoveStationMarkers();
+      });
 
+      if (this.walking1Points) this.addPolyline(this.walking1Points, GoogleMapComponent.WALKING);
+      if (this.walking2Points) this.addPolyline(this.walking2Points, GoogleMapComponent.WALKING);
+      if (this.bicyclingPoints) this.addPolyline(this.bicyclingPoints, GoogleMapComponent.BICYCLING);
+    }
   }
 
   fitBounds() {
