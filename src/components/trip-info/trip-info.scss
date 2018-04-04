@@ -90,14 +90,15 @@ trip-info {
 
   .price,
   #infoIcon {
-    cursor: pointer;
     display: flex;
     font-weight: 500;
     align-items: center;
     justify-content: flex-end;
   }
 
+
   #infoIcon {
+    cursor: pointer;
     font-size: 1.5em;
     justify-content: flex-end;
   }
@@ -114,6 +115,7 @@ trip-info {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    margin-right: 5px;
   }
 
   .address,
