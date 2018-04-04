@@ -65,7 +65,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
           },
         ]
       });
-      this.map.setCenter(this.center);
+      // this.map.setCenter(this.center);
 
       if (this.origin) this.addMarker(this.origin);
       if (this.destination) this.addMarker(this.destination);
