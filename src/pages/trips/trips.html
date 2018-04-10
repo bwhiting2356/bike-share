@@ -10,32 +10,32 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-segment [(ngModel)]="timeDirection">
-    <ion-segment-button value="upcoming">
-      Upcoming
-    </ion-segment-button>
-    <ion-segment-button value="past">
-      Past
-    </ion-segment-button>
-  </ion-segment>
+<!--<ion-content padding>-->
+  <!--<ion-segment [(ngModel)]="timeDirection">-->
+    <!--<ion-segment-button value="upcoming">-->
+      <!--Upcoming-->
+    <!--</ion-segment-button>-->
+    <!--<ion-segment-button value="past">-->
+      <!--Past-->
+    <!--</ion-segment-button>-->
+  <!--</ion-segment>-->
 
-  <ion-list
-    *ngIf="timeDirection === 'past'">
-    <trip-card
-      *ngFor="let trip of upcomingTrips"
-      [trip]="trip"
-      (click)="onTripClicked(trip)">
-    </trip-card>
-  </ion-list>
-  <ion-list
-    *ngIf="timeDirection === 'upcoming'">
-    <trip-card
-      *ngFor="let trip of pastTrips"
-      [trip]="trip"
-      (click)="onTripClicked(trip)">
-    </trip-card>
-  </ion-list>
-</ion-content>
+  <!--<ion-list-->
+    <!--*ngIf="timeDirection === 'past'">-->
+    <!--<trip-card-->
+      <!--*ngFor="let trip of upcomingTrips"-->
+      <!--[trip]="trip"-->
+      <!--(click)="onTripClicked(trip)">-->
+    <!--</trip-card>-->
+  <!--</ion-list>-->
+  <!--<ion-list-->
+    <!--*ngIf="timeDirection === 'upcoming'">-->
+    <!--<trip-card-->
+      <!--*ngFor="let trip of pastTrips"-->
+      <!--[trip]="trip"-->
+      <!--(click)="onTripClicked(trip)">-->
+    <!--</trip-card>-->
+  <!--</ion-list>-->
+<!--</ion-content>-->
 
 
