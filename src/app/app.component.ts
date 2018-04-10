@@ -7,7 +7,7 @@ import { SearchPage } from '../pages/search/search';
 import { TripsPage } from '../pages/trips/trips';
 import { LoginPage } from '../pages/login/login';
 import { PaymentsPage } from '../pages/payments/payments';
-import { TempPage } from '../pages/temp/temp';
+// import { TempPage } from '../pages/temp/temp';
 import { AuthProvider } from '../providers/auth/auth';
 import { Observable } from 'rxjs/Observable';
 

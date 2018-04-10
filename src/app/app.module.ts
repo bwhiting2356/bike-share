@@ -21,7 +21,7 @@ import { SearchResultPage } from '../pages/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
 import { LoginModalPage } from '../pages/login-modal/login-modal';
 
-import { TempPage } from '../pages/temp/temp';
+// import { TempPage } from '../pages/temp/temp';
 
 // lazy loaded pages
 
@@ -55,7 +55,7 @@ import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
 import { WindowProvider } from '../providers/window/window';
 
 
-import { environment } from "../../environments/environment";
+import { environment } from "../environments/environment";
 import { InfoPage } from '../pages/info/info';
 
 
@@ -66,7 +66,6 @@ import { InfoPage } from '../pages/info/info';
     SearchResultPage,
     LoginPage,
     LoginModalPage,
-    TempPage,
     InfoPage
   ],
   imports: [
@@ -91,7 +90,6 @@ import { InfoPage } from '../pages/info/info';
     SearchResultPage,
     LoginPage,
     LoginModalPage,
-    TempPage,
     InfoPage
   ],
   providers: [
