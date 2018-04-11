@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 
 import { TripDetailPage } from '../trip-detail/trip-detail';
 import { fakeTrips, Trip, TripStatus } from '../../../shared/Trip';
+import { TripListPage } from "../trip-list/trip-list";
+import { StatsPage } from "../stats/stats";
 
 @IonicPage()
 @Component({
@@ -39,7 +41,24 @@ export class TripsPage {
   upcomingTrips: Trip[];
   timeDirection: string = 'upcoming';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  upcomingPage = TripListPage;
+  pastPage = TripListPage;
+  statsPage = StatsPage;
+
+  tabIndex = 0;
+
+  tabsPlacement: string = 'bottom';
+  tabsLayout: string = 'icon-top';
+
+  constructor(
+    public platform: Platform,
+    public navCtrl: NavController, public navParams: NavParams) {
+
+    if (!this.platform.is('mobile')) {
+      this.tabsPlacement = 'top';
+      this.tabsLayout = 'icon-left';
+    }
+
     this.trips = fakeTrips;
     this.pastTrips = this.trips.filter(trip => {
       return trip.status === TripStatus.COMPLETED  // order

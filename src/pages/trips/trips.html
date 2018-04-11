@@ -1,14 +1,19 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Trips</ion-title>
-    <ion-buttons end>
-      <signin-button></signin-button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
+<!--<ion-header>-->
+  <!--<ion-navbar>-->
+    <!--<button ion-button menuToggle>-->
+      <!--<ion-icon name="menu"></ion-icon>-->
+    <!--</button>-->
+    <!--<ion-title>Trips</ion-title>-->
+    <!--<ion-buttons end>-->
+      <!--<signin-button></signin-button>-->
+    <!--</ion-buttons>-->
+  <!--</ion-navbar>-->
+<!--</ion-header>-->
+<ion-tabs [tabsPlacement]="tabsPlacement" [tabsLayout]="tabsLayout" [selectedIndex]="tabIndex">
+  <ion-tab [root]="upcomingPage" tabTitle="Upcoming" tabIcon="arrow-round-forward"></ion-tab>
+  <ion-tab [root]="pastPage" tabTitle="Past" tabIcon="arrow-round-back"></ion-tab>
+  <ion-tab [root]="statsPage" tabTitle="Stats" tabIcon="trending-up"></ion-tab>
+</ion-tabs>
 
 <!--<ion-content padding>-->
   <!--<ion-segment [(ngModel)]="timeDirection">-->

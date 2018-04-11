@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Upcoming Trips</ion-title>
+    <ion-buttons end>
+      <signin-button></signin-button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <trip-card
+    *ngFor="let trip of trips"
+    [trip]="trip"
+    (click)="onTripClicked(trip)">
+    </trip-card>
+  </ion-list>
+
+</ion-content>

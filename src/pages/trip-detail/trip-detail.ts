@@ -22,7 +22,7 @@ export class TripDetailPage {
     this.navCtrl.setRoot(SearchPage,
       { origin: this.trip.origin, destination: this.trip.destination },
       { animate: true }
-      );
+      ); // TODO: is this confusing? I'm not leaving them a back button, do they know where they are? Maybe add a different transition.
   }
 
   toggleCollapse() {

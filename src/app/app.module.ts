@@ -57,7 +57,11 @@ import { WindowProvider } from '../providers/window/window';
 
 import { environment } from "../environments/environment";
 import { InfoPage } from '../pages/info/info';
-import {TripsPage} from "../pages/trips/trips";
+import { TripsPage } from "../pages/trips/trips";
+import { TripListPage } from "../pages/trip-list/trip-list";
+import { StatsPage } from "../pages/stats/stats";
+
+
 
 
 @NgModule({
@@ -68,7 +72,6 @@ import {TripsPage} from "../pages/trips/trips";
     LoginPage,
     LoginModalPage,
     InfoPage,
-    TripsPage
   ],
   imports: [
     BrowserModule,
@@ -93,7 +96,6 @@ import {TripsPage} from "../pages/trips/trips";
     LoginPage,
     LoginModalPage,
     InfoPage,
-    TripsPage
   ],
   providers: [
     Geolocation,

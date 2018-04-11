@@ -24,7 +24,7 @@ export class MyApp {
   isAnonymous: Observable<boolean>;
   @ViewChild(Nav) nav: Nav | undefined;
 
-  rootPage: any = TripsPage;
+  rootPage: any = SearchPage;
 
   initialPages: Array<Page>;
   userPages: Array<Page>;
