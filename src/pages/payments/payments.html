@@ -17,6 +17,7 @@
       <ion-icon item-left name="card"></ion-icon>
       **** 1234
     </button>
+    <!-- TODO: what if there is no payment method currently? Placeholder? -->
   </ion-list>
 
   <ion-list>
@@ -25,13 +26,15 @@
       <span class="description">Cash Balance</span>
       <span class="price" item-end>{{ balance.cashBalance | currency:'USD' }}</span>
     </ion-item>
-    <ion-item>
+
+    <ion-item *ngIf="balance.promotion">
       <span class="description">Promotional Credit</span>
       <span class="price" item-end>{{ balance.promotion | currency:'USD' }}</span>
     </ion-item>
-    <ion-item no-lines>
+    <ion-item no-lines *ngIf="balance.promotion">
       <span class="price" item-end><strong>Total: {{ balance.cashBalance + balance.promotion | currency:'USD' }}</strong></span>
     </ion-item>
+
     <button outline icon-start class="withdraw" ion-button (click)="withdraw()">
       <ion-icon name="arrow-down"></ion-icon>
       Withdraw
@@ -40,7 +43,6 @@
       <ion-icon name="arrow-up"></ion-icon>
       Deposit
     </button>
-
   </ion-list>
 
   <ion-list>
@@ -58,5 +60,6 @@
       </span>
 
     </ion-item>
+    <ion-item *ngIf="transactions.length === 0"><i>No transactions to show</i></ion-item>
   </ion-list>
 </ion-content>

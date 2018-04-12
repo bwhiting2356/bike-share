@@ -57,6 +57,7 @@ import { WindowProvider } from '../providers/window/window';
 
 import { environment } from "../environments/environment";
 import { InfoPage } from '../pages/info/info';
+import {QRScanner} from "@ionic-native/qr-scanner";
 
 
 
@@ -107,7 +108,8 @@ import { InfoPage } from '../pages/info/info';
     AuthProvider,
     GeolocationProvider,
     AutocompleteProvider,
-    WindowProvider
+    WindowProvider,
+    QRScanner
   ]
 })
 export class AppModule {}

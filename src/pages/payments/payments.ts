@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 
-type Description = 'No-Show Fee' | 'Trip Booking' | 'Cancellation Credit';
-
 interface Transaction {
   date: Date;
   description: string;

@@ -15,6 +15,7 @@ import { SearchAutocompleteComponent } from './search-autocomplete/search-autoco
 import { CollapseIconComponent } from './collapse-icon/collapse-icon';
 import { PhoneLoginComponent } from './phone-login/phone-login';
 import { SigninButtonComponent } from './signin-button/signin-button';
+import { QrScannerComponent } from './qr-scanner/qr-scanner';
 
 @NgModule({
 	declarations: [
@@ -25,6 +26,7 @@ import { SigninButtonComponent } from './signin-button/signin-button';
     CollapseIconComponent,
     PhoneLoginComponent,
     SigninButtonComponent,
+    QrScannerComponent,
   ],
 	imports: [
 	  CommonModule,
@@ -39,6 +41,7 @@ import { SigninButtonComponent } from './signin-button/signin-button';
     CollapseIconComponent,
     PhoneLoginComponent,
     SigninButtonComponent,
+    QrScannerComponent,
   ]
 })
 export class ComponentsModule {}
