@@ -22,7 +22,6 @@ export class GeolocationProvider {
 
   async init() {
     await this.mapsAPILoader.load();
-    console.log("inside ng init");
 
     this.geocoder = new google.maps.Geocoder;
 

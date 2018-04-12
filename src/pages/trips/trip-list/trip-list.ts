@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {fakeTrips, Trip} from "../../../shared/Trip";
+import {fakeTrips, Trip} from "../../../../shared/Trip";
 
 
 

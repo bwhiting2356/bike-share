@@ -171,8 +171,8 @@ trip-info {
       text-align: right;
     }
   }
-
-  .positive {
-    color: green;
-  }
 }
+
+.positive {
+  color: map-get($colors, 'positivePrice');
+} // TODO: this class is also being used elsewhere

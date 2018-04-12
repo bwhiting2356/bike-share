@@ -1,3 +1,16 @@
 page-payments {
+  .right {
+    text-align: right;
+  }
+
+  .withdraw,
+  .deposit {
+    box-sizing: border-box;
+    width: 48%;
+  }
+
+  .no-show {
+    color: map-get($colors, 'danger');
+  }
 
 }

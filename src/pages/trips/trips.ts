@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 
-import { TripDetailPage } from '../trip-detail/trip-detail';
+import { TripDetailPage } from './trip-detail/trip-detail';
 import { fakeTrips, Trip, TripStatus } from '../../../shared/Trip';
-import { TripListPage } from "../trip-list/trip-list";
-import { StatsPage } from "../stats/stats";
+import { TripListPage } from "./trip-list/trip-list";
+import { StatsPage } from "./stats/stats";
 
 @IonicPage()
 @Component({

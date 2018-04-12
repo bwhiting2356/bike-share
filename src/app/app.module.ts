@@ -17,7 +17,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { MyApp } from './app.component';
 import { SearchPage } from '../pages/search/search';
 
-import { SearchResultPage } from '../pages/search-result/search-result';
+import { SearchResultPage } from '../pages/search/search-result/search-result';
 import { LoginPage } from '../pages/login/login';
 import { LoginModalPage } from '../pages/login-modal/login-modal';
 
@@ -58,8 +58,9 @@ import { WindowProvider } from '../providers/window/window';
 import { environment } from "../environments/environment";
 import { InfoPage } from '../pages/info/info';
 import { TripsPage } from "../pages/trips/trips";
-import { TripListPage } from "../pages/trip-list/trip-list";
-import { StatsPage } from "../pages/stats/stats";
+import { TripListPage } from "../pages/trips/trip-list/trip-list";
+import { StatsPage } from "../pages/trips/stats/stats";
+import {PaymentsPage} from "../pages/payments/payments";
 
 
 

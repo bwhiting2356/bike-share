@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { Trip } from '../../../shared/Trip';
-import { SearchPage } from '../search/search';
+import { Trip } from '../../../../shared/Trip';
+import { SearchPage } from '../../search/search';
 
 
 @IonicPage()

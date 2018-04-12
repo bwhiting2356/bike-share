@@ -4,15 +4,15 @@ import {
   ToastController
 } from 'ionic-angular';
 
-import { Trip } from '../../../shared/Trip';
-import { LatLng } from '../../../shared/LatLng';
+import { Trip } from '../../../../shared/Trip';
+import { LatLng } from '../../../../shared/LatLng';
 
 // import { TempPage } from '../temp/temp';
-import { LoginModalPage } from '../login-modal/login-modal';
+import { LoginModalPage } from '../../login-modal/login-modal';
 
 // providers
-import { FirestoreProvider } from '../../providers/firestore/firestore';
-import { AuthProvider } from '../../providers/auth/auth';
+import { FirestoreProvider } from '../../../providers/firestore/firestore';
+import { AuthProvider } from '../../../providers/auth/auth';
 
 // rxjs
 import { take } from 'rxjs/operators';

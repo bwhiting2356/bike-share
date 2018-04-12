@@ -3,7 +3,7 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 // pages
 
-import { SearchResultPage } from '../search-result/search-result';
+import { SearchResultPage } from './search-result/search-result';
 
 // shared
 
