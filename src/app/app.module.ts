@@ -57,11 +57,6 @@ import { WindowProvider } from '../providers/window/window';
 
 import { environment } from "../environments/environment";
 import { InfoPage } from '../pages/info/info';
-import { TripsPage } from "../pages/trips/trips";
-import { TripListPage } from "../pages/trips/trip-list/trip-list";
-import { StatsPage } from "../pages/trips/stats/stats";
-import {PaymentsPage} from "../pages/payments/payments";
-
 
 
 

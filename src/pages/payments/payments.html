@@ -32,11 +32,11 @@
     <ion-item no-lines>
       <span class="price" item-end><strong>Total: {{ balance.cashBalance + balance.promotion | currency:'USD' }}</strong></span>
     </ion-item>
-    <button icon-start class="withdraw" ion-button (click)="withdraw()">
+    <button outline icon-start class="withdraw" ion-button (click)="withdraw()">
       <ion-icon name="arrow-down"></ion-icon>
       Withdraw
     </button>
-    <button icon-start class="deposit" ion-button (click)="deposit()">
+    <button outline icon-start class="deposit" ion-button (click)="deposit()">
       <ion-icon name="arrow-up"></ion-icon>
       Deposit
     </button>
