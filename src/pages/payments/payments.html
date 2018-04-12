@@ -49,7 +49,7 @@
       <span class="left">
 
         <span [ngClass]="{'no-show': transaction.description === 'No-Show Fee'}">{{ transaction.description }}</span>
-        <p>Trip #{{ transaction.tripId }}</p>
+        <p *ngIf="transaction.tripId">Trip #{{ transaction.tripId }}</p>
       </span>
 
       <span class="right" item-end>

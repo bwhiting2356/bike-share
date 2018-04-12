@@ -7,7 +7,7 @@ interface Transaction {
   date: Date;
   description: string;
   price: number;
-  tripId: number;
+  tripId?: number;
 }
 
 
@@ -44,9 +44,19 @@ export class PaymentsPage {
     },
     {
       date: new Date(),
+      description: 'Deposit',
+      price: 20,
+    },
+    {
+      date: new Date(),
       description: 'Booking',
       price: 1.14,
       tripId: 1214
+    },
+    {
+      date: new Date(),
+      description: 'Withdrawl',
+      price: -11.90,
     },
   ];
 
