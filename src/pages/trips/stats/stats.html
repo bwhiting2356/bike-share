@@ -10,15 +10,16 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <div class="chart-container">
+  <div class="content-container">
     <canvas width="350px"
-            height="350px"
+            height="200px"
             baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"
             [options]="barChartOptions"
             [legend]="barChartLegend"
-            [chartType]="barChartType"></canvas>
+            [chartType]="barChartType">
+    </canvas>
   </div>
 
 </ion-content>

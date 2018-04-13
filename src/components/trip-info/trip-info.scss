@@ -172,7 +172,3 @@ trip-info {
     }
   }
 }
-
-.positive {
-  color: map-get($colors, 'positivePrice');
-} // TODO: this class is also being used elsewhere

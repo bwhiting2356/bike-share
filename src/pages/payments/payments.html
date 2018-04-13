@@ -11,55 +11,57 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-list-header>Payment Method</ion-list-header>
-    <button ion-item (click)="editPaymentMethod()">
-      <ion-icon item-left name="card"></ion-icon>
-      **** 1234
-    </button>
-    <!-- TODO: what if there is no payment method currently? Placeholder? -->
-  </ion-list>
+  <div class="content-container">
+    <ion-list>
+      <ion-list-header>Payment Method</ion-list-header>
+      <button ion-item (click)="editPaymentMethod()">
+        <ion-icon item-left name="card"></ion-icon>
+        **** 1234
+      </button>
+      <!-- TODO: what if there is no payment method currently? Placeholder? -->
+    </ion-list>
 
-  <ion-list>
-    <ion-list-header>Balance</ion-list-header>
-    <ion-item>
-      <span class="description">Cash Balance</span>
-      <span class="price" item-end>{{ balance.cashBalance | currency:'USD' }}</span>
-    </ion-item>
+    <ion-list>
+      <ion-list-header>Balance</ion-list-header>
+      <ion-item>
+        <span class="description">Cash Balance</span>
+        <span class="price" item-end>{{ balance.cashBalance | currency:'USD' }}</span>
+      </ion-item>
 
-    <ion-item *ngIf="balance.promotion">
-      <span class="description">Promotional Credit</span>
-      <span class="price" item-end>{{ balance.promotion | currency:'USD' }}</span>
-    </ion-item>
-    <ion-item no-lines *ngIf="balance.promotion">
-      <span class="price" item-end><strong>Total: {{ balance.cashBalance + balance.promotion | currency:'USD' }}</strong></span>
-    </ion-item>
+      <ion-item *ngIf="balance.promotion">
+        <span class="description">Promotional Credit</span>
+        <span class="price" item-end>{{ balance.promotion | currency:'USD' }}</span>
+      </ion-item>
+      <ion-item no-lines *ngIf="balance.promotion">
+        <span class="price" item-end><strong>Total: {{ balance.cashBalance + balance.promotion | currency:'USD' }}</strong></span>
+      </ion-item>
 
-    <button outline icon-start class="withdraw" ion-button (click)="withdraw()">
-      <ion-icon name="arrow-down"></ion-icon>
-      Withdraw
-    </button>
-    <button icon-start class="deposit" ion-button (click)="deposit()">
-      <ion-icon name="arrow-up"></ion-icon>
-      Deposit
-    </button>
-  </ion-list>
+      <button outline icon-start class="withdraw" ion-button (click)="withdraw()">
+        <ion-icon name="arrow-down"></ion-icon>
+        Withdraw
+      </button>
+      <button icon-start class="deposit" ion-button (click)="deposit()">
+        <ion-icon name="arrow-up"></ion-icon>
+        Deposit
+      </button>
+    </ion-list>
 
-  <ion-list>
-    <ion-list-header>Transactions</ion-list-header>
-    <ion-item *ngFor="let transaction of transactions">
+    <ion-list>
+      <ion-list-header>Transactions</ion-list-header>
+      <ion-item *ngFor="let transaction of transactions">
       <span class="left">
 
         <span [ngClass]="{'no-show': transaction.description === 'No-Show Fee'}">{{ transaction.description }}</span>
         <p *ngIf="transaction.tripId">Trip #{{ transaction.tripId }}</p>
       </span>
 
-      <span class="right" item-end>
+        <span class="right" item-end>
         <span [ngClass]="{positive: transaction.price > 0}">{{ transaction.price | currency:'USD' }}</span>
         <p>{{ transaction.date | date }}</p>
       </span>
 
-    </ion-item>
-    <ion-item *ngIf="transactions.length === 0"><i>No transactions to show</i></ion-item>
-  </ion-list>
+      </ion-item>
+      <ion-item *ngIf="transactions.length === 0"><i>No transactions to show</i></ion-item>
+    </ion-list>
+  </div>
 </ion-content>
