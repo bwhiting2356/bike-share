@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {PaymentMethodPage} from "../payment-method/payment-method";
 
 interface Transaction {
   date: Date;
@@ -69,7 +70,7 @@ export class PaymentsPage {
               public navParams: NavParams) { }
 
   editPaymentMethod() {
-    this.notImplementedYet();
+   this.navCtrl.push(PaymentMethodPage);
   }
 
   withdraw() {

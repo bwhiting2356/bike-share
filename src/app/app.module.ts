@@ -57,7 +57,10 @@ import { WindowProvider } from '../providers/window/window';
 
 import { environment } from "../environments/environment";
 import { InfoPage } from '../pages/info/info';
-import {QRScanner} from "@ionic-native/qr-scanner";
+import { QRScanner } from "@ionic-native/qr-scanner";
+import { PaymentsProvider } from '../providers/payments/payments';
+import { HelpPage } from "../pages/help/help";
+import {PaymentMethodPage} from "../pages/payment-method/payment-method";
 
 
 
@@ -69,6 +72,7 @@ import {QRScanner} from "@ionic-native/qr-scanner";
     LoginPage,
     LoginModalPage,
     InfoPage,
+    HelpPage,
   ],
   imports: [
     BrowserModule,
@@ -93,6 +97,7 @@ import {QRScanner} from "@ionic-native/qr-scanner";
     LoginPage,
     LoginModalPage,
     InfoPage,
+    HelpPage,
   ],
   providers: [
     Geolocation,
@@ -109,7 +114,8 @@ import {QRScanner} from "@ionic-native/qr-scanner";
     GeolocationProvider,
     AutocompleteProvider,
     WindowProvider,
-    QRScanner
+    QRScanner,
+    PaymentsProvider
   ]
 })
 export class AppModule {}

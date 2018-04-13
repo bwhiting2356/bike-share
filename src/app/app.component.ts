@@ -7,9 +7,9 @@ import { SearchPage } from '../pages/search/search';
 import { TripsPage } from '../pages/trips/trips';
 import { LoginPage } from '../pages/login/login';
 import { PaymentsPage } from '../pages/payments/payments';
-// import { TempPage } from '../pages/temp/temp';
 import { AuthProvider } from '../providers/auth/auth';
 import { Observable } from 'rxjs/Observable';
+import { HelpPage } from "../pages/help/help";
 
 interface Page {
   title: string;
@@ -24,7 +24,7 @@ export class MyApp {
   isAnonymous: Observable<boolean>;
   @ViewChild(Nav) nav: Nav | undefined;
 
-  rootPage: any = LoginPage;
+  rootPage: any = SearchPage;
 
   initialPages: Array<Page>;
   userPages: Array<Page>;
@@ -32,13 +32,14 @@ export class MyApp {
 
   constructor(private authService: AuthProvider,
               public platform: Platform,
-              public statusBar: StatusBar,
-              public splashScreen: SplashScreen,
+              // public statusBar: StatusBar,
+              // public splashScreen: SplashScreen,
               private toastCtrl: ToastController) {
     this.initializeApp();
 
     this.initialPages = [
       { title: 'Search', icon: 'search', component: SearchPage },
+      { title: 'Help', icon: 'help', component: HelpPage }
     ];
     this.loginPage = { title: 'Log in', icon: 'person', component: LoginPage }; // keep separate so I can remove it when signed in
 
@@ -53,8 +54,8 @@ export class MyApp {
 
   async initializeApp() {
     await this.platform.ready();
-    this.statusBar.styleDefault();
-    this.splashScreen.hide();
+    // this.statusBar.styleDefault();
+    // this.splashScreen.hide();
   }
 
   openPage(page: Page) {
