@@ -46,10 +46,14 @@
       <div class="map">
         <collapse-icon (click)="toggleCollapse()" [collapsed]="collapsed"></collapse-icon>
         <google-map [collapsed]="collapsed"
-                    [origin]="origin"
-                    [destination]="destination"
-                    [stationStart]="result.stationStart.coords || null"
-                    [stationEnd]="result ? result.stationEnd.coords : null"
+                    [originCoords]="result ? result.origin.coords : null"
+                    [originAddress]="result ? result.origin.address : null"
+                    [destinationCoords]="result ? result.destination.coords : null"
+                    [destinationAddress]="result ? result.destination.address : null"
+                    [stationStartCoords]="result ? result.stationStart.coords : null"
+                    [stationStartAddress]="result ? result.stationStart.address : null"
+                    [stationEndCoords]="result ? result.stationEnd.coords : null"
+                    [stationEndAddress]="result ? result.stationEnd.address : null"
                     [walking1Points]="result ? result.walking1Travel.points : null"
                     [bicyclingPoints]="result ? result.bicyclingTravel.points : null"
                     [walking2Points]="result ? result.walking2Travel.points : null">

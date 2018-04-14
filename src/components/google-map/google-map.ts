@@ -5,6 +5,7 @@ import { Component, ViewChild, Input, OnChanges, OnInit, ElementRef } from '@ang
 import { LatLng } from '../../../shared/LatLng';
 import { bicyclePolylineBorderColor, bicyclePolylineMainColor } from '../../../shared/ThemeVariables';
 import { MapsAPILoader } from '@agm/core';
+import { clientMapGeoPointToLatLng } from "../../providers/firestore/clientMapGeoPointToLatLng";
 
 
 const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
@@ -23,17 +24,22 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   @Input() gestureHandling: string = 'greedy';
   @Input() fullscreenControl: boolean = true;
   @Input() center: LatLng | undefined;
-  @Input() origin: LatLng | undefined;
-  @Input() destination: LatLng | undefined;
-  @Input() stationStart: LatLng | undefined;
-  @Input() stationEnd: LatLng | undefined;
+  @Input() originCoords: LatLng | undefined;
+  @Input() originAddress: string | undefined;
+  @Input() destinationCoords: LatLng | undefined;
+  @Input() destinationAddress: string | undefined;
+  @Input() stationStartCoords: LatLng | undefined;
+  @Input() stationStartAddress: string | undefined;
+  @Input() stationEndCoords: LatLng | undefined;
+  @Input() stationEndAddress: string | undefined;
   @Input() walking1Points: LatLng[] | undefined;
   @Input() walking2Points: LatLng[] | undefined;
   @Input() bicyclingPoints: LatLng[] | undefined;
-  @Input() stationList: LatLng[] | undefined;
+  @Input() stationList: any[] | undefined;
   @Input() collapsed: boolean = false; // this is only here to trigger change detection when the size changes
   map: any;
   stationMarkers: any[] = [];
+  openWindow: any | null;
 
   constructor(private mapsAPILoader: MapsAPILoader) { }
 
@@ -65,15 +71,14 @@ export class GoogleMapComponent implements OnChanges, OnInit {
           },
         ]
       });
-      // this.map.setCenter(this.center);
 
-      if (this.origin) this.addMarker(this.origin);
-      if (this.destination) this.addMarker(this.destination);
+      if (this.originCoords) this.addMarker(this.originCoords, this.originAddress);
+      if (this.destinationCoords) this.addMarker(this.destinationCoords, this.destinationAddress);
 
-      if (this.origin || this.destination) this.fitBounds();
+      if (this.originCoords || this.destinationCoords) this.fitBounds();
 
-      if (this.stationStart) this.addMarker(this.stationStart, true);
-      if (this.stationEnd) this.addMarker(this.stationEnd, true);
+      if (this.stationStartCoords) this.addMarker(this.stationStartCoords, this.stationStartAddress, true);
+      if (this.stationEndCoords) this.addMarker(this.stationEndCoords, this.stationEndAddress, true);
 
       this.addOrRemoveStationMarkers();
 
@@ -89,40 +94,51 @@ export class GoogleMapComponent implements OnChanges, OnInit {
 
   fitBounds() {
     let bounds = new google.maps.LatLngBounds();
-    if (this.origin) bounds.extend(this.origin);
+    if (this.originCoords) bounds.extend(this.originCoords);
     if (this.walking1Points) {
       this.walking1Points.forEach(points => bounds.extend(points));
     }
-    if (this.stationStart) bounds.extend(this.stationStart);
+    if (this.stationStartCoords) bounds.extend(this.stationStartCoords);
     if (this.bicyclingPoints) {
       this.bicyclingPoints.forEach(points => bounds.extend(points));
     }
-    if (this.stationEnd) bounds.extend(this.stationEnd);
+    if (this.stationEndCoords) bounds.extend(this.stationEndCoords);
     if (this.walking2Points) {
       this.walking2Points.forEach(points => bounds.extend(points));
     }
-    if (this.destination) bounds.extend(this.destination);
+    if (this.destinationCoords) bounds.extend(this.destinationCoords);
     this.map.fitBounds(bounds, 20); // 20px padding
   }
 
-  addMarker(position: LatLng, station = false) {
-    const url = station ? '/assets/imgs/station.svg' : '/assets/imgs/pin.svg';
+  addMarker(position: LatLng, address: string | undefined, station = false) {
+    const infoWindow = new google.maps.InfoWindow({
+      content: address || 'unknown address'
+    });
 
-    let markerOptions = {
+    const markerOptions = {
       position: position,
       map: this.map,
       icon: {
-        url: url
+        url: station
+          ? '/assets/imgs/station.svg'
+          : '/assets/imgs/pin.svg'
       }
     };
 
-    return new google.maps.Marker(markerOptions);
+    const marker = new google.maps.Marker(markerOptions);
+    marker.addListener('click', () => {
+      if (this.openWindow) this.openWindow.close(this.map);
+      this.openWindow = infoWindow;
+      this.openWindow.open(this.map, marker);
+    });
+    return marker;
   }
 
   addOrRemoveStationMarkers() {
     if (this.stationList && this.map.getZoom() >= 14) {
       this.stationList.forEach(station => {
-        const marker = this.addMarker(station, true);
+        const { address, coords } = station;
+        const marker = this.addMarker(clientMapGeoPointToLatLng(coords), address, true);
         this.stationMarkers.push(marker);
       });
     } else {
@@ -214,3 +230,6 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     });
   }
 }
+
+
+

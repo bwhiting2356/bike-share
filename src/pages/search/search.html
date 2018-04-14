@@ -65,8 +65,10 @@
     <div class="map">
       <google-map
         [center]="userLocation$ | async"
-        [origin]="originCoords"
-        [destination]="destinationCoords"
+        [originCoords]="originCoords"
+        [originAddress]="originAddress"
+        [destinationCoords]="destinationCoords"
+        [destinationAddress]="destinationAddress"
         [stationList]="stationList | async">
       </google-map>
     </div>

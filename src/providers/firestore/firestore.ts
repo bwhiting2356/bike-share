@@ -22,7 +22,7 @@ import { AuthProvider } from '../auth/auth';
 
 @Injectable()
 export class FirestoreProvider {
-  stationList: Observable<LatLng[]>;
+  stationList: Observable<any[]>;
   userId: string | undefined;
   userDataRef: AngularFirestoreDocument<DocumentData> | undefined;
   searchResultTrip: BehaviorSubject<Trip | null>;
@@ -41,7 +41,7 @@ export class FirestoreProvider {
     this.stationList = this.dbFirestore.collection('/stations').valueChanges()
       .pipe(
         take(1),
-        map(stationList => stationList.map((station: any) => clientMapGeoPointToLatLng(station["coords"])))
+        // map(stationList => stationList.map((station: any) => clientMapGeoPointToLatLng(station["coords"])))
       );
 
     this.authService.currentUserIdObservable.subscribe(userId => {

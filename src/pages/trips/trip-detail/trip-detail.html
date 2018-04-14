@@ -30,10 +30,14 @@
       <div class="map">
         <collapse-icon (click)="toggleCollapse()" [collapsed]="collapsed"></collapse-icon>
         <google-map [collapsed]="collapsed"
-                    [origin]="trip.origin.coords"
-                    [destination]="trip.destination.coords"
-                    [stationStart]="trip.stationStart.coords"
-                    [stationEnd]="trip.stationEnd.coords"
+                    [originCoords]="trip.origin.coords"
+                    [originAddress]="trip.origin.address"
+                    [destinationCoords]="trip.destination.coords"
+                    [destinationAddress]="trip.destination.address"
+                    [stationStartCoords]="trip.stationStart.coords"
+                    [stationStartAddress]="trip.stationStart.address"
+                    [stationEndCoords]="trip.stationEnd.coords"
+                    [stationEndAddress]="trip.stationEnd.address"
                     [walking1Points]="trip.walking1Travel.points"
                     [bicyclingPoints]="trip.bicyclingTravel.points"
                     [walking2Points]="trip.walking2Travel.points">
