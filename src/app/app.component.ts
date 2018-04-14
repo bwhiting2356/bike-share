@@ -1,7 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, ToastController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SearchPage } from '../pages/search/search';
 import { TripsPage } from '../pages/trips/trips';
@@ -32,10 +30,7 @@ export class MyApp {
 
   constructor(private authService: AuthProvider,
               public platform: Platform,
-              // public statusBar: StatusBar,
-              // public splashScreen: SplashScreen,
               private toastCtrl: ToastController) {
-    this.initializeApp();
 
     this.initialPages = [
       { title: 'Search', icon: 'search', component: SearchPage },
@@ -49,13 +44,6 @@ export class MyApp {
     ];
 
     this.isAnonymous = this.authService.isAnonymous();
-
-  }
-
-  async initializeApp() {
-    await this.platform.ready();
-    // this.statusBar.styleDefault();
-    // this.splashScreen.hide();
   }
 
   openPage(page: Page) {

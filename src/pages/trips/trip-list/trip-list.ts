@@ -1,15 +1,6 @@
 import { Component } from '@angular/core';
-import {App, IonicPage, NavController, NavParams} from 'ionic-angular';
-import {fakeTrips, Trip} from "../../../../shared/Trip";
-
-
-
-/**
- * Generated class for the TripListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { App, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { fakeTrips, Trip } from "../../../../shared/Trip";
 
 @IonicPage()
 @Component({

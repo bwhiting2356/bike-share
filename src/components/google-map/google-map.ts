@@ -10,7 +10,6 @@ import { clientMapGeoPointToLatLng } from "../../providers/firestore/clientMapGe
 import {} from '@types/googlemaps';
 
 type gestureHandling =  'greedy' | 'cooperative' | 'none' | 'auto' | undefined;
-
 const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
 
 @Component({
@@ -74,13 +73,13 @@ export class GoogleMapComponent implements OnChanges, OnInit {
         ]
       });
 
-      if (this.originCoords) this.addMarker(this.originCoords, this.originAddress);
-      if (this.destinationCoords) this.addMarker(this.destinationCoords, this.destinationAddress);
+      if (this.originCoords) this.addMarker(this.originCoords, this.originAddress, 'Origin', );
+      if (this.destinationCoords) this.addMarker(this.destinationCoords, this.destinationAddress, 'Destination');
 
       if (this.originCoords || this.destinationCoords) this.fitBounds();
 
-      if (this.stationStartCoords) this.addMarker(this.stationStartCoords, this.stationStartAddress, true);
-      if (this.stationEndCoords) this.addMarker(this.stationEndCoords, this.stationEndAddress, true);
+      if (this.stationStartCoords) this.addMarker(this.stationStartCoords, this.stationStartAddress, 'Pickup Station', true);
+      if (this.stationEndCoords) this.addMarker(this.stationEndCoords, this.stationEndAddress, 'Dropoff Station', true);
 
       this.addOrRemoveStationMarkers();
 
@@ -112,9 +111,14 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     this.map.fitBounds(bounds, 20); // 20px padding
   }
 
-  addMarker(position: LatLng, address: string | undefined, station = false) {
+  addMarker(position: LatLng, address: string | undefined, description: string | undefined, station = false) {
+    const content = `
+    <h5>${description || 'unknown place'}:</h5>
+    <p> ${address || 'unknown address'}</p>
+    `;
+
     const infoWindow = new google.maps.InfoWindow({
-      content: address || 'unknown address'
+      content
     });
 
     const markerOptions = {
@@ -140,7 +144,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
     if (this.stationList && this.map.getZoom() >= 14) {
       this.stationList.forEach(station => {
         const { address, coords } = station;
-        const marker = this.addMarker(clientMapGeoPointToLatLng(coords), address, true);
+        const marker = this.addMarker(clientMapGeoPointToLatLng(coords), address, 'Station', true);
         this.stationMarkers.push(marker);
       });
     } else {

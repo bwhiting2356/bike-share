@@ -60,8 +60,6 @@ import { InfoPage } from '../pages/info/info';
 import { QRScanner } from "@ionic-native/qr-scanner";
 import { PaymentsProvider } from '../providers/payments/payments';
 import { HelpPage } from "../pages/help/help";
-import {PaymentMethodPage} from "../pages/payment-method/payment-method";
-
 
 
 @NgModule({

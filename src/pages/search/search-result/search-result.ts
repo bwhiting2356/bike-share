@@ -7,7 +7,6 @@ import {
 import { Trip } from '../../../../shared/Trip';
 import { LatLng } from '../../../../shared/LatLng';
 
-// import { TempPage } from '../temp/temp';
 import { LoginModalPage } from '../../login-modal/login-modal';
 
 // providers

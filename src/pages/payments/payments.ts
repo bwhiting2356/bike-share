@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
-import {PaymentMethodPage} from "../payment-method/payment-method";
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { PaymentMethodPage } from "../payment-method/payment-method";
 
 interface Transaction {
   date: Date;
