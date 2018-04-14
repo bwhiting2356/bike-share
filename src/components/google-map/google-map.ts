@@ -7,9 +7,11 @@ import { bicyclePolylineBorderColor, bicyclePolylineMainColor } from '../../../s
 import { MapsAPILoader } from '@agm/core';
 import { clientMapGeoPointToLatLng } from "../../providers/firestore/clientMapGeoPointToLatLng";
 
+import {} from '@types/googlemaps';
+
+type gestureHandling =  'greedy' | 'cooperative' | 'none' | 'auto' | undefined;
 
 const DEFAULT_LOCATION: LatLng = { lat: 40.724910, lng: -73.995480 };
-declare var google: any;
 
 @Component({
   selector: 'google-map',
@@ -21,7 +23,7 @@ export class GoogleMapComponent implements OnChanges, OnInit {
   @Input() zoomControl: boolean = false;
   @Input() scrollWheel: boolean = true;
   @Input() streetViewControl: boolean = false;
-  @Input() gestureHandling: string = 'greedy';
+  @Input() gestureHandling: gestureHandling = 'greedy';
   @Input() fullscreenControl: boolean = true;
   @Input() center: LatLng | undefined;
   @Input() originCoords: LatLng | undefined;

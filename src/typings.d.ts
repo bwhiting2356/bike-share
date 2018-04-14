@@ -5,3 +5,5 @@
 // }
 
 declare var Stripe: any;
+// declare var google: any;
+

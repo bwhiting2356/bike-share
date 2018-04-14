@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 
-declare var google: any;
-
 @Injectable()
 export class AutocompleteProvider {
   googleAutocompleteService: any;

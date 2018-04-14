@@ -15,8 +15,7 @@ import { Trip, TripData } from '../../../shared/Trip';
 import { mapLatLngToGeoPoint } from '../../../shared/mapLatLngToGeoPoint';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { clientMapGeoPointToLatLng } from './clientMapGeoPointToLatLng';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { AuthProvider } from '../auth/auth';
 
 

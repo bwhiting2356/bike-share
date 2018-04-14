@@ -6,9 +6,6 @@ import { MapsAPILoader } from '@agm/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-declare var google: any;
-
-
 @Injectable()
 export class GeolocationProvider {
   userLocation$: Observable<LatLng | undefined>;
