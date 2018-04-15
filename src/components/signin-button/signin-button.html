@@ -1,12 +1,8 @@
-<button *ngIf="(isAnonymous | async)" ion-button (click)="signIn()"> <!-- TODO: maybe a more muted color -->
-  <div>
-    <ion-icon name="person" padding-right></ion-icon>
+<button icon-start outline *ngIf="(isAnonymous | async)" ion-button (click)="signIn()">
+    <ion-icon name="person"></ion-icon>
     <span>Sign In</span>
-  </div>
 </button>
-<button *ngIf="!(isAnonymous | async)" ion-button (click)="signOut()">
-  <div>
-    <ion-icon name="person" padding-right></ion-icon>
+<button icon-start outline *ngIf="!(isAnonymous | async)" ion-button (click)="signOut()">
+    <ion-icon name="person"></ion-icon>
     <span>Sign Out</span>
-  </div>
 </button> <!-- TODO: why is there a flash of 'sign out' before 'sign in' loads correctly? -->

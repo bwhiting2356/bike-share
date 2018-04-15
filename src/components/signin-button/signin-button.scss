@@ -1,6 +1,5 @@
 signin-button {
-  display: none;
-  @media (min-width: $desktop-breakpoint) {
-    display: block;
+  button {
+    width: 99%; // TODO: why does 100% hide the borde?
   }
 }

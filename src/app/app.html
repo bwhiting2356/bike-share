@@ -32,14 +32,11 @@
         <span>{{ p.title }}</span>
 
       </button>
-      <button *ngIf="(isAnonymous | async)" large menuClose ion-item (click)="openPage(loginPage)">
-        <ion-icon item-left name='person'></ion-icon>
-        Sign in
-      </button>
-      <button *ngIf="!(isAnonymous | async)" large ion-item (click)="signOut()">
-        <ion-icon item-left name='person'></ion-icon>
-        Sign out
-      </button>
+
+      <ion-item>
+        <signin-button></signin-button>
+      </ion-item>
+
     </ion-list>
   </ion-content>
 

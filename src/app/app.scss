@@ -15,6 +15,15 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+ion-header {
+  signin-button {
+    display: none;
+    @media (min-width: $desktop-breakpoint) {
+      display: block;
+    }
+  }
+}
+
 .content-container {
   @media(min-width: 450px) {
     max-width: 90%;
@@ -34,3 +43,5 @@
 .active {
   color: map-get($colors, 'primary');
 }
+
+
