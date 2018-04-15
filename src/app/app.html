@@ -12,13 +12,25 @@
 
   <ion-content>
     <ion-list>
-      <button large menuClose ion-item *ngFor="let p of initialPages" (click)="openPage(p)">
+      <button
+        [ngClass]="{active: isActive(p)}"
+        large
+        menuClose
+        ion-item
+        *ngFor="let p of initialPages" (click)="openPage(p)">
         <ion-icon item-left [name]="p.icon"></ion-icon>
         {{p.title}}
       </button>
-      <button large menuClose ion-item *ngFor="let p of userPages" (click)="openPage(p)">
+      <button
+        [ngClass]="{active: isActive(p)}"
+        large
+        menuClose
+        ion-item
+        *ngFor="let p of userPages" (click)="openPage(p)">
+
         <ion-icon item-left [name]="p.icon"></ion-icon>
-        {{p.title}}
+        <span>{{ p.title }}</span>
+
       </button>
       <button *ngIf="(isAnonymous | async)" large menuClose ion-item (click)="openPage(loginPage)">
         <ion-icon item-left name='person'></ion-icon>

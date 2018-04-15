@@ -30,3 +30,7 @@
 .positive {
   color: map-get($colors, 'positivePrice');
 }
+
+.active {
+  color: map-get($colors, 'primary');
+}

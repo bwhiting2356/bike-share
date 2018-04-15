@@ -52,6 +52,17 @@ export class MyApp {
     }
   }
 
+  isActive(page: Page) {
+    if (!this.nav) return;
+    const active = this.nav.getActive();
+
+    if (typeof page.component === 'string') { // if it's a lazy loaded page
+      return active ? active.component.name === page.component : false;
+    } else {
+      return active ? active.component === page.component : false;
+    }
+  }
+
   async signOut() {
     try {
       await this.authService.signOut();
