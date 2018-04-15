@@ -34,7 +34,7 @@
           [label]="'Destination'">
         </search-autocomplete>
 
-        <div ion-item class="time-container">
+        <div ion-item class="time-container-mobile">
           <ion-select
             [(ngModel)]="timeTarget"
             (ngModelChange)="timeTargetChange()"
@@ -48,6 +48,21 @@
             (ngModelChange)="datetimeChange()"
             displayFormat="h:mm A MMM DD">
           </ion-datetime>
+        </div>
+
+        <div ion-item class="time-container-desktop">
+          <mat-form-field class="time-target">
+            <mat-select [(ngModel)]="timeTarget">
+              <mat-option value="Depart at">Depart at</mat-option>
+              <mat-option value="Arrive by">Arrive by</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br>
+          <mat-form-field class="datetime">
+            <input [(ngModel)]="datetime" matInput [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
 
         <!-- TODO: replace with better desktop friendly widgets for desktop devices -->

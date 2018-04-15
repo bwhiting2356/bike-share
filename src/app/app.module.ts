@@ -60,6 +60,7 @@ import { InfoPage } from '../pages/info/info';
 import { QRScanner } from "@ionic-native/qr-scanner";
 import { PaymentsProvider } from '../providers/payments/payments';
 import { HelpPage } from "../pages/help/help";
+import {MaterialModule} from "../material/material.module";
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { HelpPage } from "../pages/help/help";
     AgmCoreModule.forRoot({
       libraries: ['places'],
       apiKey: environment.googleMapsKey
-    })
+    }),
+    MaterialModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

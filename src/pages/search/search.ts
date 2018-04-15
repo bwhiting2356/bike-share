@@ -21,12 +21,14 @@ import { take } from 'rxjs/operators';
 import { GeolocationProvider } from '../../providers/geolocation/geolocation';
 import { FirestoreProvider } from '../../providers/firestore/firestore';
 import { AuthProvider } from '../../providers/auth/auth';
+import {DateAdapter, NativeDateAdapter} from "@angular/material";
 
 const CURRENT_LOCATION = "Current Location";
 
 @Component({
   selector: 'page-search',
-  templateUrl: 'search.html'
+  templateUrl: 'search.html',
+  providers: [{provide: DateAdapter, useClass: NativeDateAdapter }]
 })
 export class SearchPage {
   userLocation$: Observable<LatLng | undefined>;

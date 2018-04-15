@@ -71,17 +71,35 @@ page-trip-detail {
       }
     }
   }
-}
 
-.time-container {
-  position: relative;
+  .time-container-mobile {
 
-  ion-select {
-    position: absolute;
-    left: 0;
+    position: relative;
+
+    ion-select {
+      position: absolute;
+      left: 0;
+    }
+    ion-datetime {
+      position: absolute;
+      right: 0;
+    }
+    @media (min-width: $desktop-breakpoint) {
+      display: none;
+    }
   }
-  ion-datetime {
-    position: absolute;
-    right: 0;
+
+  .time-container-desktop {
+    display: none;
+    @media (min-width: $desktop-breakpoint) {
+      display: block;
+    }
+
+    .time-target,
+    .datetime {
+      display: inline-block;
+      width: 33%;
+    }
+
   }
 }
